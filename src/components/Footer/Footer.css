@@ -1,0 +1,17 @@
+.Footer {
+    margin-top: 60px;
+}
+
+.list-groups {
+    display: flex;
+    justify-content: space-around;
+}
+
+.individual-list-group {
+    width: 20%;
+}
+
+.item {
+    border: none;
+    text-align: center;
+}
