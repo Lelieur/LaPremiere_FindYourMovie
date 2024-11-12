@@ -14,25 +14,7 @@ const HomePage = () => {
     return (
         <div className="HomePage">
 
-<<<<<<< HEAD
-                <Card style={{ width: '18rem', textAlign: "center", boxShadow: '0px 0px 100px #ccc' }}>
-                    <Card.Body>
-                        <Card.Title className="p-4">LE PREMIERE</Card.Title>
-                        <Card.Text className="p-2">
-                            Encuentra tu película favorita, en tu cine favorito.
-                        </Card.Text>
-                        <Card.Text>
-                            Buscar por:
-                        </Card.Text>.
-                        <ButtonGroup className="p-2" aria-label="Basic example">
-                            <Button to={"/cines"} variant="secondary" as={Link}>Cine</Button>
-                            <Button to={"/peliculas"} variant="secondary" as={Link}>Película</Button>
-                        </ButtonGroup>
-                    </Card.Body>
-                </Card>
-=======
             <Container>
->>>>>>> 13386b38642e6b4d1d31fe5d405ea91408b04e6c
 
                 <Row>
 
