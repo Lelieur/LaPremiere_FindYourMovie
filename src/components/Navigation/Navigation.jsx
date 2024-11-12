@@ -21,9 +21,7 @@ const Navigation = () => {
                             <NavDropdown title="Administrar" id="collapsible-nav-dropdown">
                                 <NavDropdown.Item to="/cines/editar" as={Link}>Editar</NavDropdown.Item>
                                 <NavDropdown.Divider />
-                                <NavDropdown.Item to="/cines/crear" as={Link}>
-                                    Crear
-                                </NavDropdown.Item>
+                                <NavDropdown.Item to="/cines/crear" as={Link}>Crear</NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
                     </Navbar.Collapse>
