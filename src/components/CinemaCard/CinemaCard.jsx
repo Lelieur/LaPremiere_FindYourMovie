@@ -20,6 +20,9 @@ const CinemaCard = ({ id, cover, name, address, specs, url }) => {
     const iconVO = cld.image('VO');
     const iconAccesibility = cld.image('accesibility');
 
+
+    console.log(cld.image('3D'))
+
     const { street, city, zipcode, country } = address
     const { is3D, VO, accesibility } = specs
 

@@ -18,11 +18,14 @@ const HomePage = () => {
                     <Card.Body>
                         <Card.Title className="p-4">LE PREMIERE</Card.Title>
                         <Card.Text className="p-2">
-                            Encuentra tu película favorita, en tu cine favorito
+                            Encuentra tu película favorita, en tu cine favorito.
                         </Card.Text>
+                        <Card.Text>
+                            Buscar por:
+                        </Card.Text>.
                         <ButtonGroup className="p-2" aria-label="Basic example">
-                            <Button to={"/cines"} variant="secondary" as={Link}>Cines</Button>
-                            <Button to={"/peliculas"} variant="secondary" as={Link}>Películas</Button>
+                            <Button to={"/cines"} variant="secondary" as={Link}>Cine</Button>
+                            <Button to={"/peliculas"} variant="secondary" as={Link}>Película</Button>
                         </ButtonGroup>
                     </Card.Body>
                 </Card>
