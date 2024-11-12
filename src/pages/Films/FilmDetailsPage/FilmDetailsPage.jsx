@@ -1,8 +1,8 @@
+import FilmSelectedDetails from "../../../components/FilmSelectedDetails/FilmSelectedDetails"
 const FilmDetailsPage = () => {
     return (
         <div className="FilmDetailsPage">
-            <h1>Detalles de la Pelicula</h1>
-            <hr />
+            <FilmSelectedDetails />
         </div>
     )
 }
