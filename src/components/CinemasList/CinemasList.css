@@ -1,0 +1,6 @@
+.CinemaList {
+    display: flex;
+    overflow-x: auto;
+    justify-content: space-evenly;
+    align-items: center;
+}

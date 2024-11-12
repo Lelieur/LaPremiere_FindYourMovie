@@ -15,7 +15,7 @@ const Navigation = () => {
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="me-auto">
                             <Nav.Link to="/cines" as={Link}>Cines</Nav.Link>
-                            <Nav.Link t0="/peliculas" as={Link}>Películas</Nav.Link>
+                            <Nav.Link to="/peliculas" as={Link}>Películas</Nav.Link>
                         </Nav>
                         <Nav>
                             <NavDropdown title="Administrar" id="collapsible-nav-dropdown">

@@ -1,0 +1,11 @@
+.CinemasPage {
+    text-align: center;
+}
+
+.cinemas-page {
+    margin-top: 30px;
+}
+
+.CinemasPage .return-button {
+    margin: 20px;
+}
