@@ -1,0 +1,30 @@
+.FilmDetailsPage .movie-poster {
+    height: 350px;
+    /* Ajusta la altura de la imagen */
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.FilmDetailsPage .movie-title {
+    font-weight: bold;
+    text-decoration: underline;
+    margin-bottom: 1rem;
+}
+
+.FilmDetailsPage .list-group-flush .list-group-item {
+    border: none;
+    padding-left: 0;
+    /* Elimina sangría a la izquierda */
+}
+
+.FilmDetailsPage .badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    /* Espacio uniforme entre los badges */
+}
+
+.FilmDetailsPage .d-flex .btn-group .btn {
+    margin: 0 0.25rem;
+    /* Espacio horizontal entre los botones */
+}
