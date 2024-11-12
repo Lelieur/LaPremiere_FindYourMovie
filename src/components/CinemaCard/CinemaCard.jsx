@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom"
 
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import Badge from 'react-bootstrap/Badge';
-import Stack from 'react-bootstrap/Stack';
+import { Card, Row, Col, Image } from 'react-bootstrap/';
+
 
 import "./CinemaCard.css"
 
@@ -18,18 +16,29 @@ const CinemaCard = ({ id, cover, name, address, specs, url }) => {
             <Link to={`detalles/${id}`}>
 
                 <Card className="mb-5 pb-2">
-                    <Card.Img variant="top" src={cover[0]} style={{ height: "10rem", objectFit: "cover" }} />
+                    <Card.Img variant="top" src={cover[0]} style={{ height: "15rem", objectFit: "cover" }} />
                     <Card.Body>
                         <Card.Title>{name}</Card.Title>
                         <Card.Text>
                             📍 {country} | {city} | {street}, {zipcode}
                         </Card.Text>
-                        <Stack className="dflex justify-content-center mb-4" direction="horizontal" gap={3}>
-                            <Badge pill bg="primary">Primary</Badge>
-                            <Badge pill bg="secondary">Secondary</Badge>
-                            <Badge pill bg="success">Success</Badge>
-                        </Stack>
-                        <Button variant="primary">Ver películas en cartelera</Button>
+                        <Row>
+                            {is3D && (
+                                <Col md={{ span: 2 }}>
+                                    <Image src={"https://res.cloudinary.com/dhluctrie/image/upload/v1731410923/3D.png"} fluid />
+                                </Col>
+                            )}
+                            {VO && (
+                                <Col md={{ span: 2 }}>
+                                    <Image src={"https://res.cloudinary.com/dhluctrie/image/upload/v1731410923/VO.avif"} fluid />
+                                </Col>
+                            )}
+                            {accesibility && (
+                                <Col md={{ span: 2 }}>
+                                    <Image src={"https://res.cloudinary.com/dhluctrie/image/upload/v1731410923/accesibility.png"} fluid />
+                                </Col>
+                            )}
+                        </Row>
                     </Card.Body>
                 </Card>
 
