@@ -2,14 +2,14 @@ import axios from "axios"
 import { useState, useEffect } from "react"
 
 import CinemaCard from "../CinemaCard/CinemaCard"
+import { Col, Row } from "react-bootstrap"
+
 import "./CinemasList.css"
 
 const API_URL = "http://localhost:5005"
 
 
-
 const CinemasList = () => {
-
 
     const [cinemas, setCinemas] = useState([])
 
@@ -27,13 +27,17 @@ const CinemasList = () => {
     return (
         <div className="CinemaList">
 
-            {
-                cinemas.map(elm => {
-                    return (
-                        <CinemaCard {...elm} key={elm.id} />
-                    )
-                })
-            }
+            <Row>
+                {
+                    cinemas.map(elm => {
+                        return (
+                            <Col md={{ span: 4 }} key={elm.id} >
+                                <CinemaCard {...elm} />
+                            </Col>
+                        )
+                    })
+                }
+            </Row>
 
         </div>
     )
