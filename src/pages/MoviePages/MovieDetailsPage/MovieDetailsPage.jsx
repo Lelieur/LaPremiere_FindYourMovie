@@ -1,7 +1,7 @@
 import { Link, useParams } from "react-router-dom"
 import { useState, useEffect } from "react"
 import axios from "axios"
-import { Col, Container, Row, ButtonGroup, ListGroup, Image, Button, Badge } from "react-bootstrap";
+import { Col, Container, Row, ButtonGroup, ListGroup, Image, Button, Badge, Accordion } from "react-bootstrap";
 import CinemaCard from "../../../components/CinemaCard/CinemaCard"
 
 const API_URL = "http://localhost:5005"
@@ -12,6 +12,9 @@ const MovieDetailsPage = () => {
     const [movie, setMovie] = useState({})
     const [isLoading, setIsLoading] = useState(true)
     const [cinemasInMovie, setCinemasInMovie] = useState([])
+    const handleLinkClick = (event) => {
+        event.preventDefault();
+    }
 
     useEffect(() => {
         fetchMovieDetails()
@@ -79,15 +82,26 @@ const MovieDetailsPage = () => {
                             <ListGroup.Item><strong>Calificación: </strong> {movie.calification ? movie.calification : "No disponible"}</ListGroup.Item>
                             <ListGroup.Item><strong>Fecha:</strong> {movie.date ? new Date(movie.date).toLocaleDateString() : "No disponible"}</ListGroup.Item>
                         </ListGroup>
-
                         <Row className="mt-4">
-                            <h3>Cines Disponibles</h3>
-                            {cinemasInMovie.map(elm => (
-                                <Col md={4} key={elm.id}>
-                                    <CinemaCard {...elm} />
-                                </Col>
-                            ))}
+                            {cinemasInMovie.length > 0 && (
+                                <Accordion>
+                                    <Accordion.Item eventKey="0">
+                                        <Accordion.Header><strong>Cines Disponibles</strong></Accordion.Header>
+                                        <Accordion.Body>
+                                            <ListGroup >
+                                                {cinemasInMovie.map(elm => (
+                                                    <ListGroup.Item key={elm.id} >
+                                                        <Link to={`/cines/detalles/${elm.id}`}>{elm.name}</Link>
+                                                    </ListGroup.Item>
+                                                ))}
+                                            </ListGroup >
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                </Accordion>
+                            )}
+                            {cinemasInMovie.length === 0 && <p>No hay cines disponibles para esta película.</p>}
                         </Row>
+
                         <Row>
 
                             <Col lg={{ span: 8, offset: 2 }}>

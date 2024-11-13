@@ -4,9 +4,9 @@ import HomePage from "../pages/HomePages/HomePages";
 import CinemaDetailsPage from "../pages/CinemaPages/CinemaDetailsPage/CinemaDetailsPage";
 import NewCinemaPage from "../pages/CinemaPages/NewCinemaPage/NewCinemaPage";
 import EditCinemaPage from "../pages/CinemaPages/EditCinemaPage/EditCinemaPage";
-import MoviesPage from "../pages/MoviePages/MoviesPage/MoviesPage"
-import MovieDetailPage from "../pages/MoviePages/MovieDetailsPage/MovieDetailsPage"
-import NewMoviePage from "../pages/MoviePages/NewMoviePage/NewMoviePage"
+import MoviesPage from "../pages/MoviePages/MoviesPage/MoviesPage";
+import MovieDetailPage from "../pages/MoviePages/MovieDetailsPage/MovieDetailsPage";
+import NewMoviePage from "../pages/MoviePages/NewMoviePage/NewMoviePage";
 import EditMoviePage from "../pages/MoviePages/EditMoviePage/EditMoviePage"
 
 const AppRoutes = () => {

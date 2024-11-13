@@ -1,9 +1,9 @@
-const EditFilmPage = () => {
+const EditMoviePage = () => {
     return (
-        <div className="EditFilmPage">
+        <div className="EditMoviePage">
             <h1>Edita la Película</h1>
             <hr />
         </div>
     )
 }
-export default EditFilmPage
+export default EditMoviePage

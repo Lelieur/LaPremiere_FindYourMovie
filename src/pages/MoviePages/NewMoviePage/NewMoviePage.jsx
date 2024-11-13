@@ -1,9 +1,13 @@
-const NewFilmPage = () => {
+import NewMovieForm from "../../../components/NewMovieForm/NewMovieForm"
+
+const NewMoviePage = () => {
     return (
-        <div className="NewFilmPage">
+        <div className="NewMoviePage">
             <h1>Añade una Película</h1>
             <hr />
+            <NewMovieForm />
+
         </div>
     )
 }
-export default NewFilmPage
+export default NewMoviePage
