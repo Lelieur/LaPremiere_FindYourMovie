@@ -1,6 +1,4 @@
-import ListGroup from 'react-bootstrap/ListGroup';
-
-import { Link } from 'react-router-dom';
+import { Row, Col, Button, Card } from 'react-bootstrap';
 
 import "./Footer.css"
 
@@ -8,25 +6,23 @@ const Footer = () => {
     return (
         <div className="Footer">
 
-            <hr />
-
-            <div className="list-groups">
-
-                <ListGroup className='individual-list-group' variant="flush">
-                    <ListGroup.Item className="item" to="#" as={Link}>Aviso Legal</ListGroup.Item>
-                    <ListGroup.Item className="item" to="#" as={Link}>Política de Privacidad</ListGroup.Item>
-                    <ListGroup.Item className="item" to="#" as={Link}>Política de cookies</ListGroup.Item>
-                    <ListGroup.Item className="item" to="#" as={Link}>Sobre Nosotros</ListGroup.Item>
-                </ListGroup>
-
-                <ListGroup className='individual-list-group' variant="flush">
-                    <ListGroup.Item className="item" to="#" as={Link}>Administrar</ListGroup.Item>
-                    <ListGroup.Item className="item" to="/cines" as={Link}>Cines</ListGroup.Item>
-                    <ListGroup.Item className="item" to="/peliculas" as={Link}>Películas</ListGroup.Item>
-                </ListGroup>
-
-            </div>
-
+            <Card className="mt-5 rounded-0 text-center" bg="dark" text="light" border="none">
+                <Card.Body className='p-4'>
+                    <Card.Title>LE PREMIERE</Card.Title>
+                    <Card.Text>Copyright © 2024 Le Premiere. Built by Aaron & Lucas.</Card.Text>
+                </Card.Body>
+                <Row className="p-3">
+                    <Col md={{ span: 4 }}>
+                        <Button className="bg-transparent border-0 text-white" variant="light" as="a" href="#">Aviso Legal</Button>
+                    </Col>
+                    <Col md={{ span: 4 }}>
+                        <Button className="bg-transparent border-0 text-white" variant="light">Política de Privacidad</Button>
+                    </Col>
+                    <Col md={{ span: 4 }}>
+                        <Button className="bg-transparent border-0 text-white" variant="light">Política de Cookies</Button>
+                    </Col>
+                </Row>
+            </Card>
 
         </div>
     )

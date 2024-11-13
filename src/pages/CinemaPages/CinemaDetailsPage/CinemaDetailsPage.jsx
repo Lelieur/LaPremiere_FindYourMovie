@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 
 import axios from 'axios'
-import { Container, Image, Row, Col, Carousel, Stack, Badge, Button, ButtonGroup } from 'react-bootstrap'
+import { Container, Image, Row, Col, Carousel, Stack, Badge, Button, ButtonGroup, Card } from 'react-bootstrap'
 
 import "./CinemaDetailsPage.css"
 
@@ -15,9 +15,12 @@ const CinemaDetailsPage = () => {
     const [cinema, setCinema] = useState({})
     const [isLoading, setIsLoading] = useState(true)
 
+    const [moviesInCinema, setMoviesInCinema] = useState([])
+
 
     useEffect(() => {
         fetchCinemaDetails()
+        fetchMoviesInCinema()
     }, [])
 
     const fetchCinemaDetails = () => {
@@ -29,6 +32,28 @@ const CinemaDetailsPage = () => {
             })
             .catch(err => console.log(err))
     }
+
+
+    const fetchMoviesInCinema = () => {
+
+        axios
+            .get(`${API_URL}/movies/`)
+            .then(response => {
+
+                const allMovies = response.data
+
+                const filteredMovies = allMovies.filter(eachMovie =>
+                    Array.isArray(eachMovie.cinemaId) ?
+                        eachMovie.cinemaId.includes(Number(cinemaId))
+                        : eachMovie.cinemaId === Number(cinemaId)
+                )
+
+                setMoviesInCinema(filteredMovies)
+            })
+            .catch(err => console.log(err))
+    }
+
+    console.log(moviesInCinema)
 
     return (
         isLoading ? <h1>CARGANDO</h1> :
@@ -99,6 +124,25 @@ const CinemaDetailsPage = () => {
                             </Col>
                         </Row>
 
+                    </Container>
+
+                    <Container className="mt-4">
+                        <h3>PELÍCULAS EN CARTELERA</h3>
+                        <hr />
+                        <Row className="flex-nowrap" style={{ overflowX: "auto" }}>
+                            {
+                                moviesInCinema.map(elm => {
+                                    return (
+                                        <Col md={{ span: 2 }} key={elm.id}>
+                                            <Card >
+                                                <Card.Img variant="top" src={elm.poster} />
+                                                <Button className="rounded-0 rounded-bottom" variant="dark">Comprar entradas</Button>
+                                            </Card>
+                                        </Col>
+                                    )
+                                })
+                            }
+                        </Row>
                     </Container>
 
                 </div >
