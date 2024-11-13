@@ -1,7 +1,11 @@
+import NewCinemaForm from "../../../components/NewCinemaForm/NewCinemaForm"
+
 const NewCinemaPage = () => {
     return (
         <div className="NewCinemaPage">
-            <h1>Crea un cine</h1>
+
+            <NewCinemaForm />
+
         </div>
     )
 }
