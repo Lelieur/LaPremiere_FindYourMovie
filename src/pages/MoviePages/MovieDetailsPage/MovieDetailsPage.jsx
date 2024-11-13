@@ -2,26 +2,45 @@ import { Link, useParams } from "react-router-dom"
 import { useState, useEffect } from "react"
 import axios from "axios"
 import { Col, Container, Row, ButtonGroup, ListGroup, Image, Button, Badge } from "react-bootstrap";
+import CinemaCard from "../../../components/CinemaCard/CinemaCard"
 
 const API_URL = "http://localhost:5005"
 
-const FilmDetailsPage = () => {
-
+const MovieDetailsPage = () => {
+    const badgeColors = ["primary", "secondary", "success", "danger", "warning", "info", "dark"];
     const { movieId } = useParams()
     const [movie, setMovie] = useState({})
-    const badgeColors = ["primary", "secondary", "success", "danger", "warning", "info", "dark"];
+    const [isLoading, setIsLoading] = useState(true)
+    const [cinemasInMovie, setCinemasInMovie] = useState([])
+
     useEffect(() => {
-        fetchFilmDetails()
+        fetchMovieDetails()
+        fetchCinemaInMovie()
     }, [])
 
-    const fetchFilmDetails = () => {
+    const fetchMovieDetails = () => {
         axios
             .get(`${API_URL}/movies/${movieId}`)
             .then(response => setMovie(response.data))
             .catch(err => console.log(err))
     }
+    const fetchCinemaInMovie = () => {
+        axios
+            .get(`${API_URL}/cinemas/`)
+            .then(response => {
+                const allCinemas = response.data
+                const filteredCinemas = allCinemas.filter(eachCinema =>
+                    Array.isArray(eachCinema.movieId) ?
+                        eachCinema.movieId.includes(Number(movieId))
+                        : eachCinema.movieId = Number(movieId)
+                )
+                setCinemasInMovie(filteredCinemas)
+            })
+            .catch(err => console.log(err))
+    }
+
     return (
-        <div className="FilmDetailsPage">
+        <div className="MovieDetailsPage">
             <Container>
 
                 <Row>
@@ -58,9 +77,17 @@ const FilmDetailsPage = () => {
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item><strong>Calificación: </strong> {movie.calification ? movie.calification : "No disponible"}</ListGroup.Item>
-                            <ListGroup.Item><strong>Fecha:</strong> {movie.date ? movie.date : "No disponible"}</ListGroup.Item>
+                            <ListGroup.Item><strong>Fecha:</strong> {movie.date ? new Date(movie.date).toLocaleDateString() : "No disponible"}</ListGroup.Item>
                         </ListGroup>
 
+                        <Row className="mt-4">
+                            <h3>Cines Disponibles</h3>
+                            {cinemasInMovie.map(elm => (
+                                <Col md={4} key={elm.id}>
+                                    <CinemaCard {...elm} />
+                                </Col>
+                            ))}
+                        </Row>
                         <Row>
 
                             <Col lg={{ span: 8, offset: 2 }}>
@@ -86,8 +113,8 @@ const FilmDetailsPage = () => {
 
                 </Row>
 
-            </Container>
+            </Container >
         </div >
     )
 }
-export default FilmDetailsPage
+export default MovieDetailsPage
