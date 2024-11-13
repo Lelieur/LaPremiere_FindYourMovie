@@ -136,7 +136,15 @@ const CinemaDetailsPage = () => {
                                         <Col md={{ span: 2 }} key={elm.id}>
                                             <Card >
                                                 <Card.Img variant="top" src={elm.poster} />
-                                                <Button className="rounded-0 rounded-bottom" variant="dark">Comprar entradas</Button>
+
+                                                {
+                                                    elm.released ?
+                                                        <Button className="rounded-0 rounded-bottom" variant="dark">Comprar entradas</Button>
+                                                        :
+                                                        <Button className="rounded-0 rounded-bottom" variant="success">Próximamente</Button>
+
+                                                }
+
                                             </Card>
                                         </Col>
                                     )
