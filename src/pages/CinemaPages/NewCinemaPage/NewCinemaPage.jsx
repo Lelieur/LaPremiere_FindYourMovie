@@ -1,10 +1,10 @@
-import NewCineForm from "../../../components/NewCineForm/NewCineForm"
+import NewCinemaForm from "../../../components/NewCinemaForm/NewCinemaForm"
 
 const NewCinemaPage = () => {
     return (
         <div className="NewCinemaPage">
 
-            <NewCineForm />
+            <NewCinemaForm />
 
         </div>
     )
