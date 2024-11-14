@@ -1,4 +1,4 @@
-import NewCinemaForm from "../../../components/NewCinemaForm/NewCinemaForm"
+import NewCinemaForm from "../../../components/NewCineForm/NewCineForm"
 
 const NewCinemaPage = () => {
     return (

@@ -10,9 +10,7 @@ const MovieCard = ({ id, title, country, duration, language, calification, poste
             <Card style={{ width: '18rem' }}>
                 <Card.Img variant="top" src={poster} />
                 <Card.Body>
-                    <Card.Title>
-                        <h1>{title?.original || title || "Sin título"}</h1>
-                    </Card.Title>
+                    <Card.Title>{title.spanish ? title.spanish : "No tiene título"}</Card.Title>
                     <ListGroup variant="flush">
                         <ListGroup.Item><strong>Country:</strong> {country}</ListGroup.Item>
                         <ListGroup.Item><strong>Language:</strong> {language}</ListGroup.Item>
