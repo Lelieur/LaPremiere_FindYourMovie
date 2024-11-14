@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom"
 import { useState, useEffect } from "react"
 import axios from "axios"
 import { Col, Container, Row, ButtonGroup, ListGroup, Image, Button, Badge, Accordion } from "react-bootstrap";
-import CinemaCard from "../../../components/CinemaCard/CinemaCard"
+
 
 const API_URL = "http://localhost:5005"
 
@@ -12,9 +12,7 @@ const MovieDetailsPage = () => {
     const [movie, setMovie] = useState({})
     const [isLoading, setIsLoading] = useState(true)
     const [cinemasInMovie, setCinemasInMovie] = useState([])
-    const handleLinkClick = (event) => {
-        event.preventDefault();
-    }
+
 
     useEffect(() => {
         fetchMovieDetails()
@@ -24,7 +22,10 @@ const MovieDetailsPage = () => {
     const fetchMovieDetails = () => {
         axios
             .get(`${API_URL}/movies/${movieId}`)
-            .then(response => setMovie(response.data))
+            .then(response => {
+                setMovie(response.data)
+                setIsLoading(false)
+            })
             .catch(err => console.log(err))
     }
     const fetchCinemaInMovie = () => {
@@ -32,103 +33,106 @@ const MovieDetailsPage = () => {
             .get(`${API_URL}/cinemas/`)
             .then(response => {
                 const allCinemas = response.data
+                console.log(allCinemas)
                 const filteredCinemas = allCinemas.filter(eachCinema =>
                     Array.isArray(eachCinema.movieId) ?
                         eachCinema.movieId.includes(Number(movieId))
-                        : eachCinema.movieId = Number(movieId)
+                        : eachCinema.movieId === Number(movieId)
                 )
                 setCinemasInMovie(filteredCinemas)
             })
             .catch(err => console.log(err))
     }
 
+
+
     return (
-        <div className="MovieDetailsPage">
-            <Container>
 
-                <Row>
+        isLoading ? <h1>Cargando </h1> :
+            <div className="MovieDetailsPage">
+                <Container>
 
-                    <Col md={{ md: 3 }}>
-                        <Image
-                            src={movie.poster || "default-image.jpg"}
-                            alt={movie.title || "Película"}
-                            fluid
-                            className="mb-4 mt-4"
-                        />
-                    </Col>
+                    <Row>
 
-                    <Col md={{ md: 4, offset: 1 }}>
+                        <Col md={{ md: 3 }}>
+                            <Image
+                                src={movie.poster || "default-image.jpg"}
+                                alt={movie.title || "Película"}
+                                fluid
+                                className="mb-4 mt-4"
+                            />
+                        </Col>
 
-                        <h1>{movie.title?.original || movie.title || "Sin título"}</h1>
-                        <p><strong>Sinopsis:</strong> {movie.description ? movie.description : "Sin descripción disponible."}</p>
+                        <Col md={{ md: 4, offset: 1 }}>
 
-                        <ListGroup className="list-group-flush">
-                            <ListGroup.Item><strong>País: </strong>{movie.country ? movie.country : "No disponible"}</ListGroup.Item>
-                            <ListGroup.Item><strong>Lengua:</strong> {movie.language ? movie.language : "No disponible"}</ListGroup.Item>
-                            <ListGroup.Item><strong>Duración: </strong> {movie.duration ? movie.duration : "No disponible"} min </ListGroup.Item>
-                            <ListGroup.Item><strong>Género:</strong>
-                                <Row className="mt-2">
-                                    {movie.gender && movie.gender.length > 0 ? (
-                                        movie.gender.map((gen, index) => (
-                                            <Col key={index} xs="auto" className="mb-2">
-                                                <Badge bg={badgeColors[index % badgeColors.length]}>{gen}</Badge>
-                                            </Col>
-                                        ))
-                                    ) : (
-                                        <span>No disponible</span>
-                                    )}
-                                </Row>
-                            </ListGroup.Item>
-                            <ListGroup.Item><strong>Calificación: </strong> {movie.calification ? movie.calification : "No disponible"}</ListGroup.Item>
-                            <ListGroup.Item><strong>Fecha:</strong> {movie.date ? new Date(movie.date).toLocaleDateString() : "No disponible"}</ListGroup.Item>
-                        </ListGroup>
-                        <Row className="mt-4">
-                            {cinemasInMovie.length > 0 && (
-                                <Accordion>
-                                    <Accordion.Item eventKey="0">
-                                        <Accordion.Header><strong>Cines Disponibles</strong></Accordion.Header>
-                                        <Accordion.Body>
-                                            <ListGroup >
-                                                {cinemasInMovie.map(elm => (
+                            <h1>{movie.title?.original || movie.title || "Sin título"}</h1>
+                            <p><strong>Sinopsis:</strong> {movie.description ? movie.description : "Sin descripción disponible."}</p>
+
+                            <ListGroup className="list-group-flush">
+                                <ListGroup.Item><strong>País: </strong>{movie.country ? movie.country : "No disponible"}</ListGroup.Item>
+                                <ListGroup.Item><strong>Lengua:</strong> {movie.language ? movie.language : "No disponible"}</ListGroup.Item>
+                                <ListGroup.Item><strong>Duración: </strong> {movie.duration ? movie.duration : "No disponible"} min </ListGroup.Item>
+                                <ListGroup.Item><strong>Género:</strong>
+                                    <Row className="mt-2">
+                                        {movie.gender && movie.gender.length > 0 ? (
+                                            movie.gender.map((gen, index) => (
+                                                <Col key={index} xs="auto" className="mb-2">
+                                                    <Badge bg={badgeColors[index % badgeColors.length]}>{gen}</Badge>
+                                                </Col>
+                                            ))
+                                        ) : (
+                                            <span>No disponible</span>
+                                        )}
+                                    </Row>
+                                </ListGroup.Item>
+                                <ListGroup.Item><strong>Calificación: </strong> {movie.calification ? movie.calification : "No disponible"}</ListGroup.Item>
+                                <ListGroup.Item><strong>Fecha:</strong> {movie.date ? new Date(movie.date).toLocaleDateString() : "No disponible"}</ListGroup.Item>
+                            </ListGroup>
+
+                            <Accordion>
+                                <Accordion.Item eventKey="0">
+                                    <Accordion.Header><strong>Cines Disponibles</strong></Accordion.Header>
+                                    <Accordion.Body>
+                                        <ListGroup >
+                                            {cinemasInMovie.map((elm) => {
+                                                return (
                                                     <ListGroup.Item key={elm.id} >
                                                         <Link to={`/cines/detalles/${elm.id}`}>{elm.name}</Link>
                                                     </ListGroup.Item>
-                                                ))}
-                                            </ListGroup >
-                                        </Accordion.Body>
-                                    </Accordion.Item>
-                                </Accordion>
-                            )}
-                            {cinemasInMovie.length === 0 && <p>No hay cines disponibles para esta película.</p>}
-                        </Row>
+                                                )
+                                            })}
+                                        </ListGroup >
+                                    </Accordion.Body>
+                                </Accordion.Item>
+                            </Accordion>
 
-                        <Row>
+                            <Row>
 
-                            <Col lg={{ span: 8, offset: 2 }}>
+                                <Col lg={{ span: 8, offset: 2 }}>
 
-                                <div className="d-grid">
+                                    <div className="d-grid">
 
-                                    <ButtonGroup size="lg" className="mb-2 mt-5">
+                                        <ButtonGroup size="lg" className="mb-2 mt-5">
 
-                                        <Button href={movie.trailer} variant="secondary" as="a">
-                                            Ver Trailer
-                                        </Button>
-                                        <Button variant="secondary" as={Link} to={'/peliculas'}>
-                                            Volver a la lista
-                                        </Button>
+                                            <Button href={movie.trailer} variant="secondary" as="a">
+                                                Ver Trailer
+                                            </Button>
+                                            <Button variant="secondary" as={Link} to={'/peliculas'}>
+                                                Volver a la lista
+                                            </Button>
 
-                                    </ButtonGroup>
+                                        </ButtonGroup>
 
-                                </div>
-                            </Col>
-                        </Row>
+                                    </div>
+                                </Col>
+                            </Row>
 
-                    </Col>
+                        </Col>
 
-                </Row>
+                    </Row>
 
-            </Container >
-        </div >
+                </Container >
+            </div >
     )
 }
 export default MovieDetailsPage
