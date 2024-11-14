@@ -3,21 +3,26 @@ import { Button, Form, Row, Col } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 
 import axios from 'axios';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const API_URL = "http://localhost:5005"
 
-const NewCineForm = () => {
+const EditCinemaForm = () => {
+
+    const { cinemaId } = useParams()
+    const navigate = useNavigate()
 
     const [isLoading, setIsLoading] = useState(true)
 
     const [movies, setMovies] = useState([])
     useEffect(() => {
+        fetchCinemaData()
         fetchMovies()
     }, [])
 
     const fetchMovies = () => {
         axios
-            .get(`${API_URL}/movies`)
+            .get(`${API_URL}/movies/`)
             .then(response => {
                 setMovies(response.data)
                 setIsLoading(false)
@@ -27,9 +32,10 @@ const NewCineForm = () => {
 
     const [cinemaData, setCinemaData] = useState({
         name: '',
-        cover: '',
+        cover: [''],
         url: '',
-        services: ['']
+        services: [''],
+        movieId: ['']
     })
 
     const [address, setAddress] = useState({
@@ -56,6 +62,20 @@ const NewCineForm = () => {
         seating: 0
     })
 
+    const fetchCinemaData = () => {
+        axios
+            .get(`${API_URL}/cinemas/${cinemaId}`)
+            .then(response => {
+                const { data: cinemaData } = response
+
+                setCinemaData(cinemaData)
+                setAddress(cinemaData.address)
+                setPrice(cinemaData.price)
+                setSpecs(cinemaData.specs)
+                setCapacity(cinemaData.capacity)
+            })
+    }
+
 
     const handleCinemaDataChange = e => {
         const { name, value } = e.target
@@ -65,6 +85,84 @@ const NewCineForm = () => {
         }
         )
     }
+
+    const handleCoversChange = (e, idx) => {
+
+        const { value } = e.target
+
+        const coversCopy = [...cinemaData.cover]
+
+        coversCopy[idx] = value
+
+        setCinemaData({
+            ...cinemaData, cover: coversCopy
+        })
+    }
+
+
+    const addNewCinemaCover = () => {
+        const coversCopy = [...cinemaData.cover]
+        coversCopy.push('')
+        setCinemaData({ ...cinemaData, cover: coversCopy })
+    }
+
+    const deleteNewCinemaCover = () => {
+        const coversCopy = [...cinemaData.cover]
+        coversCopy.pop('')
+        setCinemaData({ ...cinemaData, cover: coversCopy })
+    }
+
+    const handleServicesChange = (e, idx) => {
+
+        const { value } = e.target
+
+        const servicesCopy = [...cinemaData.services]
+
+        servicesCopy[idx] = value
+
+        setCinemaData({
+            ...cinemaData, services: servicesCopy
+        })
+    }
+
+    const addNewService = () => {
+        const servicesCopy = [...cinemaData.services]
+        servicesCopy.push('')
+        setCinemaData({ ...cinemaData, services: servicesCopy })
+    }
+
+    const deletNewService = () => {
+        const servicesCopy = [...cinemaData.services]
+        servicesCopy.pop('')
+        setCinemaData({ ...cinemaData, services: servicesCopy })
+    }
+
+    const handleMovieIdChange = (e, idx) => {
+
+        const { value } = e.target
+
+        const moviesIdsCopy = [...cinemaData.movieId]
+
+        moviesIdsCopy[idx] = value
+
+        setCinemaData({
+            ...cinemaData, movieId: moviesIdsCopy
+        })
+    }
+
+    const addNewMovieId = () => {
+        const moviesIdsCopy = [...cinemaData.movieId]
+        moviesIdsCopy.push('')
+        setCinemaData({ ...cinemaData, movieId: moviesIdsCopy })
+    }
+
+    const deletNewMovieId = () => {
+        const moviesIdsCopy = [...cinemaData.movieId]
+        moviesIdsCopy.pop('')
+        setCinemaData({ ...cinemaData, movieId: moviesIdsCopy })
+    }
+
+
 
     const handleAddresChange = e => {
         const { name, value } = e.target
@@ -101,6 +199,7 @@ const NewCineForm = () => {
     const handleFormSubmit = e => {
 
         e.preventDefault()
+
         const reqPayload = {
             ...cinemaData,
             address: address,
@@ -108,6 +207,11 @@ const NewCineForm = () => {
             specs: specs,
             capacity: capacity
         }
+
+        axios
+            .put(`${API_URL}/cinemas/${cinemaId}`, reqPayload)
+            .then(() => navigate(`/cines/detalles/${cinemaId}`))
+            .catch(err => console.log(err))
     }
 
     return (
@@ -125,10 +229,30 @@ const NewCineForm = () => {
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="coverField">
-                                <Form.Label className="fw-bold">Foto de portada</Form.Label>
-                                <Form.Control type="text" value={cinemaData.cover} name={'cover'} onChange={handleCinemaDataChange} />
-                            </Form.Group>
+                                <Form.Label className="fw-bold">Añadir fotos (URL)</Form.Label>
 
+                                <div>
+                                    {
+                                        cinemaData.cover.map((eachCover, idx) => {
+                                            return (
+                                                <Form.Control
+                                                    key={idx}
+                                                    className="mb-2"
+                                                    name={'cover'}
+                                                    type="text"
+                                                    onChange={e => handleCoversChange(e, idx)}
+                                                    value={eachCover}>
+                                                </Form.Control>
+                                            )
+                                        })
+
+                                    }
+                                </div>
+
+                                <Button className="me-2" size="sm" variant="dark" onClick={addNewCinemaCover}>Añadir foto</Button>
+                                <Button className="me-2" size="sm" variant="dark" onClick={deleteNewCinemaCover}>Quitar foto</Button>
+
+                            </Form.Group>
 
                             <Row className="mt-4 mb-4">
                                 <Form.Label className="fw-bold">Dirección</Form.Label>
@@ -185,7 +309,6 @@ const NewCineForm = () => {
                                 </Col>
                             </Row>
 
-                            {/* <Form.Label as="legend" column sm={2}>Servicios</Form.Label> */}
                             <Row>
                                 <Form.Label className="fw-bold">Especificaciones</Form.Label>
                                 <Col>
@@ -245,24 +368,72 @@ const NewCineForm = () => {
 
                             <Form.Group className="mb-3" controlId="servicesField">
                                 <Form.Label className="fw-bold">Servicios</Form.Label>
-                                <Form.Control type="text" />
+
+                                <div>
+                                    {
+                                        cinemaData.services.map((eachService, idx) => {
+                                            return (
+                                                <Form.Control
+                                                    key={idx}
+                                                    as="select"
+                                                    className="mb-2"
+                                                    type="text"
+                                                    onChange={e => handleServicesChange(e, idx)}
+                                                    value={eachService}>
+
+                                                    <option>Selecciona un servicio</option>
+                                                    <option>Parking</option>
+                                                    <option>Food & Drinks</option>
+                                                    <option>Toilettes</option>
+
+                                                </Form.Control>
+                                            )
+                                        })
+
+                                    }
+
+                                </div>
+
+                                <Button className="me-2" size="sm" variant="dark" onClick={addNewService}>Añadir servicio</Button>
+                                <Button className="me-2" size="sm" variant="dark" onClick={deletNewService}>Quitar servicio</Button>
+
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="moviesField">
                                 <Form.Label className="fw-bold">Películas en cartelera</Form.Label>
-                                <Form.Select multiple value="arrayOf">
+
+                                <div>
                                     {
-                                        movies.map(elm => {
+                                        cinemaData.movieId.map((eachMovieId, idx) => {
                                             return (
-                                                <option key={elm.id} value={elm.id}>{elm.title.spanish}</option>
+                                                <Form.Select
+                                                    disabled
+                                                    key={idx}
+                                                    className='mb-2'
+                                                    type="text"
+                                                    onChange={e => handleMovieIdChange(e, idx)}
+                                                    value={eachMovieId}>
+                                                    <option>Selecciona una película</option>
+                                                    {
+                                                        movies.map(elm => {
+                                                            return (
+                                                                <option key={elm.id} value={elm.id}>{elm.title.spanish}</option>
+                                                            )
+                                                        })
+                                                    }
+                                                </Form.Select>
                                             )
                                         })
                                     }
-                                </Form.Select>
+                                </div>
+
+                                <Button disabled className="me-2" size="sm" variant="dark" onClick={addNewMovieId}>Añadir película</Button>
+                                <Button disabled className="me-2" size="sm" variant="dark" onClick={deletNewMovieId}>Quitar película</Button>
+
                             </Form.Group>
 
                             <div className="d-grid mt-5">
-                                <Button variant="dark" type="submit">Crear nuevo cine</Button>
+                                <Button variant="dark" type="submit">Editar cine</Button>
                             </div>
 
                         </Form>
@@ -274,4 +445,4 @@ const NewCineForm = () => {
     )
 }
 
-export default NewCineForm
+export default EditCinemaForm

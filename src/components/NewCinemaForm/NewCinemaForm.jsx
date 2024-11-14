@@ -6,7 +6,7 @@ import axios from 'axios';
 
 const API_URL = "http://localhost:5005"
 
-const NewCineForm = () => {
+const NewCinemaForm = () => {
 
     const [isLoading, setIsLoading] = useState(true)
 
@@ -192,13 +192,13 @@ const NewCineForm = () => {
         axios
             .post(`${API_URL}/cinemas`, reqPayload)
             .then((response) => {
-                const newCinema = response.data
+                const { data: newCinema } = response
 
                 axios
                     .get(`${API_URL}/movies/`)
                     .then(response => {
 
-                        const allMovies = response.data
+                        const { data: allMovies } = response
 
                         const filteredMovies = allMovies.filter(eachMovie => {
                             return (newCinema.movieId.includes(eachMovie.id.toString()))
@@ -224,6 +224,7 @@ const NewCineForm = () => {
 
                             axios
                                 .put(`${API_URL}/movies/${eachMovie.id}`, copyMovieToEdit)
+                                .then(() => { })
                                 .catch(err => console.lopg(err))
                         })
                     })
@@ -232,9 +233,6 @@ const NewCineForm = () => {
                 alert('HECHO!')
             })
             .catch(err => console.log(err))
-
-
-
     }
 
     return (
@@ -276,7 +274,6 @@ const NewCineForm = () => {
                                 <Button className="me-2" size="sm" variant="dark" onClick={deleteNewCinemaCover}>Quitar foto</Button>
 
                             </Form.Group>
-
 
                             <Row className="mt-4 mb-4">
                                 <Form.Label className="fw-bold">Dirección</Form.Label>
@@ -333,7 +330,6 @@ const NewCineForm = () => {
                                 </Col>
                             </Row>
 
-                            {/* <Form.Label as="legend" column sm={2}>Servicios</Form.Label> */}
                             <Row>
                                 <Form.Label className="fw-bold">Especificaciones</Form.Label>
                                 <Col>
@@ -469,4 +465,4 @@ const NewCineForm = () => {
     )
 }
 
-export default NewCineForm
+export default NewCinemaForm

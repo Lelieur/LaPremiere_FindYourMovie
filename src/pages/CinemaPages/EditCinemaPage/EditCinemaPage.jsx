@@ -1,7 +1,11 @@
+import EditCinemaForm from "../../../components/EditCinemaForm/EditCinemaForm"
+
 const EditCinemaPage = () => {
     return (
         <div className="EditCinemaPage">
-            <h1>Edítame</h1>
+
+            <EditCinemaForm />
+
         </div>
     )
 }

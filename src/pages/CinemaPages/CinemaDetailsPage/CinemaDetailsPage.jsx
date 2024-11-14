@@ -1,3 +1,5 @@
+import * as IMAGE_PATHS from '../../../consts/image-paths'
+
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 
@@ -38,7 +40,7 @@ const CinemaDetailsPage = () => {
             .get(`${API_URL}/movies/`)
             .then(response => {
 
-                const allMovies = response.data
+                const { data: allMovies } = response
 
                 const filteredMovies = allMovies.filter(eachMovie =>
                     Array.isArray(eachMovie.cinemaId) ?
@@ -75,15 +77,15 @@ const CinemaDetailsPage = () => {
                             <Col md={{ span: 7 }}>
                                 <h1>{cinema.name}</h1>
                                 <hr />
-                                <p><span className="titulos-destacados">Dirección: </span>{cinema.address.street}, {cinema.address.zipcode} ({cinema.address.city})</p>
-                                <p><span className="titulos-destacados">Precio: </span>
+                                <p><span className="form-section-title">Dirección: </span>{cinema.address.street}, {cinema.address.zipcode} ({cinema.address.city})</p>
+                                <p><span className="form-section-title">Precio: </span>
                                     <Stack direction="horizontal" gap={2} style={{ display: 'inline-flex' }}>
                                         <Badge bg="dark">Nomal: {cinema.price.regular}€</Badge>
                                         <Badge bg="secondary">Fin de semana: {cinema.price.weekend}€</Badge>
                                         <Badge bg="success">Miércoles: {cinema.price.special}€</Badge>
                                     </Stack>
                                 </p>
-                                <p><span className="titulos-destacados">Servicios: </span>
+                                <p><span className="form-section-title">Servicios: </span>
                                     <Stack direction="horizontal" gap={2} style={{ display: 'inline-flex' }}>
                                         {
                                             cinema.services.map(elm => {
@@ -94,27 +96,28 @@ const CinemaDetailsPage = () => {
                                         }
                                     </Stack>
                                 </p>
-                                <p><span className="titulos-destacados">Specs: </span>
+                                <p><span className="form-section-title">Specs: </span>
                                     <Row style={{ display: 'inline-flex' }}>
                                         {cinema.specs.is3D && (
                                             <Col md={{ span: 1 }}>
-                                                <Image src={"https://res.cloudinary.com/dhluctrie/image/upload/v1731410923/3D.png"} fluid />
+                                                <Image src={IMAGE_PATHS.is3DFavicon} fluid />
                                             </Col>
                                         )}
                                         {cinema.specs.VO && (
                                             <Col md={{ span: 1 }}>
-                                                <Image src={"https://res.cloudinary.com/dhluctrie/image/upload/v1731410923/VO.avif"} fluid />
+                                                <Image src={IMAGE_PATHS.specsFavicon} fluid />
                                             </Col>
                                         )}
                                         {cinema.specs.accesibility && (
                                             <Col md={{ span: 1 }}>
-                                                <Image src={"https://res.cloudinary.com/dhluctrie/image/upload/v1731410923/accesibility.png"} fluid />
+                                                <Image src={IMAGE_PATHS.accesibilityFavicon} fluid />
                                             </Col>
                                         )}
                                     </Row>
                                     <ButtonGroup className="mt-4" aria-label="Basic example">
                                         <Button variant="dark" as="a" href={cinema.url} target="_blank">Comprar entradas</Button>
                                         <Button variant="secondary" as={Link} to="/cines">Ver otro cine</Button>
+                                        <Button className="ms-4" variant="success" as={Link} to={`/cines/editar/${cinemaId}`}>Editar cine</Button>
                                     </ButtonGroup>
                                 </p>
                             </Col>

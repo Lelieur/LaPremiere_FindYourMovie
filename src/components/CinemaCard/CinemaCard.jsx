@@ -1,3 +1,5 @@
+import * as IMAGE_PATHS from '../../consts/image-paths'
+
 import { Link } from "react-router-dom"
 
 import { Card, Row, Col, Image } from 'react-bootstrap/';
@@ -25,17 +27,17 @@ const CinemaCard = ({ id, cover, name, address, specs, url }) => {
                         <Row>
                             {is3D && (
                                 <Col md={{ span: 2 }}>
-                                    <Image src={"https://res.cloudinary.com/dhluctrie/image/upload/v1731410923/3D.png"} fluid />
+                                    <Image src={IMAGE_PATHS.is3DFavicon} fluid />
                                 </Col>
                             )}
                             {VO && (
                                 <Col md={{ span: 2 }}>
-                                    <Image src={"https://res.cloudinary.com/dhluctrie/image/upload/v1731410923/VO.avif"} fluid />
+                                    <Image src={IMAGE_PATHS.specsFavicon} fluid />
                                 </Col>
                             )}
                             {accesibility && (
                                 <Col md={{ span: 2 }}>
-                                    <Image src={"https://res.cloudinary.com/dhluctrie/image/upload/v1731410923/accesibility.png"} fluid />
+                                    <Image src={IMAGE_PATHS.accesibilityFavicon} fluid />
                                 </Col>
                             )}
                         </Row>
