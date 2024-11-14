@@ -5,11 +5,14 @@ import MoviesList from "../../../components/MoviesList/MoviesList"
 const FilmsPage = () => {
     return (
         <div className="FilmsPage">
-            <h1>Peliculas</h1>
-            <hr />
+
             <MoviesList />
+
             <hr />
-            <Button variant="dark" as={Link} to={'/'}>Volver a la Home</Button>
+
+            <div className="d-flex justify-content-center">
+                <Button variant="dark" as={Link} to={'/'}>Volver a la Home</Button>
+            </div>
         </div>
     )
 }

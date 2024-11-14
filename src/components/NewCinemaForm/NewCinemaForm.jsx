@@ -3,6 +3,7 @@ import { Button, Form, Row, Col } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 
 import axios from 'axios';
+import Loader from '../Loader/Loader';
 
 const API_URL = "http://localhost:5005"
 
@@ -239,7 +240,7 @@ const NewCineForm = () => {
 
     return (
 
-        isLoading ? <h1>CARGANDO</h1> :
+        isLoading ? <Loader /> :
 
             <div className="NewCineForm mt-5">
 

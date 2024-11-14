@@ -5,6 +5,7 @@ import axios from 'axios'
 import { Container, Image, Row, Col, Carousel, Stack, Badge, Button, ButtonGroup, Card } from 'react-bootstrap'
 
 import "./CinemaDetailsPage.css"
+import Loader from '../../../components/Loader/Loader'
 
 const API_URL = "http://localhost:5005"
 
@@ -38,7 +39,7 @@ const CinemaDetailsPage = () => {
             .get(`${API_URL}/movies/`)
             .then(response => {
 
-                const allMovies = response.data
+                const { data: allMovies } = response
 
                 const filteredMovies = allMovies.filter(eachMovie =>
                     Array.isArray(eachMovie.cinemaId) ?
@@ -52,7 +53,7 @@ const CinemaDetailsPage = () => {
     }
 
     return (
-        isLoading ? <h1>CARGANDO</h1> :
+        isLoading ? <Loader /> :
             (
                 <div className="CinemaDetailsPage">
 

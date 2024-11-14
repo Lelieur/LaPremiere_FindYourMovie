@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Row, Col, Form, Button, Spinner } from "react-bootstrap"
-
+import Loader from "../Loader/Loader"
 import axios from "axios"
 
 const API_URL = "http://localhost:5005"
@@ -91,11 +91,7 @@ const NewMovieForm = () => {
     }
 
     return (
-        isLoading ? (
-            <Spinner animation="border" role="status">
-                <span className="visually-hidden">Cargando...</span>
-            </Spinner>
-        ) :
+        isLoading ? <Loader /> :
 
             <div className="NewMovieForm mt-5">
                 <Row>

@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom"
 import { useState, useEffect } from "react"
 import axios from "axios"
 import { Col, Container, Row, ButtonGroup, ListGroup, Image, Button, Badge, Accordion } from "react-bootstrap";
-
+import Loader from "../../../components/Loader/Loader";
 
 const API_URL = "http://localhost:5005"
 
@@ -48,7 +48,7 @@ const MovieDetailsPage = () => {
 
     return (
 
-        isLoading ? <h1>Cargando </h1> :
+        isLoading ? <Loader /> :
             <div className="MovieDetailsPage">
                 <Container>
 
