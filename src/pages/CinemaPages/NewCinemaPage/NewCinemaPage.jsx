@@ -4,7 +4,7 @@ const NewCinemaPage = () => {
     return (
         <div className="NewCinemaPage">
 
-            <NewCinemaForm />
+            < NewCinemaForm />
 
         </div>
     )

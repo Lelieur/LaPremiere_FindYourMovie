@@ -3,22 +3,26 @@ import { Button, Form, Row, Col } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 
 import axios from 'axios';
-import Loader from '../Loader/Loader';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const API_URL = "http://localhost:5005"
 
-const NewCinemaForm = () => {
+const EditCinemaForm = () => {
+
+    const { cinemaId } = useParams()
+    const navigate = useNavigate()
 
     const [isLoading, setIsLoading] = useState(true)
 
     const [movies, setMovies] = useState([])
     useEffect(() => {
+        fetchCinemaData()
         fetchMovies()
     }, [])
 
     const fetchMovies = () => {
         axios
-            .get(`${API_URL}/movies`)
+            .get(`${API_URL}/movies/`)
             .then(response => {
                 setMovies(response.data)
                 setIsLoading(false)
@@ -57,6 +61,20 @@ const NewCinemaForm = () => {
         dicerooms: 0,
         seating: 0
     })
+
+    const fetchCinemaData = () => {
+        axios
+            .get(`${API_URL}/cinemas/${cinemaId}`)
+            .then(response => {
+                const { data: cinemaData } = response
+
+                setCinemaData(cinemaData)
+                setAddress(cinemaData.address)
+                setPrice(cinemaData.price)
+                setSpecs(cinemaData.specs)
+                setCapacity(cinemaData.capacity)
+            })
+    }
 
 
     const handleCinemaDataChange = e => {
@@ -191,54 +209,14 @@ const NewCinemaForm = () => {
         }
 
         axios
-            .post(`${API_URL}/cinemas`, reqPayload)
-            .then((response) => {
-                const { data: newCinema } = response
-
-                axios
-                    .get(`${API_URL}/movies/`)
-                    .then(response => {
-
-                        const { data: allMovies } = response
-
-                        const filteredMovies = allMovies.filter(eachMovie => {
-                            return (newCinema.movieId.includes(eachMovie.id.toString()))
-                        })
-
-                        filteredMovies.map(eachMovie => {
-
-                            let copyMovieToEdit = {
-                                ...eachMovie
-                            }
-
-                            const newCinemasIds =
-                                Array.isArray(copyMovieToEdit.cinemaId) ?
-                                    copyMovieToEdit.cinemaId :
-                                    [copyMovieToEdit.cinemaId]
-
-                            newCinemasIds.push(newCinema.id)
-
-                            copyMovieToEdit = {
-                                ...eachMovie,
-                                cinemaId: newCinemasIds
-                            }
-
-                            axios
-                                .put(`${API_URL}/movies/${eachMovie.id}`, copyMovieToEdit)
-                                .then(() => { })
-                                .catch(err => console.lopg(err))
-                        })
-                    })
-
-
-                alert('HECHO!')
-            })
+            .put(`${API_URL}/cinemas/${cinemaId}`, reqPayload)
+            .then(() => navigate(`/cines/detalles/${cinemaId}`))
             .catch(err => console.log(err))
     }
 
     return (
 
-        isLoading ? <Loader /> :
+        isLoading ? <h1>CARGANDO</h1> :
 
             <div className="NewCineForm mt-5">
 
@@ -429,6 +407,7 @@ const NewCinemaForm = () => {
                                         cinemaData.movieId.map((eachMovieId, idx) => {
                                             return (
                                                 <Form.Select
+                                                    disabled
                                                     key={idx}
                                                     className='mb-2'
                                                     type="text"
@@ -448,13 +427,13 @@ const NewCinemaForm = () => {
                                     }
                                 </div>
 
-                                <Button className="me-2" size="sm" variant="dark" onClick={addNewMovieId}>Añadir película</Button>
-                                <Button className="me-2" size="sm" variant="dark" onClick={deletNewMovieId}>Quitar película</Button>
+                                <Button disabled className="me-2" size="sm" variant="dark" onClick={addNewMovieId}>Añadir película</Button>
+                                <Button disabled className="me-2" size="sm" variant="dark" onClick={deletNewMovieId}>Quitar película</Button>
 
                             </Form.Group>
 
                             <div className="d-grid mt-5">
-                                <Button variant="dark" type="submit">Crear nuevo cine</Button>
+                                <Button variant="dark" type="submit">Editar cine</Button>
                             </div>
 
                         </Form>
@@ -466,4 +445,4 @@ const NewCinemaForm = () => {
     )
 }
 
-export default NewCinemaForm
+export default EditCinemaForm

@@ -32,8 +32,7 @@ const MovieDetailsPage = () => {
         axios
             .get(`${API_URL}/cinemas/`)
             .then(response => {
-                const allCinemas = response.data
-                console.log(allCinemas)
+                const { data: allCinemas } = response
                 const filteredCinemas = allCinemas.filter(eachCinema =>
                     Array.isArray(eachCinema.movieId) ?
                         eachCinema.movieId.includes(Number(movieId))

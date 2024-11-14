@@ -10,6 +10,7 @@ const API_URL = "http://localhost:5005"
 const MoviesList = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [movies, setMovies] = useState([])
+
     useEffect(() => {
         fetchMovies()
     }, [])
