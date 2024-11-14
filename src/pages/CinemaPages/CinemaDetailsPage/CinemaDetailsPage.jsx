@@ -17,7 +17,6 @@ const CinemaDetailsPage = () => {
 
     const [moviesInCinema, setMoviesInCinema] = useState([])
 
-
     useEffect(() => {
         fetchCinemaDetails()
         fetchMoviesInCinema()
@@ -32,7 +31,6 @@ const CinemaDetailsPage = () => {
             })
             .catch(err => console.log(err))
     }
-
 
     const fetchMoviesInCinema = () => {
 
@@ -52,8 +50,6 @@ const CinemaDetailsPage = () => {
             })
             .catch(err => console.log(err))
     }
-
-    console.log(moviesInCinema)
 
     return (
         isLoading ? <h1>CARGANDO</h1> :
@@ -139,9 +135,9 @@ const CinemaDetailsPage = () => {
 
                                                 {
                                                     elm.released ?
-                                                        <Button className="rounded-0 rounded-bottom" variant="dark">Comprar entradas</Button>
+                                                        <Button as="a" target="_blank" href={cinema.url} className="rounded-0 rounded-bottom" variant="dark">Comprar entradas</Button>
                                                         :
-                                                        <Button className="rounded-0 rounded-bottom" variant="success">Próximamente</Button>
+                                                        <Button as="a" target="_blank" href={cinema.url} className="rounded-0 rounded-bottom" variant="success">Próximamente</Button>
 
                                                 }
 

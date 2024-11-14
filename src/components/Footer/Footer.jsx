@@ -8,8 +8,9 @@ const Footer = () => {
 
             <Card className="mt-5 rounded-0 text-center" bg="dark" text="light" border="none">
                 <Card.Body className='p-4'>
-                    <Card.Title>LE PREMIERE</Card.Title>
-                    <Card.Text>Copyright © 2024 Le Premiere. Built by Aaron & Lucas.</Card.Text>
+                    <Card.Title className='p-4'>LA PREMIERE</Card.Title>
+                    <p>Copyright © 2024 Le Premiere.</p>
+                    <p>Built by Aaron & Lucas.</p>
                 </Card.Body>
                 <Row className="p-3">
                     <Col md={{ span: 4 }}>

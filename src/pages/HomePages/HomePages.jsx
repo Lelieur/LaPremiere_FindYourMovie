@@ -23,7 +23,7 @@ const HomePage = () => {
 
                         <Card style={{ textAlign: "center", boxShadow: '0px 0px 100px #ccc' }}>
                             <Card.Body>
-                                <Card.Title className="p-4">LE PREMIERE</Card.Title>
+                                <Card.Title className="p-4">LA PREMIERE</Card.Title>
                                 <Card.Text className="p-2">
                                     Encuentra tu película favorita, en tu cine favorito
                                 </Card.Text>
