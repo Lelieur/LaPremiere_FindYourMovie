@@ -4,12 +4,14 @@ import { useState, useEffect } from 'react';
 
 import axios from 'axios';
 import Loader from '../Loader/Loader';
+import { useNavigate } from 'react-router-dom';
 
 const API_URL = "http://localhost:5005"
 
 const NewCinemaForm = () => {
 
     const [isLoading, setIsLoading] = useState(true)
+    const navigate = useNavigate()
 
     const [movies, setMovies] = useState([])
     useEffect(() => {
@@ -232,6 +234,7 @@ const NewCinemaForm = () => {
 
 
                 alert('HECHO!')
+                navigate(`/cines/detalles/${newCinema.id}`)
             })
             .catch(err => console.log(err))
     }

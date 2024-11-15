@@ -20,8 +20,9 @@ const Navigation = () => {
                         <Nav>
                             <NavDropdown title="Administrar" id="collapsible-nav-dropdown">
                                 <NavDropdown.Item to="/cines/crear" as={Link}>Añadir nuevo cine</NavDropdown.Item>
-                                <NavDropdown.Divider />
                                 <NavDropdown.Item to="/peliculas/crear" as={Link}>Añadir nueva película</NavDropdown.Item>
+                                <NavDropdown.Divider />
+                                <NavDropdown.Item to="/cines/eliminados" as={Link}>Recuperar Cine</NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
                     </Navbar.Collapse>

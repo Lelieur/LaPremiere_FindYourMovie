@@ -17,7 +17,7 @@ const CinemaCard = ({ id, cover, name, address, specs, url }) => {
 
             <Link to={`detalles/${id}`}>
 
-                <Card className="mb-5 pb-2">
+                <Card className="pb-2">
                     <Card.Img variant="top" src={cover[0]} style={{ height: "15rem", objectFit: "cover" }} />
                     <Card.Body>
                         <Card.Title>{name}</Card.Title>

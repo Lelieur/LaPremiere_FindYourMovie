@@ -37,11 +37,13 @@ const CinemasList = () => {
                 <Row>
                     {
                         cinemas.map(elm => {
-                            return (
-                                <Col md={{ span: 4 }} key={elm.id} >
-                                    <CinemaCard {...elm} />
-                                </Col>
-                            )
+                            if (!elm.isDeleted) {
+                                return (
+                                    <Col className="mb-5" md={{ span: 4 }} key={elm.id} >
+                                        <CinemaCard {...elm} />
+                                    </Col>
+                                )
+                            }
                         })
                     }
                 </Row>
