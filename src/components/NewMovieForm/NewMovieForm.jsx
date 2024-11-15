@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import { Form, Button, Spinner } from "react-bootstrap"
-
+import { Form, Button } from "react-bootstrap"
+import Loader from "../Loader/Loader"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 
@@ -73,12 +73,24 @@ const NewMovieForm = () => {
         setMovieData((prevData) => ({
             ...prevData,
             cinemaId: [...prevData.cinemaId, '']
-        }));
+        }))
+    }
+    const deletNewCinema = (idx) => {
+        setMovieData((prevData) => {
+            const cinemaIdCopy = [...prevData.cinemaId]
+            cinemaIdCopy.splice(idx, 1)
+            return { ...prevData, cinemaId: cinemaIdCopy }
+        })
     }
 
     const addNewGender = () => {
         const gendersCopy = [...movieData.gender]
         gendersCopy.push('')
+        setMovieData({ ...movieData, gender: gendersCopy })
+    }
+    const deletNewGender = () => {
+        const gendersCopy = [...movieData.gender]
+        gendersCopy.pop()
         setMovieData({ ...movieData, gender: gendersCopy })
     }
     const handleFormSubmit = (e) => {
@@ -179,7 +191,8 @@ const NewMovieForm = () => {
                             })
                         }
 
-                        <Button size='sm' variant='dark' onClick={addNewGender}>Añadir nuevo género</Button>
+                        <Button className="me-2" size="sm" variant="dark" onClick={addNewGender}>Añadir Género</Button>
+                        <Button className="me-2" size="sm" variant="dark" onClick={deletNewGender}>Quitar Género</Button>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="calificationField">
@@ -241,9 +254,8 @@ const NewMovieForm = () => {
                                 ))}
                             </Form.Control>
                         ))}
-                        <Button size="sm" variant="dark" onClick={addNewCinema}>
-                            Añadir cine
-                        </Button>
+                        <Button className="me-2" size="sm" variant="dark" onClick={addNewCinema}>Añadir Cine</Button>
+                        <Button className="me-2" size="sm" variant="dark" onClick={deletNewCinema}>Quitar Cine</Button>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="releasedField">
