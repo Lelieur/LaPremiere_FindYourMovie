@@ -1,8 +1,16 @@
+import EditMovieForm from "../../../components/EditMovieForm/EditMovieForm"
+import { Col, Row } from "react-bootstrap"
 const EditMoviePage = () => {
     return (
         <div className="EditMoviePage">
-            <h1>Edita la Película</h1>
-            <hr />
+
+            <Row>
+                <Col md={{ span: 6, offset: 3 }}>
+
+                    <EditMovieForm />
+
+                </Col>
+            </Row>
         </div>
     )
 }

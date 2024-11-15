@@ -42,7 +42,20 @@ const MovieDetailsPage = () => {
             })
             .catch(err => console.log(err))
     }
-
+    const deleteMovie = () => {
+        if (window.confirm("¿Estás seguro de que quieres eliminar esta película?")) {
+            axios
+                .delete(`${API_URL}/movies/${movieId}`)
+                .then(() => {
+                    alert("Película eliminada con éxito.");
+                    navigate('/peliculas'); // Redirige a la lista de películas
+                })
+                .catch(err => {
+                    console.error("Error eliminando la película:", err);
+                    alert("Hubo un error al eliminar la película.");
+                });
+        }
+    };
 
 
     return (
@@ -118,6 +131,12 @@ const MovieDetailsPage = () => {
                                             </Button>
                                             <Button variant="secondary" as={Link} to={'/peliculas'}>
                                                 Volver a la lista
+                                            </Button>
+                                            <Button variant="secondary" as={Link} to={`/peliculas/editar/${movieId}`}>
+                                                Editar Película
+                                            </Button>
+                                            <Button variant="danger" onClick={deleteMovie}>
+                                                Eliminar Película
                                             </Button>
 
                                         </ButtonGroup>
