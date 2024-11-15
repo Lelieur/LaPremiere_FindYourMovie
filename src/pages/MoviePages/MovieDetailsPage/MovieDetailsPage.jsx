@@ -3,21 +3,24 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 import { Col, Container, Row, ButtonGroup, ListGroup, Image, Button, Badge, Accordion } from "react-bootstrap";
 import Loader from "../../../components/Loader/Loader";
+import MovieReview from "../../../components/CommentsMovie/MovieReview"
 
 const API_URL = "http://localhost:5005"
 
 const MovieDetailsPage = () => {
     const badgeColors = ["primary", "secondary", "success", "danger", "warning", "info", "dark"];
     const { movieId } = useParams()
+    const { reviewId } = useParams
     const [movie, setMovie] = useState({})
     const [isLoading, setIsLoading] = useState(true)
     const [cinemasInMovie, setCinemasInMovie] = useState([])
-
+    const [reviews, setReviews] = useState([])
 
     useEffect(() => {
         fetchMovieDetails()
         fetchCinemaInMovie()
-    }, [])
+        fetchReviews()
+    }, [movieId, reviewId])
 
     const fetchMovieDetails = () => {
         axios
@@ -42,21 +45,38 @@ const MovieDetailsPage = () => {
             })
             .catch(err => console.log(err))
     }
-    const deleteMovie = () => {
-        if (window.confirm("¿Estás seguro de que quieres eliminar esta película?")) {
-            axios
-                .delete(`${API_URL}/movies/${movieId}`)
-                .then(() => {
-                    alert("Película eliminada con éxito.");
-                    navigate('/peliculas'); // Redirige a la lista de películas
-                })
-                .catch(err => {
-                    console.error("Error eliminando la película:", err);
-                    alert("Hubo un error al eliminar la película.");
-                });
-        }
-    };
 
+    const fetchReviews = () => {
+        axios
+            .get(`${API_URL}/reviews?movieId=${movieId}`)
+            .then(response => {
+                const reviewsData = Array.isArray(response.data) ? response.data : []
+                setReviews(reviewsData)
+            })
+            .catch(err => {
+                console.log(err)
+                setReviews([])
+            })
+    }
+
+
+    const addReview = (newReview) => {
+        const reviewWithUser = { ...newReview, movieId, user: newReview.user || "Anonimo" }
+        axios
+            .post(`${API_URL}/reviews/${movieId}`, reviewWithUser)
+            .then(response => {
+                setReviews(prevReviews => [...prevReviews, newReview])
+            })
+            .catch(err => console.log(err))
+    }
+
+    const calculateAverageRating = () => {
+        if (!Array.isArray(reviews) || reviews.length === 0) return 0
+        const totalRating = reviews.reduce((sum, review) => sum + (review.rating || 0), 0)
+        return (totalRating / reviews.length).toFixed(1)
+    }
+
+    const averageRating = calculateAverageRating()
 
     return (
 
@@ -117,7 +137,11 @@ const MovieDetailsPage = () => {
                                     </Accordion.Body>
                                 </Accordion.Item>
                             </Accordion>
-
+                            <MovieReview onAddReview={addReview} reviews={reviews} />
+                            <ListGroup.Item>
+                                <strong>Calificación Promedio: </strong>
+                                {averageRating > 0 ? `${averageRating} / 5` : "No disponible"}
+                            </ListGroup.Item>
                             <Row>
 
                                 <Col lg={{ span: 8, offset: 2 }}>
@@ -134,9 +158,6 @@ const MovieDetailsPage = () => {
                                             </Button>
                                             <Button variant="secondary" as={Link} to={`/peliculas/editar/${movieId}`}>
                                                 Editar Película
-                                            </Button>
-                                            <Button variant="danger" onClick={deleteMovie}>
-                                                Eliminar Película
                                             </Button>
 
                                         </ButtonGroup>
