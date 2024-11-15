@@ -127,7 +127,7 @@ const NewCinemaForm = () => {
 
         const moviesIdsCopy = [...cinemaData.movieId]
 
-        moviesIdsCopy[idx] = value
+        moviesIdsCopy[idx] = Number(value)
 
         setCinemaData({
             ...cinemaData, movieId: moviesIdsCopy
@@ -204,7 +204,7 @@ const NewCinemaForm = () => {
                         const { data: allMovies } = response
 
                         const filteredMovies = allMovies.filter(eachMovie => {
-                            return (newCinema.movieId.includes(eachMovie.id.toString()))
+                            return (newCinema.movieId.includes(eachMovie.id))
                         })
 
                         filteredMovies.map(eachMovie => {
@@ -228,7 +228,7 @@ const NewCinemaForm = () => {
                             axios
                                 .put(`${API_URL}/movies/${eachMovie.id}`, copyMovieToEdit)
                                 .then(() => { })
-                                .catch(err => console.lopg(err))
+                                .catch(err => console.log(err))
                         })
                     })
 

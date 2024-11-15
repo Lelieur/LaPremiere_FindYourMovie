@@ -27,9 +27,45 @@ const DeletedCinemasPage = () => {
             .catch(err => console.log(err))
     }
 
-    const handleCinemaRecovery = (id) => {
+    const handleCinemaRecovery = (cinema) => {
         axios
-            .patch((`${API_URL}/cinemas/${id}`), { isDeleted: false })
+            .get((`${API_URL}/movies/`))
+            .then(response => {
+
+                const { data: allMovies } = response
+
+                const filteredMovies = allMovies.filter(eachMovie => {
+                    return (cinema.movieId.includes(eachMovie.id))
+                })
+
+                filteredMovies.map(eachMovie => {
+
+                    let copyMovieToEdit = {
+                        ...eachMovie
+                    }
+
+                    const newCinemasIds =
+                        Array.isArray(copyMovieToEdit.cinemaId) ?
+                            copyMovieToEdit.cinemaId :
+                            [copyMovieToEdit.cinemaId]
+
+                    newCinemasIds.push(cinema.id)
+
+                    copyMovieToEdit = {
+                        ...eachMovie,
+                        cinemaId: newCinemasIds
+                    }
+
+                    axios
+                        .put(`${API_URL}/movies/${eachMovie.id}`, copyMovieToEdit)
+                        .then(() => { })
+                        .catch(err => console.log(err))
+                })
+            })
+            .catch(err => console.log(err))
+
+        axios
+            .patch((`${API_URL}/cinemas/${cinema.id}`), { isDeleted: false })
             .then(fetchCinemas())
             .catch(err => console.log(err))
     }
@@ -50,7 +86,7 @@ const DeletedCinemasPage = () => {
                                     return (
                                         <Col md={{ span: 4 }} key={elm.id} >
                                             <CinemaCard {...elm} />
-                                            <Button className="mt-3" variant="success" onClick={() => handleCinemaRecovery(elm.id)}>Recuperar cine</Button>
+                                            <Button className="mt-3" variant="success" onClick={() => handleCinemaRecovery(elm)}>Recuperar cine</Button>
                                         </Col>
                                     )
                                 }
