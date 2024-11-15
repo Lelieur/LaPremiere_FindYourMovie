@@ -15,8 +15,8 @@ const MovieDetailsPage = () => {
 
 
     useEffect(() => {
-        fetchMovieDetails()
         fetchCinemaInMovie()
+        fetchMovieDetails()
     }, [])
 
     const fetchMovieDetails = () => {
@@ -107,11 +107,15 @@ const MovieDetailsPage = () => {
                                     <Accordion.Body>
                                         <ListGroup >
                                             {cinemasInMovie.map((elm) => {
-                                                return (
-                                                    <ListGroup.Item key={elm.id} >
-                                                        <Link to={`/cines/detalles/${elm.id}`}>{elm.name}</Link>
-                                                    </ListGroup.Item>
-                                                )
+
+                                                if (!elm.isDeleted) {
+                                                    return (
+                                                        <ListGroup.Item key={elm.id} >
+                                                            <Link to={`/cines/detalles/${elm.id}`}>{elm.name}</Link>
+                                                        </ListGroup.Item>
+                                                    )
+                                                }
+
                                             })}
                                         </ListGroup >
                                     </Accordion.Body>

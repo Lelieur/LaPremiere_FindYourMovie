@@ -22,8 +22,8 @@ const CinemaDetailsPage = () => {
     const [moviesInCinema, setMoviesInCinema] = useState([])
 
     useEffect(() => {
-        fetchCinemaDetails()
         fetchMoviesInCinema()
+        fetchCinemaDetails()
     }, [])
 
     const fetchCinemaDetails = () => {
@@ -56,22 +56,41 @@ const CinemaDetailsPage = () => {
     }
 
     const handleCinemaDelete = () => {
+
         axios
             .get((`${API_URL}/movies/`))
             .then(response => {
 
                 const { data: allMovies } = response
 
-                allMovies.forEach(eachMovie => {
-                    if (Array.isArray(eachMovie.cinemaId)) {
-                        const updatedCinemaIds = eachMovie.cinemaId.filter(eachCinemaId => eachCinemaId !== cinemaId);
-                        axios
-                            .put((`${API_URL}/movies/${eachMovie.id}`), { ...eachMovie, cinemaId: updatedCinemaIds })
-                            .then(() => { })
-                            .catch(err => console.log(err))
-                    } else {
-                        eachMovie.cinemaId = ['']
+                const filteredMovies = allMovies.filter(eachMovie => {
+                    return (cinema.movieId.includes(eachMovie.id))
+                })
+
+                filteredMovies.map(eachMovie => {
+
+                    let copyMovieToEdit = {
+                        ...eachMovie
                     }
+
+                    const newCinemasIds =
+                        Array.isArray(copyMovieToEdit.cinemaId) ?
+                            copyMovieToEdit.cinemaId.filter(eachCinemaId => {
+                                return (eachCinemaId !== cinema.id)
+                            }) :
+                            copyMovieToEdit.cinemaId === cinema.id ?
+                                copyMovieToEdit.cinemaId = [] :
+                                copyMovieToEdit.cinemaId
+
+                    copyMovieToEdit = {
+                        ...eachMovie,
+                        cinemaId: newCinemasIds
+                    }
+
+                    axios
+                        .put(`${API_URL}/movies/${eachMovie.id}`, copyMovieToEdit)
+                        .then(() => { })
+                        .catch(err => console.log(err))
                 })
             })
             .catch(err => console.log(err))
@@ -175,18 +194,22 @@ const CinemaDetailsPage = () => {
                                     moviesInCinema.map(elm => {
                                         return (
                                             <Col md={{ span: 2 }} key={elm.id}>
-                                                <Card >
-                                                    <Card.Img variant="top" src={elm.poster} />
+                                                <Link to={`/peliculas/detalles/${elm.id}`}>
 
-                                                    {
-                                                        elm.released ?
-                                                            <Button as="a" target="_blank" href={cinema.url} className="rounded-0 rounded-bottom" variant="dark">Comprar entradas</Button>
-                                                            :
-                                                            <Button as="a" target="_blank" href={cinema.url} className="rounded-0 rounded-bottom" variant="success">Próximamente</Button>
+                                                    <Card >
+                                                        <Card.Img variant="top" src={elm.poster} />
 
-                                                    }
+                                                        {
+                                                            elm.released ?
+                                                                <Button as="a" target="_blank" href={cinema.url} className="rounded-0 rounded-bottom" variant="dark">Comprar entradas</Button>
+                                                                :
+                                                                <Button as="a" target="_blank" href={cinema.url} className="rounded-0 rounded-bottom" variant="success">Próximamente</Button>
 
-                                                </Card>
+                                                        }
+
+                                                    </Card>
+
+                                                </Link>
                                             </Col>
                                         )
                                     })
@@ -209,7 +232,7 @@ const CinemaDetailsPage = () => {
                             Si continúas no se podrá recuperar el cine seleccionado. ¿Estás seguro de que quieres continuar?
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button variant="danger" onClick={() => handleCinemaDelete()}>
+                            <Button variant="danger" onClick={handleCinemaDelete}>
                                 Eliminar definitvamente
                             </Button>
                             <Button variant="primary" onClick={() => setShowModal(false)}>Cancelar</Button>

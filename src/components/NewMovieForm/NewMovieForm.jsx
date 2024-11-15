@@ -52,7 +52,7 @@ const NewMovieForm = () => {
     const handleCinemaChange = (e, idx) => {
         const { value } = e.target
         const cinemasCopy = [...movieData.cinemaId]
-        cinemasCopy[idx] = value
+        cinemasCopy[idx] = Number(value)
         const filteredCinemas = cinemasCopy.filter(cinema => cinema !== "")
         setMovieData({ ...movieData, cinemaId: filteredCinemas })
     }
