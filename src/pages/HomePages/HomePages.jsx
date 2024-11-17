@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
@@ -7,22 +7,31 @@ import Card from 'react-bootstrap/Card';
 
 import "./HomePage.css"
 import { Col, Row } from "react-bootstrap";
-
-import phanterMusic from '../../assets/music/panther.mp3'
+import { MdVolumeOff, MdVolumeUp } from "react-icons/md"
+import Century from '../../assets/music/Century.mp3'
 
 const HomePage = () => {
 
-    const [isPlaying, setIsPlaying] = useState(false)
-    const [audio] = useState(new Audio(phanterMusic))
+    const [audio, setAudio] = useState()
+    const [isMuted, setIsMuted] = useState(false)
 
-    const musicPlay = () => {
-        if (isPlaying) {
-            audio.pause();
-        } else {
-            audio.play();
+    useEffect(() => {
+        const audioInstance = new Audio(Century)
+        setAudio(audioInstance)
+        audioInstance.play().catch((error) => {
+            console.log(error)
+        })
+        return () => {
+            audioInstance.pause()
+            audioInstance.currentTime = 0
         }
-        setIsPlaying(!isPlaying)
+    }, [])
+
+    const handleMute = () => {
+        audio.muted = !isMuted
+        setIsMuted(!isMuted)
     }
+
     return (
         <div className="HomePage">
 
@@ -31,11 +40,10 @@ const HomePage = () => {
                 <Row>
 
                     <Col lg={{ span: 4, offset: 4 }}>
-
-
                         <Card style={{ textAlign: "center", boxShadow: '0px 0px 100px #ccc' }}>
+
                             <Card.Body>
-                                <Card.Title className="p-4">LA PREMIERE</Card.Title>
+                                <Card.Title className="p-4" >LA PREMIERE</Card.Title>
                                 <Card.Text className="p-2">
                                     Encuentra tu película favorita, en tu cine favorito
                                 </Card.Text>
@@ -44,21 +52,16 @@ const HomePage = () => {
                                     <Button to={"/peliculas"} variant="secondary" as={Link}>Películas</Button>
                                 </ButtonGroup>
 
-                                <div className="mt-4">
-                                    <Button
-                                        variant={isPlaying ? "danger" : "success"}
-                                        onClick={musicPlay}>
-                                        {isPlaying ? "Pausar música" : "Reproducir música"}
-                                    </Button>
+                                <div className="mt-3">
+                                    <span
+                                        onClick={handleMute}
+                                        style={{ fontSize: "2rem", cursor: "pointer" }}>
+                                        {isMuted ? <MdVolumeOff /> : <MdVolumeUp />}
+                                    </span>
                                 </div>
 
-                                {/* Reproductor de audio oculto (si lo prefieres) */}
-                                {/* Puedes añadir esto si quieres que el control de audio se muestre */}
-                                <audio controls>
-                                    <source src="/audio/miCancion.mp3" type="audio/mp3" />
-                                    Tu navegador no soporta el elemento de audio.
-                                </audio>
                             </Card.Body>
+
                         </Card>
 
                     </Col>
@@ -66,7 +69,7 @@ const HomePage = () => {
                 </Row>
 
             </Container>
-        </div>
+        </div >
     )
 }
 

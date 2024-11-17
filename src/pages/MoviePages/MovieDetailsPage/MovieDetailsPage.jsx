@@ -1,16 +1,17 @@
 import { Link, useParams } from "react-router-dom"
 import { useState, useEffect } from "react"
 import axios from "axios"
-import { Col, Container, Row, ButtonGroup, ListGroup, Image, Button, Badge, Accordion } from "react-bootstrap";
+import { Col, Container, Row, ButtonGroup, ListGroup, Image, Button, Badge, Accordion } from "react-bootstrap"
 import Loader from "../../../components/Loader/Loader";
-import MovieReview from "../../../components/CommentsMovie/MovieReview"
+import NewMovieReviewForm from "../../../components/NewMovieReviewForm/NewMovieReviewForm"
+import { FaStar } from "react-icons/fa"
 
 const API_URL = "http://localhost:5005"
 
 const MovieDetailsPage = () => {
-    const badgeColors = ["primary", "secondary", "success", "danger", "warning", "info", "dark"];
+    const badgeColors = ["primary", "secondary", "success", "danger", "warning", "info", "dark"]
     const { movieId } = useParams()
-    const { reviewId } = useParams
+
     const [movie, setMovie] = useState({})
     const [isLoading, setIsLoading] = useState(true)
     const [cinemasInMovie, setCinemasInMovie] = useState([])
@@ -20,7 +21,7 @@ const MovieDetailsPage = () => {
         fetchCinemaInMovie()
         fetchReviews()
         fetchMovieDetails()
-    }, [movieId, reviewId])
+    }, [movieId])
 
     const fetchMovieDetails = () => {
         axios
@@ -42,6 +43,7 @@ const MovieDetailsPage = () => {
                         : eachCinema.movieId === Number(movieId)
                 )
                 setCinemasInMovie(filteredCinemas)
+                setIsLoading(false)
             })
             .catch(err => console.log(err))
     }
@@ -52,6 +54,7 @@ const MovieDetailsPage = () => {
             .then(response => {
                 const reviewsData = Array.isArray(response.data) ? response.data : []
                 setReviews(reviewsData)
+                setIsLoading(false)
             })
             .catch(err => {
                 console.log(err)
@@ -61,27 +64,80 @@ const MovieDetailsPage = () => {
 
 
     const addReview = (newReview) => {
-        const reviewWithUser = { ...newReview, movieId, user: newReview.user || "Anonimo" }
+        const reviewWithMovieId = { ...newReview, movieId: Number(movieId), user: newReview.user || "Anonimo" }
+
         axios
-            .post(`${API_URL}/reviews/${movieId}`, reviewWithUser)
+            .post(`${API_URL}/reviews`, reviewWithMovieId)
             .then(response => {
-                setReviews(prevReviews => [...prevReviews, newReview])
+                const createdReview = response.data
+                setReviews(prevReviews => [...prevReviews, createdReview])
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                console.err("Error al añadir la reseña")
+            })
     }
 
     const calculateAverageRating = () => {
-        if (!Array.isArray(reviews) || reviews.length === 0) return 0
-        const totalRating = reviews.reduce((sum, review) => sum + (review.rating || 0), 0)
-        return (totalRating / reviews.length).toFixed(1)
+        const totalRating = reviews.reduce((sum, review) => sum + (review.rating), 0)
+        return (totalRating / reviews.length)
     }
 
     const averageRating = calculateAverageRating()
 
+    const handleMovieDelete = () => {
+
+        axios
+            .get((`${API_URL}/cinemas/`))
+            .then(response => {
+
+                const { data: allCinemas } = response
+
+                const filteredCinemas = allCinemas.filter(eachCinema => {
+                    return (movie.cinemaId.includes(eachCinema.id))
+                })
+
+                filteredCinemas.map(eachCinema => {
+
+                    let copyCinemaToEdit = {
+                        ...eachCinema
+                    }
+
+                    const newMoviesIds =
+                        Array.isArray(copyCinemaToEdit.movieId) ?
+                            copyCinemaToEdit.movieId.filter(eachMovieId => {
+                                return (eachMovieId !== movie.id)
+                            }) :
+                            copyCinemaToEdit.movieId === movie.id ?
+                                copyCinemaToEdit.movieId = [] :
+                                copyCinemaToEdit.movieId
+
+                    copyCinemaToEdit = {
+                        ...eachCinema,
+                        movieId: newMoviesIds
+                    }
+
+                    axios
+                        .put(`${API_URL}/cinemas/${eachCinema.id}`, copyCinemaToEdit)
+                        .then(() => { })
+                        .catch(err => console.log(err))
+                })
+            })
+            .catch(err => console.log(err))
+
+        axios
+            .patch((`${API_URL}/movies/${movieId}`), { isDeleted: true })
+            .then(() => setShowModal(false))
+            .then(() => navigate(`/movies`))
+            .catch(err => console.log(err))
+    }
+
+
     return (
 
         isLoading ? <Loader /> :
+
             <div className="MovieDetailsPage">
+
                 <Container>
 
                     <Row>
@@ -93,11 +149,31 @@ const MovieDetailsPage = () => {
                                 fluid
                                 className="mb-4 mt-4"
                             />
+                            <NewMovieReviewForm
+                                onAddReview={addReview}
+                            />
                         </Col>
 
                         <Col md={{ md: 4, offset: 1 }}>
 
-                            <h1>{movie.title?.original || movie.title || "Sin título"}</h1>
+                            <h1>{movie.title?.spanish || movie.title || "Sin título"}</h1>
+                            <ListGroup.Item>
+                                <strong>Calificación {movie.title?.spanish || "No disponible"} </strong>
+                                {averageRating > 0 ? (
+                                    <div>
+                                        {[...Array(5)].map((_, index) => (
+                                            <FaStar
+                                                key={index}
+                                                color={index < (averageRating) ? "#ffb400" : "#e4e5e9"}
+                                                style={{ fontSize: "1.5rem", marginRight: "5px" }}
+                                            />
+                                        ))}
+                                        <span className="ms-2"> {averageRating} / 5</span>
+                                    </div>
+                                ) : (
+                                    "No disponible"
+                                )}
+                            </ListGroup.Item>
                             <p><strong>Sinopsis:</strong> {movie.description ? movie.description : "Sin descripción disponible."}</p>
 
                             <ListGroup className="list-group-flush">
@@ -119,9 +195,9 @@ const MovieDetailsPage = () => {
                                 </ListGroup.Item>
                                 <ListGroup.Item><strong>Calificación: </strong> {movie.calification ? movie.calification : "No disponible"}</ListGroup.Item>
                                 <ListGroup.Item><strong>Fecha:</strong> {movie.date ? new Date(movie.date).toLocaleDateString() : "No disponible"}</ListGroup.Item>
-                            </ListGroup>
 
-                            <Accordion>
+                            </ListGroup>
+                            <Accordion className="mb-2">
                                 <Accordion.Item eventKey="0">
                                     <Accordion.Header><strong>Cines Disponibles</strong></Accordion.Header>
                                     <Accordion.Body>
@@ -141,27 +217,53 @@ const MovieDetailsPage = () => {
                                     </Accordion.Body>
                                 </Accordion.Item>
                             </Accordion>
-                            <MovieReview onAddReview={addReview} reviews={reviews} />
-                            <ListGroup.Item>
-                                <strong>Calificación Promedio: </strong>
-                                {averageRating > 0 ? `${averageRating} / 5` : "No disponible"}
-                            </ListGroup.Item>
+
+                            <Accordion className="mb-2">
+                                <Accordion.Item eventKey="0">
+                                    <Accordion.Header><strong>Ver Comentarios</strong></Accordion.Header>
+                                    <Accordion.Body>
+                                        {reviews.length > 0 ? (
+                                            <ListGroup>
+                                                {reviews.map((review, index) => (
+                                                    <ListGroup.Item key={index}>
+                                                        <strong>{review.user || "Anónimo"}</strong>: {review.comment}
+                                                        <div>
+                                                            <strong>Calificación:</strong>
+                                                            {[...Array(review.rating)].map((_, idx) => (
+                                                                <span key={idx} style={{ color: "#ffb400" }}>★</span>
+                                                            ))}
+                                                        </div>
+                                                    </ListGroup.Item>
+                                                ))}
+                                            </ListGroup>
+                                        ) : (
+                                            <p>No hay comentarios para esta película.</p>
+                                        )}
+                                    </Accordion.Body>
+                                </Accordion.Item>
+                            </Accordion>
+
+
+
                             <Row>
 
                                 <Col lg={{ span: 8, offset: 2 }}>
 
                                     <div className="d-grid">
 
-                                        <ButtonGroup size="lg" className="mb-2 mt-5">
+                                        <ButtonGroup size="sm" className="mb-2 mt-5">
 
-                                            <Button href={movie.trailer} variant="secondary" as="a">
+                                            <Button href={movie.trailer} variant="dark" as="a">
                                                 Ver Trailer
                                             </Button>
-                                            <Button variant="secondary" as={Link} to={'/peliculas'}>
+                                            <Button variant="dark" as={Link} to={'/peliculas'}>
                                                 Volver a la lista
                                             </Button>
-                                            <Button variant="secondary" as={Link} to={`/peliculas/editar/${movieId}`}>
+                                            <Button variant="dark" as={Link} to={`/peliculas/editar/${movieId}`}>
                                                 Editar Película
+                                            </Button>
+                                            <Button variant="dark" onClick={() => setShowModal(true)}>
+                                                Eliminar Película
                                             </Button>
 
                                         </ButtonGroup>
