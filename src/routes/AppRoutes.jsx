@@ -11,12 +11,15 @@ import EditMoviePage from "../pages/MoviePages/EditMoviePage/EditMoviePage"
 import DeletedCinemasPage from "../pages/CinemaPages/DeletedCinemasPage/DeletedCinemasPage";
 
 const AppRoutes = () => {
+
+    console.log(window)
+
     return (
         <div className="AppRoutes">
             <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/cines" element={<CinemasPage />} />
-                <Route path="/cines/detalles/:cinemaId" element={<CinemaDetailsPage />} />
+                <Route path="/cines/detalles/:cinemaId" element={<CinemaDetailsPage key={window.location.pathname} />} />
                 <Route path="/cines/crear" element={<NewCinemaPage />} />
                 <Route path="/cines/editar/:cinemaId" element={<EditCinemaPage />} />
                 <Route path="/peliculas" element={<MoviesPage />} />

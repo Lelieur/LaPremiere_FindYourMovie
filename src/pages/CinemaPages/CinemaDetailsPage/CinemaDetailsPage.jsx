@@ -140,13 +140,13 @@ const CinemaDetailsPage = () => {
 
                                     <hr />
                                     <p><span className="form-section-title">Dirección: </span>{cinema.address.street}, {cinema.address.zipcode} ({cinema.address.city})</p>
-                                    <p><span className="form-section-title">Precio: </span>
-                                        <Stack direction="horizontal" gap={2} style={{ display: 'inline-flex' }}>
-                                            <Badge bg="dark">Nomal: {cinema.price.regular}€</Badge>
-                                            <Badge bg="secondary">Fin de semana: {cinema.price.weekend}€</Badge>
-                                            <Badge bg="success">Miércoles: {cinema.price.special}€</Badge>
-                                        </Stack>
-                                    </p>
+                                    <p><span className="form-section-title">Precio: </span></p>
+                                    <Stack direction="horizontal" gap={2}>
+                                        <Badge bg="dark">Nomal: {cinema.price.regular}€</Badge>
+                                        <Badge bg="secondary">Fin de semana: {cinema.price.weekend}€</Badge>
+                                        <Badge bg="success">Miércoles: {cinema.price.special}€</Badge>
+                                    </Stack>
+
                                     <p><span className="form-section-title">Servicios: </span>
                                         <Stack direction="horizontal" gap={2} style={{ display: 'inline-flex' }}>
                                             {
@@ -158,29 +158,29 @@ const CinemaDetailsPage = () => {
                                             }
                                         </Stack>
                                     </p>
-                                    <p><span className="form-section-title">Specs: </span>
-                                        <Row style={{ display: 'inline-flex' }}>
-                                            {cinema.specs.is3D && (
-                                                <Col md={{ span: 1 }}>
-                                                    <Image src={IMAGE_PATHS.is3DFavicon} fluid />
-                                                </Col>
-                                            )}
-                                            {cinema.specs.VO && (
-                                                <Col md={{ span: 1 }}>
-                                                    <Image src={IMAGE_PATHS.specsFavicon} fluid />
-                                                </Col>
-                                            )}
-                                            {cinema.specs.accesibility && (
-                                                <Col md={{ span: 1 }}>
-                                                    <Image src={IMAGE_PATHS.accesibilityFavicon} fluid />
-                                                </Col>
-                                            )}
-                                        </Row>
-                                        <ButtonGroup className="mt-4 me-5" aria-label="Basic example">
-                                            <Button variant="dark" as="a" href={cinema.url} target="_blank">Comprar entradas</Button>
-                                            <Button variant="secondary" as={Link} to="/cines">Ver otro cine</Button>
-                                        </ButtonGroup>
-                                    </p>
+                                    <p><span className="form-section-title">Specs: </span></p>
+                                    <Row>
+                                        {cinema.specs.is3D && (
+                                            <Col md={{ span: 1 }}>
+                                                <Image src={IMAGE_PATHS.is3DFavicon} fluid />
+                                            </Col>
+                                        )}
+                                        {cinema.specs.VO && (
+                                            <Col md={{ span: 1 }}>
+                                                <Image src={IMAGE_PATHS.specsFavicon} fluid />
+                                            </Col>
+                                        )}
+                                        {cinema.specs.accesibility && (
+                                            <Col md={{ span: 1 }}>
+                                                <Image src={IMAGE_PATHS.accesibilityFavicon} fluid />
+                                            </Col>
+                                        )}
+                                    </Row>
+                                    <ButtonGroup className="mt-4 me-5" aria-label="Basic example">
+                                        <Button variant="dark" as="a" href={cinema.url} target="_blank">Comprar entradas</Button>
+                                        <Button variant="secondary" as={Link} to="/cines">Ver otro cine</Button>
+                                    </ButtonGroup>
+
                                 </Col>
                             </Row>
 

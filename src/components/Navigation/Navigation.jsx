@@ -1,11 +1,12 @@
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+import { Container, Nav, Navbar, NavDropdown, Form, Row, Col } from 'react-bootstrap';
+
+import CinemasGlobalFilter from '../CinemasGlobalFilter/CinemasGlobalFilter';
+import MoviesGlobalFilter from '../MoviesGlobalFilter/MoviesGlobalFilter';
 
 import { Link } from 'react-router-dom';
 
-const Navigation = () => {
+const Navigation = currentFamilyPath => {
+
     return (
         <div className="Navigation">
             <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary" data-bs-theme="dark" bg="dark">
@@ -17,6 +18,23 @@ const Navigation = () => {
                             <Nav.Link to="/cines" as={Link}>Cines</Nav.Link>
                             <Nav.Link to="/peliculas" as={Link}>Películas</Nav.Link>
                         </Nav>
+                        <Form>
+                            <Row>
+                                <Col xs="auto">
+
+
+                                    {
+
+                                        currentFamilyPath.currentFamilyPath === 'cines' ?
+                                            <CinemasGlobalFilter />
+                                            : currentFamilyPath.currentFamilyPath === 'peliculas' ?
+                                                <MoviesGlobalFilter />
+                                                :
+                                                null
+                                    }
+                                </Col>
+                            </Row>
+                        </Form>
                         <Nav>
                             <NavDropdown title="Administrar" id="collapsible-nav-dropdown">
                                 <NavDropdown.Item to="/cines/crear" as={Link}>Añadir nuevo cine</NavDropdown.Item>
