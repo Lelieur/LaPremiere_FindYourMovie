@@ -12,8 +12,6 @@ import DeletedCinemasPage from "../pages/CinemaPages/DeletedCinemasPage/DeletedC
 
 const AppRoutes = () => {
 
-    console.log(window)
-
     return (
         <div className="AppRoutes">
             <Routes>

@@ -7,6 +7,7 @@ import axios from 'axios'
 import { Container, Image, Row, Col, Carousel, Stack, Badge, Button, ButtonGroup, Card, Modal } from 'react-bootstrap'
 
 import "./CinemaDetailsPage.css"
+import CustomMap from '../../../components/CustomMap/CustomMap'
 import Loader from '../../../components/Loader/Loader'
 
 const API_URL = "http://localhost:5005"
@@ -110,111 +111,154 @@ const CinemaDetailsPage = () => {
                     <div className="CinemaDetailsPage">
 
                         <Container>
+                            <Row className='mt-4 mb-4 align-items-center'>
+                                <Col>
+                                    <h1>{cinema.name}</h1>
+                                </Col>
+                                <Col className="d-flex align-items-center justify-content-end">
+                                    <ButtonGroup>
+                                        <Button variant="success" as={Link} to={`/cines/editar/${cinemaId}`}>Editar cine</Button>
+                                        <Button variant="danger" onClick={() => setShowModal(true)}>Eliminar cine</Button>
+                                    </ButtonGroup>
+                                </Col>
+                                <hr />
+                            </Row>
 
-                            <Row className="mt-5">
-                                <Col md={{ span: 5 }}>
+                            <Row className="mt-2 align-items-center">
+                                <Col md={{ span: 4 }}>
                                     <Carousel>
                                         <Carousel.Item >
-                                            <Image src={cinema.cover[0]} rounded fluid />
+                                            <Image className="w-100 h-100 object-fit-cover" style={{ aspectRatio: "4 / 3", overflow: "hidden" }} src={cinema.cover[0]} rounded fluid />
                                         </Carousel.Item>
                                         <Carousel.Item >
-                                            <Image src={cinema.cover[1]} rounded fluid />
+                                            <Image className="w-100 h-100 object-fit-cover" style={{ aspectRatio: "4 / 3", overflow: "hidden" }} src={cinema.cover[1]} rounded fluid />
                                         </Carousel.Item>
                                         <Carousel.Item >
-                                            <Image src={cinema.cover[2]} rounded fluid />
+                                            <Image className="w-100 h-100 object-fit-cover" style={{ aspectRatio: "4 / 3", overflow: "hidden" }} src={cinema.cover[2]} rounded fluid />
                                         </Carousel.Item>
                                     </Carousel>
                                 </Col>
-                                <Col md={{ span: 7 }}>
+
+                                <Col md={{ span: 8 }}>
                                     <Row>
+
                                         <Col md={{ span: 6 }}>
-                                            <h1>{cinema.name}</h1>
+                                            <Row className="mb-3" >
+                                                <Row>
+                                                    <Col>
+                                                        <span className="form-section-title">Dirección: </span>
+                                                    </Col>
+                                                </Row>
+                                                <Row>
+                                                    <Col>
+                                                        {cinema.address.street}, {cinema.address.zipcode} ({cinema.address.city})
+                                                    </Col>
+                                                </Row>
+                                            </Row>
+                                            <Row className="mb-3">
+                                                <Row>
+                                                    <Col >
+                                                        <span className="form-section-title">Precio: </span>
+                                                    </Col>
+                                                </Row>
+                                                <Row>
+                                                    <Col>
+                                                        <Stack direction="horizontal" gap={1}>
+                                                            <Badge bg="dark">Nomal: {cinema.price.regular}€</Badge>
+                                                            <Badge bg="secondary">Fin de semana: {cinema.price.weekend}€</Badge>
+                                                            <Badge bg="success">Miércoles: {cinema.price.special}€</Badge>
+                                                        </Stack>
+                                                    </Col>
+                                                </Row>
+                                            </Row>
+                                            <Row className="mb-3">
+                                                <Row className="align-items-center">
+                                                    <Col >
+                                                        <span className="form-section-title">Servicios: </span>
+                                                    </Col>
+                                                </Row>
+                                                <Row>
+                                                    <Col>
+                                                        <Stack direction="horizontal" gap={1}>
+                                                            {
+                                                                cinema.services.map(elm => {
+                                                                    return (
+                                                                        <Badge bg="warning" key={elm}>{cinema.services[cinema.services.indexOf(elm)]}</Badge>
+                                                                    )
+                                                                })
+                                                            }
+                                                        </Stack>
+                                                    </Col>
+                                                </Row>
+                                            </Row>
+                                            <Row className="mb-3">
+                                                <Row>
+                                                    <Col>
+                                                        <p><span className="form-section-title">Specs: </span></p>
+                                                    </Col>
+                                                </Row>
+                                                <Row>
+                                                    <Col>
+                                                        {cinema.specs.is3D && (
+                                                            <Image src={IMAGE_PATHS.is3DFavicon} className="h-100 me-3"
+                                                                style={{ objectFit: "contain", maxHeight: "30px" }} fluid />
+                                                        )}
+                                                        {cinema.specs.VO && (
+                                                            <Image src={IMAGE_PATHS.specsFavicon} className="h-100 me-3"
+                                                                style={{ objectFit: "contain", maxHeight: "30px" }} fluid />
+                                                        )}
+                                                        {cinema.specs.accesibility && (
+                                                            <Image src={IMAGE_PATHS.accesibilityFavicon} className="h-100 me-3"
+                                                                style={{ objectFit: "contain", maxHeight: "30px" }} fluid />
+                                                        )}
+                                                    </Col>
+                                                </Row>
+                                            </Row>
+                                            <Row>
+                                                <Col>
+                                                    <ButtonGroup className="me-5" aria-label="Basic example">
+                                                        <Button variant="dark" as="a" href={cinema.url} target="_blank">Comprar entradas</Button>
+                                                        <Button variant="secondary" as={Link} to="/cines">Ver otro cine</Button>
+                                                    </ButtonGroup>
+                                                </Col>
+                                            </Row>
                                         </Col>
-                                        <Col md={{ span: 6 }} className="d-flex align-items-center justify-content-end">
-                                            <ButtonGroup>
-                                                <Button variant="success" as={Link} to={`/cines/editar/${cinemaId}`}>Editar cine</Button>
-                                                <Button variant="danger" onClick={() => setShowModal(true)}>Eliminar cine</Button>
-                                            </ButtonGroup>
+
+                                        <Col md={{ span: 5, offset: 1 }}>
+                                            <CustomMap address={cinema.address} />
                                         </Col>
                                     </Row>
-
-                                    <hr />
-                                    <p><span className="form-section-title">Dirección: </span>{cinema.address.street}, {cinema.address.zipcode} ({cinema.address.city})</p>
-                                    <p><span className="form-section-title">Precio: </span></p>
-                                    <Stack direction="horizontal" gap={2}>
-                                        <Badge bg="dark">Nomal: {cinema.price.regular}€</Badge>
-                                        <Badge bg="secondary">Fin de semana: {cinema.price.weekend}€</Badge>
-                                        <Badge bg="success">Miércoles: {cinema.price.special}€</Badge>
-                                    </Stack>
-
-                                    <p><span className="form-section-title">Servicios: </span>
-                                        <Stack direction="horizontal" gap={2} style={{ display: 'inline-flex' }}>
-                                            {
-                                                cinema.services.map(elm => {
-                                                    return (
-                                                        <Badge bg="warning" key={cinema.id}>{cinema.services[cinema.services.indexOf(elm)]}</Badge>
-                                                    )
-                                                })
-                                            }
-                                        </Stack>
-                                    </p>
-                                    <p><span className="form-section-title">Specs: </span></p>
-                                    <Row>
-                                        {cinema.specs.is3D && (
-                                            <Col md={{ span: 1 }}>
-                                                <Image src={IMAGE_PATHS.is3DFavicon} fluid />
-                                            </Col>
-                                        )}
-                                        {cinema.specs.VO && (
-                                            <Col md={{ span: 1 }}>
-                                                <Image src={IMAGE_PATHS.specsFavicon} fluid />
-                                            </Col>
-                                        )}
-                                        {cinema.specs.accesibility && (
-                                            <Col md={{ span: 1 }}>
-                                                <Image src={IMAGE_PATHS.accesibilityFavicon} fluid />
-                                            </Col>
-                                        )}
-                                    </Row>
-                                    <ButtonGroup className="mt-4 me-5" aria-label="Basic example">
-                                        <Button variant="dark" as="a" href={cinema.url} target="_blank">Comprar entradas</Button>
-                                        <Button variant="secondary" as={Link} to="/cines">Ver otro cine</Button>
-                                    </ButtonGroup>
-
                                 </Col>
                             </Row>
 
-                        </Container >
-
-                        <Container className="mt-4">
-                            <h3>PELÍCULAS EN CARTELERA</h3>
-                            <hr />
-                            <Row className="flex-nowrap" style={{ overflowX: "auto" }}>
-                                {
-                                    moviesInCinema.map(elm => {
-                                        return (
-                                            <Col md={{ span: 2 }} key={elm.id}>
-                                                <Link to={`/peliculas/detalles/${elm.id}`}>
-
-                                                    <Card >
-                                                        <Card.Img variant="top" src={elm.poster} />
-
+                            <Row className="mt-5 justify-content-center">
+                                <Col>
+                                    <h3>PELÍCULAS EN CARTELERA</h3>
+                                    <hr />
+                                </Col>
+                                <Row className="flex-nowrap" style={{ overflowX: "auto" }}>
+                                    {
+                                        moviesInCinema.map(elm => {
+                                            return (
+                                                <Col key={elm.id}>
+                                                    <Card className="h-100 mx-auto">
+                                                        <Link className="h-100 mx-auto" to={`/peliculas/detalles/${elm.id}`}>
+                                                            <Card.Img variant="top h-100 object-fit-cover" src={elm.poster} />
+                                                        </Link>
                                                         {
                                                             elm.released ?
                                                                 <Button as="a" target="_blank" href={cinema.url} className="rounded-0 rounded-bottom" variant="dark">Comprar entradas</Button>
                                                                 :
                                                                 <Button as="a" target="_blank" href={cinema.url} className="rounded-0 rounded-bottom" variant="success">Próximamente</Button>
-
                                                         }
-
                                                     </Card>
-
-                                                </Link>
-                                            </Col>
-                                        )
-                                    })
-                                }
+                                                </Col>
+                                            )
+                                        })
+                                    }
+                                </Row>
                             </Row>
+
                         </Container>
 
                     </div >

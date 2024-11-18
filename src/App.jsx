@@ -25,7 +25,6 @@ const App = () => {
     <div className='App'>
 
       <Navigation currentFamilyPath={currentFamilyPath} />
-      {console.log(currentFamilyPath)}
 
       <AppRoutes />
 
