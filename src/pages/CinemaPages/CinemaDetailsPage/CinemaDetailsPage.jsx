@@ -224,7 +224,7 @@ const CinemaDetailsPage = () => {
                                             </Row>
                                         </Col>
 
-                                        <Col md={{ span: 5, offset: 1 }}>
+                                        <Col md={{ span: 6 }}>
                                             <CustomMap address={cinema.address} />
                                         </Col>
                                     </Row>
@@ -239,21 +239,23 @@ const CinemaDetailsPage = () => {
                                 <Row className="flex-nowrap" style={{ overflowX: "auto" }}>
                                     {
                                         moviesInCinema.map(elm => {
-                                            return (
-                                                <Col key={elm.id}>
-                                                    <Card className="h-100 mx-auto">
-                                                        <Link className="h-100 mx-auto" to={`/peliculas/detalles/${elm.id}`}>
-                                                            <Card.Img variant="top h-100 object-fit-cover" src={elm.poster} />
-                                                        </Link>
-                                                        {
-                                                            elm.released ?
-                                                                <Button as="a" target="_blank" href={cinema.url} className="rounded-0 rounded-bottom" variant="dark">Comprar entradas</Button>
-                                                                :
-                                                                <Button as="a" target="_blank" href={cinema.url} className="rounded-0 rounded-bottom" variant="success">Próximamente</Button>
-                                                        }
-                                                    </Card>
-                                                </Col>
-                                            )
+                                            if (!elm.isDeleted) {
+                                                return (
+                                                    <Col md={{ span: 2 }} key={elm.id}>
+                                                        <Card className="h-100 mx-auto">
+                                                            <Link className="h-100 mx-auto" to={`/peliculas/detalles/${elm.id}`}>
+                                                                <Card.Img variant="top h-100 object-fit-cover" src={elm.poster} />
+                                                            </Link>
+                                                            {
+                                                                elm.released ?
+                                                                    <Button as="a" target="_blank" href={cinema.url} className="rounded-0 rounded-bottom" variant="dark">Comprar entradas</Button>
+                                                                    :
+                                                                    <Button as="a" target="_blank" href={cinema.url} className="rounded-0 rounded-bottom" variant="success">Próximamente</Button>
+                                                            }
+                                                        </Card>
+                                                    </Col>
+                                                )
+                                            }
                                         })
                                     }
                                 </Row>

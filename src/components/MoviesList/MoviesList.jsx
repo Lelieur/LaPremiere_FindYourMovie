@@ -29,11 +29,17 @@ const MoviesList = () => {
         isLoading ? <Loader /> :
             <div className="MoviesList">
                 <Row className="mt-1 g-4 justify-content-center">
-                    {movies.map(elm => (
-                        <Col key={elm.id} lg={3} className="d-flex justify-content-center">
-                            <MovieCard {...elm} />
-                        </Col>
-                    ))}
+                    {
+                        movies.map(elm => {
+                            if (!elm.isDeleted) {
+                                return (
+                                    <Col key={elm.id} lg={3} className="d-flex justify-content-center">
+                                        <MovieCard {...elm} />
+                                    </Col>
+                                )
+                            }
+                        })
+                    }
                 </Row>
             </div>
     )
