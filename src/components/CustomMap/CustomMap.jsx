@@ -5,6 +5,7 @@ const CustomMap = (address) => {
 
     const [addressValue, setAddressValue] = useState(address)
     const [coordinates, setCoordinates] = useState({})
+
     useEffect(() => { handleMap() }, [])
 
     const handleMap = () => {
@@ -28,7 +29,6 @@ const CustomMap = (address) => {
                 console.log('Longitud:', location.lng());
 
                 setCoordinates({ lat: location.lat(), lng: location.lng() })
-                console.log(coordinates)
 
             } else {
                 console.error('Geocodificación fallida:', status);
@@ -50,12 +50,12 @@ const CustomMap = (address) => {
         <div>
             <GoogleMap
                 mapContainerStyle={{ height: '300px' }}
-                zoom={12}
+                zoom={15}
                 onLoad={onLoad}
-                center={{ lat: -3.745, lng: -38.523 }}
+                center={{ lat: coordinates.lat, lng: coordinates.lng }}
                 onUnmount={onUnmount}
             >
-                <Marker position={{ lat: -3.745, lng: -38.523 }} />
+                <Marker position={{ lat: coordinates.lat, lng: coordinates.lng }} />
             </GoogleMap>
         </div>
     )

@@ -128,7 +128,7 @@ const MovieDetailsPage = () => {
         axios
             .patch((`${API_URL}/movies/${movieId}`), { isDeleted: true })
             .then(() => setShowModal(false))
-            .then(() => navigate(`/movies`))
+            .then(() => navigate(`/peliculas`))
             .catch(err => console.log(err))
     }
 
