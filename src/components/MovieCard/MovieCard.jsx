@@ -1,4 +1,4 @@
-import { Card, Button, ListGroup, Image } from "react-bootstrap"
+import { Card, Button, ListGroup } from "react-bootstrap"
 import { Link } from "react-router-dom"
 
 const MovieCard = ({ id, title, country, duration, language, calification, poster }) => {
@@ -7,17 +7,21 @@ const MovieCard = ({ id, title, country, duration, language, calification, poste
     return (
         <div className="MovieCard">
 
-            <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src={poster} />
+            <Card className="border-dark" style={{ width: '18rem' }} >
+                <Card.Img
+                    variant="top"
+                    src={poster}
+                    style={{ height: "400px", objectFit: "cover" }}
+                    alt={`Poster of ${title.spanish || "the movie"}`}
+                />
                 <Card.Body>
-                    <Card.Title>{title.spanish ? title.spanish : "No tiene título"}</Card.Title>
                     <ListGroup variant="flush">
                         <ListGroup.Item><strong>Country:</strong> {country}</ListGroup.Item>
                         <ListGroup.Item><strong>Language:</strong> {language}</ListGroup.Item>
                         <ListGroup.Item> <strong>Duration:</strong> {duration} min </ListGroup.Item>
                         <ListGroup.Item><strong>Calification:</strong> {calification}</ListGroup.Item>
                     </ListGroup>
-                    <Button variant="secondary" as={Link} to={`/peliculas/detalles/${id}`}>
+                    <Button className="d-flex justify-content-center" size="sm" variant="dark" as={Link} to={`/peliculas/detalles/${id}`}>
                         Ver detalles
                     </Button>
                 </Card.Body>

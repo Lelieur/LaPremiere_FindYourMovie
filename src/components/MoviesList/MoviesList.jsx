@@ -28,15 +28,13 @@ const MoviesList = () => {
     return (
         isLoading ? <Loader /> :
             <div className="MoviesList">
-                <Container fluid className="MoviesList mt-4">
-                    <Row className="g-4 justify-content-center">
-                        {movies.map(elm => (
-                            <Col key={elm.id} lg={3} className="d-flex justify-content-center">
-                                <MovieCard {...elm} />
-                            </Col>
-                        ))}
-                    </Row>
-                </Container>
+                <Row className="mt-1 g-4 justify-content-center">
+                    {movies.map(elm => (
+                        <Col key={elm.id} lg={3} className="d-flex justify-content-center">
+                            <MovieCard {...elm} />
+                        </Col>
+                    ))}
+                </Row>
             </div>
     )
 }
