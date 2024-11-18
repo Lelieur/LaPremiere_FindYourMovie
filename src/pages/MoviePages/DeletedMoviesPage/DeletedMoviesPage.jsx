@@ -1,8 +1,8 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import Loader from "../../components/Loader/Loader"
+import Loader from "../../../components/Loader/Loader"
 import { Row, Col, Container, Button } from "react-bootstrap"
-import MovieCard from "../../components/MovieCard/MovieCard"
+import MovieCard from "../../../components/MovieCard/MovieCard"
 
 const API_URL = "http://localhost:5005"
 

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
-import { Button } from "react-bootstrap"
+import { Button, Container, Row, Col } from "react-bootstrap"
 import MoviesList from "../../../components/MoviesList/MoviesList"
+import MoviesGlobalFilter from "../../../components/MoviesGlobalFilter/MoviesGlobalFilter"
 
 const FilmsPage = () => {
     return (

@@ -80,7 +80,7 @@ const MovieDetailsPage = () => {
 
     const calculateAverageRating = () => {
         const totalRating = reviews.reduce((sum, review) => sum + (review.rating), 0)
-        return (totalRating / reviews.length)
+        return totalRating / reviews.length
     }
 
     const averageRating = calculateAverageRating()
@@ -128,7 +128,7 @@ const MovieDetailsPage = () => {
         axios
             .patch((`${API_URL}/movies/${movieId}`), { isDeleted: true })
             .then(() => setShowModal(false))
-            .then(() => navigate(`/movies`))
+            .then(() => navigate(`/peliculas`))
             .catch(err => console.log(err))
     }
 

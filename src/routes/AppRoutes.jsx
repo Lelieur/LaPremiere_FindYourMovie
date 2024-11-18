@@ -9,7 +9,7 @@ import MovieDetailPage from "../pages/MoviePages/MovieDetailsPage/MovieDetailsPa
 import NewMoviePage from "../pages/MoviePages/NewMoviePage/NewMoviePage";
 import EditMoviePage from "../pages/MoviePages/EditMoviePage/EditMoviePage"
 import DeletedCinemasPage from "../pages/CinemaPages/DeletedCinemasPage/DeletedCinemasPage";
-import DeletedMoviesPage from "../pages/DeletedMoviesPage/DeletedMoviesPage";
+import DeletedMoviesPage from "../pages/MoviePages/DeletedMoviesPage/DeletedMoviesPage";
 
 const AppRoutes = () => {
 
