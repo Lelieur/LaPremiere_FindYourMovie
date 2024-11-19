@@ -25,7 +25,7 @@ const NewMovieForm = () => {
         trailer: '',
         description: '',
         cinemaId: [''],
-        casting: [{ id: '', name: '', photo: '' }]
+        casting: [{ name: '', photo: '' }]
     })
 
     useEffect(() => {
@@ -45,12 +45,6 @@ const NewMovieForm = () => {
     const [title, setTitle] = useState({
         original: '',
         spanish: ''
-    })
-
-    const [casting, setCasting] = useState({
-        id: '',
-        nombre: '',
-        foto: ''
     })
 
     const handleTitleChange = (e) => {
@@ -110,7 +104,7 @@ const NewMovieForm = () => {
     }
     const addNewCasting = () => {
         const updatedCasting = [...movieData.casting]
-        updatedCasting.push({ id: Date.now(), name: '', photo: '' })
+        updatedCasting.push({ name: '', photo: '' })
         setMovieData({ ...movieData, casting: updatedCasting })
     }
     const deletedNewCasting = (idx) => {
@@ -165,8 +159,6 @@ const NewMovieForm = () => {
                         })
                     })
 
-
-                alert('HECHO!')
                 navigate(`/peliculas/detalles/${newMovie.id}`)
             })
             .catch(err => console.log(err))
