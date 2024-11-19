@@ -8,7 +8,6 @@ const FilmsPage = () => {
         <div className="FilmsPage">
 
             <MoviesList />
-
             <hr />
 
             <div className="d-flex justify-content-center">
