@@ -1,16 +1,18 @@
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { useState, useEffect } from "react"
 import axios from "axios"
-import { Col, Container, Row, ButtonGroup, ListGroup, Image, Button, Badge, Accordion, Modal, Card, CardHeader, CardBody } from "react-bootstrap"
+import { Col, Container, Row, ButtonGroup, ListGroup, Image, Button, Badge, Accordion, Modal, Card, CardHeader, CardBody, ModalHeader, ModalTitle, ModalBody, ModalFooter } from "react-bootstrap"
 import Loader from "../../../components/Loader/Loader"
 import { FaStar, FaStarHalfAlt, FaPlayCircle } from "react-icons/fa"
+import NewMovieReviewForm from "../../../components/NewMovieReviewForm/NewMovieReviewForm"
 
 const API_URL = "http://localhost:5005"
 
 const MovieDetailsPage = () => {
     const badgeColors = ["primary", "secondary", "success", "danger", "warning", "info", "dark"]
     const { movieId } = useParams()
-    const [showModal, setShowModal] = useState(false)
+    const [showAddReviewModal, setShowAddReviewModal] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [movie, setMovie] = useState({})
     const [isLoading, setIsLoading] = useState(true)
     const [cinemasInMovie, setCinemasInMovie] = useState([])
@@ -111,12 +113,25 @@ const MovieDetailsPage = () => {
 
         axios
             .patch((`${API_URL}/movies/${movieId}`), { isDeleted: true })
-            .then(() => setShowModal(false))
+            .then(() => setShowDeleteModal(false))
             .then(() => navigate(`/peliculas`))
             .catch(err => console.log(err))
     }
 
+    const addReview = (newReview) => {
+        const reviewWithMovieId = { ...newReview, movieId: Number(movieId), user: newReview.user || "Anonimo" }
 
+        axios
+            .post(`${API_URL}/reviews`, reviewWithMovieId)
+            .then(response => {
+                const createdReview = response.data
+                setReviews(prevReviews => [...prevReviews, createdReview])
+                setIsLoading(isLoading)
+            })
+            .catch(err => {
+                console.error("Error al añadir la reseña", err)
+            })
+    }
     return (
 
         isLoading ? <Loader /> : (
@@ -131,14 +146,14 @@ const MovieDetailsPage = () => {
                                 <Button className="me-4 btn-sm" variant="dark" as={Link} to={`/peliculas/editar/${movieId}`}>
                                     Editar Película
                                 </Button>
-                                <Button className="ms-4 btn-sm" variant="dark" onClick={() => setShowModal(true)}>
+                                <Button className="ms-4 btn-sm" variant="dark" onClick={() => setShowDeleteModal(true)}>
                                     Eliminar Película
                                 </Button>
                             </ButtonGroup>
                         </Col>
                     </Row>
                     <hr className="my-1" />
-                    <Row>
+                    <Row className="align-items-center mb-5 mt-0 p-2">
                         <Col md={2} className="mb-4">
                             <div>
                                 <a href={movie.trailer || "#"} target="_blank" rel="noopener noreferrer" style={{ position: "relative", display: "block" }}>
@@ -167,9 +182,7 @@ const MovieDetailsPage = () => {
                         </Col>
 
                         <Col md={3} className="mb-4">
-
-
-                            <ListGroup.Item>
+                            <ListGroup.Item className="mt-0">
                                 <strong>Calificación: </strong>
                                 {averageRating > 0 ? (
                                     <div className="d-flex align-items-center justify-content-between">
@@ -204,7 +217,7 @@ const MovieDetailsPage = () => {
                             <ListGroup.Item><strong>Duración: </strong>{movie.duration || "No disponible"} min</ListGroup.Item>
                             <ListGroup.Item>
                                 <strong>Género: </strong>
-                                <Row className="mt-2">
+                                <Row className="mt-1">
                                     {movie.gender?.length ? (
                                         movie.gender.map((gen, index) => (
                                             <Col key={index} xs="auto" className="mb-2">
@@ -217,16 +230,10 @@ const MovieDetailsPage = () => {
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item><strong>Fecha: </strong>{movie.date ? new Date(movie.date).toLocaleDateString() : "No disponible"}</ListGroup.Item>
-                            <Modal
-                                show={showModal}
-                                onHide={() => setShowModal(false)}
-                                backdrop="static"
-                                keyboard={false}
-                            >
-                                <Button className="mt-5" size="sm" variant="dark" as={Link} to={`/peliculas/reseña/${movie.id}`}>
-                                    Hacer una reseña
-                                </Button>
-                            </Modal>
+                            <ListGroup.Item><strong>Director: </strong>{movie.director || "No disponible"}</ListGroup.Item>
+                            <Button className="mt-3" size="sm" variant="dark" onClick={() => setShowAddReviewModal(true)}>
+                                Hacer una reseña
+                            </Button>
                         </Col>
                         <Col md={7} className="mb-4">
                             <p><strong>Sinopsis: </strong>{movie.description || "Sin descripción disponible."}</p>
@@ -247,47 +254,79 @@ const MovieDetailsPage = () => {
                                 </Accordion.Item>
                             </Accordion>
                         </Col>
+                        <div className="mt-4">
+                            <h3><strong>Casting</strong></h3>
+                            {movie.casting && movie.casting.length > 0 ? (
+                                <Row className="g-2">
+                                    {movie.casting.map((actor, index) => (
+                                        <Col xs={4} md={2} className="text-center" key={index}>
+                                            <div className="text-center">
+                                                <Image
+                                                    src={actor.photo || "default-image.jpg"}
+                                                    alt={actor.name}
+                                                    roundedCircle
+                                                    style={{ width: "100px", height: "120px", objectFit: "cover" }}
+                                                />
+                                                <p className="mt-1" style={{ fontSize: "0.9rem" }}><strong>{actor.name}</strong></p>
+                                            </div>
+                                        </Col>
+                                    ))}
+                                </Row>
+                            ) : (
+                                <p>No hay información sobre el elenco disponible.</p>
+                            )}
+                        </div>
                     </Row>
                     <Row className="mb-4">
                         <Col md={12}>
-                            <Modal
-                                show={showModal}
-                                onHide={() => setShowModal(false)}
-                                backdrop="static"
-                                keyboard={false}
-                            >
-                                <Accordion className="mb-2">
-                                    <Accordion.Item eventKey="0">
-                                        <Accordion.Header><strong>Ver Comentarios</strong></Accordion.Header>
-                                        <Accordion.Body>
-                                            <div style={{ maxHeight: "300px", overflowY: "auto" }}>
-                                                {reviews.length > 0 ? (
-                                                    <ListGroup>
-                                                        {reviews.map((review, index) => (
-                                                            <ListGroup.Item key={index}>
-                                                                <strong>{review.user || "Anónimo"}</strong>: {review.comment}
-                                                                <div>
-                                                                    <strong>Calificación:</strong>
-                                                                    {[...Array(review.rating)].map((_, idx) => (
-                                                                        <span key={idx} style={{ color: "#ffb400" }}>★</span>
-                                                                    ))}
-                                                                </div>
-                                                            </ListGroup.Item>
-                                                        ))}
-                                                    </ListGroup>
-                                                ) : (
-                                                    <p>No hay comentarios para esta película.</p>
-                                                )}
-                                            </div>
-                                        </Accordion.Body>
-                                    </Accordion.Item>
-                                </Accordion>
-                            </Modal>
+                            <Accordion className="mb-2">
+                                <Accordion.Item eventKey="0">
+                                    <Accordion.Header><strong>Ver Comentarios</strong></Accordion.Header>
+                                    <Accordion.Body>
+                                        <div style={{ maxHeight: "300px", overflowY: "auto" }}>
+                                            {reviews.length > 0 ? (
+                                                <ListGroup>
+                                                    {reviews.map((review, index) => (
+                                                        <ListGroup.Item key={index}>
+                                                            <strong>{review.user || "Anónimo"}</strong>: {review.comment}
+                                                            <div>
+                                                                <strong>Calificación:</strong>
+                                                                {[...Array(review.rating)].map((_, idx) => (
+                                                                    <span key={idx} style={{ color: "#ffb400" }}>★</span>
+                                                                ))}
+                                                            </div>
+                                                        </ListGroup.Item>
+                                                    ))}
+                                                </ListGroup>
+                                            ) : (
+                                                <p>No hay comentarios para esta película.</p>
+                                            )}
+                                        </div>
+                                    </Accordion.Body>
+                                </Accordion.Item>
+                            </Accordion>
                         </Col>
                     </Row>
                     <Modal
-                        show={showModal}
-                        onHide={() => setShowModal(false)}
+                        show={showAddReviewModal}
+                        onHide={() => setShowAddReviewModal(false)}
+                        backdrop="static"
+                        keyboard={false}
+                    >
+                        <ModalHeader closeButton>
+                            <ModalTitle> Añadir una valoración </ModalTitle>
+                        </ModalHeader>
+                        <ModalBody>
+                            <NewMovieReviewForm
+                                onAddReview={addReview}
+                                onCloseModal={() => setShowAddReviewModal(false)}
+                            />
+                        </ModalBody>
+                    </Modal>
+
+                    <Modal
+                        show={showDeleteModal}
+                        onHide={() => setShowDeleteModal(false)}
                         backdrop="static"
                         keyboard={false}
                     >
@@ -301,7 +340,7 @@ const MovieDetailsPage = () => {
                             <Button variant="danger" onClick={handleMovieDelete}>
                                 Eliminar definitivamente
                             </Button>
-                            <Button variant="dark" onClick={() => setShowModal(false)}>Cancelar</Button>
+                            <Button variant="dark" onClick={() => setShowDeleteModal(false)}>Cancelar</Button>
                         </Modal.Footer>
                     </Modal>
                     <div className="d-grid gap-2 d-md-flex justify-content-sm-end">

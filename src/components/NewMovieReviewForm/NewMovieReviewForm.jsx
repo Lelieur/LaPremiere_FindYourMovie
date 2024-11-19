@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Button, ButtonGroup, Form, Row, Col } from "react-bootstrap"
 import { FaStar } from "react-icons/fa"
 
-const NewMovieReviewForm = ({ onAddReview }) => {
+const NewMovieReviewForm = ({ onAddReview, onCloseModal }) => {
     const [rating, setRating] = useState(0)
     const [hoverRating, setHoverRating] = useState(null)
     const [comment, setComment] = useState("")
@@ -29,6 +29,7 @@ const NewMovieReviewForm = ({ onAddReview }) => {
             setComment("")
             setUserName("")
             setErrors({})
+            onCloseModal()
         }
     }
 

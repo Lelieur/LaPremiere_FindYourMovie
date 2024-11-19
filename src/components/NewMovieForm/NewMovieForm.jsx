@@ -21,9 +21,11 @@ const NewMovieForm = () => {
         calification: '',
         released: true,
         date: '',
+        director: '',
         trailer: '',
         description: '',
-        cinemaId: ['']
+        cinemaId: [''],
+        casting: [{ id: '', name: '', photo: '' }]
     })
 
     useEffect(() => {
@@ -43,6 +45,12 @@ const NewMovieForm = () => {
     const [title, setTitle] = useState({
         original: '',
         spanish: ''
+    })
+
+    const [casting, setCasting] = useState({
+        id: '',
+        nombre: '',
+        foto: ''
     })
 
     const handleTitleChange = (e) => {
@@ -69,6 +77,13 @@ const NewMovieForm = () => {
         gendersCopy[idx] = value
         setMovieData({ ...movieData, gender: gendersCopy })
     }
+    const handleCastingChange = (e, idx, field) => {
+        const { value } = e.target
+        const updatedCasting = [...movieData.casting]
+        updatedCasting[idx][field] = value
+        setMovieData({ ...movieData, casting: updatedCasting })
+    }
+
     const addNewCinema = () => {
         setMovieData((prevData) => ({
             ...prevData,
@@ -93,6 +108,16 @@ const NewMovieForm = () => {
         gendersCopy.pop()
         setMovieData({ ...movieData, gender: gendersCopy })
     }
+    const addNewCasting = () => {
+        const updatedCasting = [...movieData.casting]
+        updatedCasting.push({ id: Date.now(), name: '', photo: '' })
+        setMovieData({ ...movieData, casting: updatedCasting })
+    }
+    const deletedNewCasting = (idx) => {
+        const updatedCasting = [...movieData.casting]
+        updatedCasting.splice(idx, 1)
+        setMovieData({ ...movieData, casting: updatedCasting })
+    }
     const handleFormSubmit = (e) => {
         e.preventDefault();
         const reqPayload = {
@@ -102,7 +127,48 @@ const NewMovieForm = () => {
 
         axios
             .post(`${API_URL}/movies`, reqPayload)
-            .then(response => navigate(`/peliculas/detalles/${response.data.id}`))
+            .then((response) => {
+                const { data: newMovie } = response
+
+                axios
+                    .get(`${API_URL}/cinemas/`)
+                    .then(response => {
+
+                        const { data: allCinemas } = response
+
+                        const filteredCinemas = allCinemas.filter(eachCinema => {
+                            return (newMovie.cinemaId.includes(eachCinema.id))
+                        })
+
+                        filteredCinemas.map(eachCinema => {
+
+                            let copyCinemaToEdit = {
+                                ...eachCinema
+                            }
+
+                            const newMoviesIds =
+                                Array.isArray(copyCinemaToEdit.movieId) ?
+                                    copyCinemaToEdit.movieId :
+                                    [copyCinemaToEdit.movieId]
+
+                            newMoviesIds.push(newMovie.id)
+
+                            copyCinemaToEdit = {
+                                ...eachCinema,
+                                movieId: newMoviesIds
+                            }
+
+                            axios
+                                .put(`${API_URL}/cinemas/${eachCinema.id}`, copyCinemaToEdit)
+                                .then(() => { })
+                                .catch(err => console.log(err))
+                        })
+                    })
+
+
+                alert('HECHO!')
+                navigate(`/peliculas/detalles/${newMovie.id}`)
+            })
             .catch(err => console.log(err))
     }
 
@@ -213,6 +279,56 @@ const NewMovieForm = () => {
                             value={movieData.date}
                             onChange={handleMovieChange}
                         />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="directorField">
+                        <Form.Label><strong>Director</strong></Form.Label>
+                        <Form.Control
+                            type="text"
+                            name="director"
+                            value={movieData.director}
+                            onChange={handleMovieChange}
+                        />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="castingField">
+                        <Form.Label><strong>Casting</strong></Form.Label>
+                        {movieData.casting.map((eachCasting, idx) => (
+                            <div key={idx} className="d-flex align-items-center mb-3">
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Nombre del actor"
+                                    value={eachCasting.name}
+                                    onChange={(event) =>
+                                        handleCastingChange(event, idx, 'name')
+                                    }
+                                    className="me-2"
+                                />
+                                <Form.Control
+                                    type="text"
+                                    placeholder="URL de la foto"
+                                    value={eachCasting.photo}
+                                    onChange={(event) =>
+                                        handleCastingChange(event, idx, 'photo')
+                                    }
+                                    className="me-2"
+                                />
+                            </div>
+                        ))}
+                        <Button
+                            className="me-2"
+                            size="sm"
+                            variant="dark"
+                            onClick={addNewCasting}
+                        >
+                            Añadir Actor
+                        </Button>
+                        <Button
+                            size="sm"
+                            variant="dark"
+                            onClick={() => deletedNewCasting(idx)}
+                        >
+                            Quitar Actor
+                        </Button>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="trailerField">
