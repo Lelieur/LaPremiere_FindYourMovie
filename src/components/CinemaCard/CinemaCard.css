@@ -1,3 +1,27 @@
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.card {
+    border: none;
+    animation: gradientAnimation 5s infinite;
+    background-size: 200%, 200%;
+    background-image: linear-gradient(25deg, #ff6843, #feb47b);
+    color: white;
+    font-family: "Helvetica Neue";
+    font-size: 0.8rem;
+}
+
 a {
     text-decoration: none;
     color: black;

@@ -27,7 +27,7 @@ const App = () => {
 
       <AppRoutes currentFamilyPath={currentFamilyPath} />
 
-      <Footer />
+      <Footer currentFamilyPath={currentFamilyPath} />
 
     </div>
 

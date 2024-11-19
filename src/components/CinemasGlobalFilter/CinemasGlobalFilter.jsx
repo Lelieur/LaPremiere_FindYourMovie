@@ -54,7 +54,7 @@ const CinemasGlobalFilter = ({ filterSelected, handleFilterSelected }) => {
                 <Form.Control
                     type="text"
                     placeholder="Buscar cine"
-                    className="mr-sm-2"
+                    className="form-control mr-sm-2"
                     onChange={handleFilterChange}
                     onFocus={() => { setFilterResults([]); setFilterValue(''); handleShowFilterResults(false); changeFilterSelected("cines") }}
                     onBlur={() => { setTimeout(() => handleShowFilterResults(false), 100); changeFilterSelected("") }}

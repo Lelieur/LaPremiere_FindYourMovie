@@ -17,29 +17,33 @@ const CinemaCard = ({ id, cover, name, address, specs, url }) => {
 
             <Link to={`detalles/${id}`}>
 
-                <Card className="pb-2">
+                <Card className="card pb-2">
                     <Card.Img variant="top" src={cover[0]} style={{ height: "15rem", objectFit: "cover" }} />
                     <Card.Body>
                         <Card.Title>{name}</Card.Title>
                         <Card.Text>
                             📍 {country} | {city} | {street}, {zipcode}
                         </Card.Text>
-                        <Row>
-                            {is3D && (
-                                <Col md={{ span: 2 }}>
-                                    <Image src={IMAGE_PATHS.is3DFavicon} fluid />
-                                </Col>
-                            )}
-                            {VO && (
-                                <Col md={{ span: 2 }}>
-                                    <Image src={IMAGE_PATHS.specsFavicon} fluid />
-                                </Col>
-                            )}
-                            {accesibility && (
-                                <Col md={{ span: 2 }}>
-                                    <Image src={IMAGE_PATHS.accesibilityFavicon} fluid />
-                                </Col>
-                            )}
+                        <Row className="justify-content-center">
+                            <Col md={{ span: 6 }}>
+                                <Row>
+                                    {is3D && (
+                                        <Col>
+                                            <Image src={IMAGE_PATHS.is3DFavicon} className="h-100" style={{ objectFit: "contain", maxHeight: "30px" }} fluid />
+                                        </Col>
+                                    )}
+                                    {VO && (
+                                        <Col>
+                                            <Image src={IMAGE_PATHS.specsFavicon} className="h-100" style={{ objectFit: "contain", maxHeight: "30px" }} fluid />
+                                        </Col>
+                                    )}
+                                    {accesibility && (
+                                        <Col>
+                                            <Image src={IMAGE_PATHS.accesibilityFavicon} className="h-100" style={{ objectFit: "contain", maxHeight: "30px" }} fluid />
+                                        </Col>
+                                    )}
+                                </Row>
+                            </Col>
                         </Row>
                     </Card.Body>
                 </Card>
@@ -47,7 +51,7 @@ const CinemaCard = ({ id, cover, name, address, specs, url }) => {
             </Link>
 
 
-        </div>
+        </div >
     )
 }
 

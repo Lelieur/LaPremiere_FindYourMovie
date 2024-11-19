@@ -1,18 +1,26 @@
 import { Link } from "react-router-dom"
 import { Button, Container, Row, Col } from "react-bootstrap"
 import MoviesList from "../../../components/MoviesList/MoviesList"
-import MoviesGlobalFilter from "../../../components/MoviesGlobalFilter/MoviesGlobalFilter"
 
 const FilmsPage = () => {
     return (
         <div className="FilmsPage">
 
-            <MoviesList />
-            <hr />
+            <Container className="text-center">
+                <Row className="mt-5">
+                    <Col>
+                        <Col>
+                            <h2 className="section-title">Encuentra tu peli</h2>
+                        </Col>
+                    </Col>
+                </Row>
+                <Row>
+                    <MoviesList />
+                </Row>
+                <Button className="styled-button-2" variant="dark" as={Link} to={'/'}>Volver a la Home</Button>
 
-            <div className="d-flex justify-content-center">
-                <Button variant="dark" as={Link} to={'/'}>Volver a la Home</Button>
-            </div>
+            </Container>
+
         </div>
     )
 }

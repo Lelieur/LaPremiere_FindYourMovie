@@ -2,17 +2,18 @@ import { Row, Col, Button, Card } from 'react-bootstrap';
 
 import "./Footer.css"
 
-const Footer = () => {
-    return (
-        <div className="Footer">
+const Footer = ({ currentFamilyPath }) => {
 
-            <Card className="mt-5 rounded-0 text-center" bg="dark" text="light" border="none">
-                <Card.Body className='p-4'>
-                    <Card.Title className='p-4'>LA PREMIERE</Card.Title>
-                    <p>Copyright © 2024 Le Premiere.</p>
-                    <p>Built by Aaron & Lucas.</p>
-                </Card.Body>
-                <Row className="p-3">
+    if (currentFamilyPath) {
+        return (
+            <div className="Footer text-center text-white p-5 mt-5">
+                <Row>
+                    <h3>LA PREMIERE</h3>
+                </Row>
+                <Row>
+                    <p>Copyright © 2024 La Premiere | Built by Aaron & Lucas.</p>
+                </Row>
+                <Row>
                     <Col md={{ span: 4 }}>
                         <Button className="bg-transparent border-0 text-white" variant="light" as="a" href="#">Aviso Legal</Button>
                     </Col>
@@ -23,10 +24,10 @@ const Footer = () => {
                         <Button className="bg-transparent border-0 text-white" variant="light">Política de Cookies</Button>
                     </Col>
                 </Row>
-            </Card>
 
-        </div>
-    )
+            </div>
+        )
+    }
 }
 
 export default Footer
