@@ -18,7 +18,6 @@ const App = () => {
         :
         null
 
-
   return (
 
 
@@ -26,7 +25,7 @@ const App = () => {
 
       <Navigation currentFamilyPath={currentFamilyPath} />
 
-      <AppRoutes />
+      <AppRoutes currentFamilyPath={currentFamilyPath} />
 
       <Footer />
 

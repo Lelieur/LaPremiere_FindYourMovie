@@ -14,6 +14,7 @@ const NewCinemaForm = () => {
     const navigate = useNavigate()
 
     const [movies, setMovies] = useState([])
+
     useEffect(() => {
         fetchMovies()
     }, [])

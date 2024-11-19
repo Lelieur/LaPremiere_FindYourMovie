@@ -4,7 +4,8 @@ import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 const CustomMap = (address) => {
 
     const [addressValue, setAddressValue] = useState(address)
-    const [coordinates, setCoordinates] = useState({})
+    const [coordinates, setCoordinates] = useState()
+    const [marker, setMarker] = useState(false)
 
     useEffect(() => { handleMap() }, [])
 
@@ -20,13 +21,8 @@ const CustomMap = (address) => {
 
         geocoder.geocode({ address: addressCorrected }, (results, status) => {
             if (status === google.maps.GeocoderStatus.OK) {
-                // Extraer coordenadas del primer resultado
 
                 const location = results[0].geometry.location;
-
-                console.log('Dirección:', results[0].formatted_address);
-                console.log('Latitud:', location.lat());
-                console.log('Longitud:', location.lng());
 
                 setCoordinates({ lat: location.lat(), lng: location.lng() })
 
@@ -42,10 +38,14 @@ const CustomMap = (address) => {
 
     const [map, setMap] = useState(null)
 
-    const onLoad = (map) => console.log('Aquí haz lo que necesites tras la carga del mapa')
+    const onLoad = (map) => handleMarker()
     const onUnmount = () => setMap(null)
 
-    return isLoaded && (
+    const handleMarker = () => {
+        setMarker(true)
+    }
+
+    return isLoaded && coordinates && (
 
         <div>
             <GoogleMap
@@ -55,7 +55,10 @@ const CustomMap = (address) => {
                 center={{ lat: coordinates.lat, lng: coordinates.lng }}
                 onUnmount={onUnmount}
             >
-                <Marker position={{ lat: coordinates.lat, lng: coordinates.lng }} />
+                {
+                    marker &&
+                    <Marker position={{ lat: coordinates.lat, lng: coordinates.lng }} />
+                }
             </GoogleMap>
         </div>
     )

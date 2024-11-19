@@ -1,74 +1,89 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Form, ListGroup } from "react-bootstrap"
 
 import axios from "axios"
 import { Link } from "react-router-dom"
+import { TbRuler } from "react-icons/tb"
 
 const API_URL = "http://localhost:5005"
 
 
-const CinemasGlobalFilter = () => {
+const CinemasGlobalFilter = ({ filterSelected, handleFilterSelected }) => {
 
     const [filterValue, setFilterValue] = useState()
     const [filterResults, setFilterResults] = useState([])
     const [showFilterResults, setShowFilterResults] = useState()
 
     const handleFilterChange = e => {
+        handleShowFilterResults(true)
         const { value } = e.target
         setFilterValue(value)
-        handleFilterResults(filterValue)
     }
 
-    const handleFilterResults = search => {
+    useEffect(() => {
         axios
-            .get(`${API_URL}/cinemas/?name_like=${search}`)
+            .get(`${API_URL}/cinemas/?name_like=${filterValue}`)
             .then(response => {
                 setFilterResults(response.data)
             })
             .catch(err => console.log(err))
-    }
+    }, [filterValue])
+
 
     const handleShowFilterResults = change => {
         setShowFilterResults(change)
     }
 
-    return (
-        <div className="CinemasGlobalFilter">
+    const changeFilterSelected = input => {
+        handleFilterSelected(input)
+    }
+
+    if (filterSelected === 'pelis') {
+        return (
             <Form.Control
+                disabled
                 type="text"
                 placeholder="Buscar cine"
-                className="mr-sm-2"
-                onChange={handleFilterChange}
-                onFocus={() => { setFilterResults([]); setFilterValue(''); handleShowFilterResults(true) }}
-                onBlur={() => setTimeout(() => handleShowFilterResults(false), 150)}
-                value={filterValue}
             />
+        )
 
+    } else {
+        return (
+            <div className="CinemasGlobalFilter">
 
+                <Form.Control
+                    type="text"
+                    placeholder="Buscar cine"
+                    className="mr-sm-2"
+                    onChange={handleFilterChange}
+                    onFocus={() => { setFilterResults([]); setFilterValue(''); handleShowFilterResults(false); changeFilterSelected("cines") }}
+                    onBlur={() => { setTimeout(() => handleShowFilterResults(false), 100); changeFilterSelected("") }}
+                    value={filterValue}
+                />
+                <ListGroup className="position-absolute z-1">
+                    {
+                        filterResults.map(elm => {
 
-            <ListGroup className="position-absolute z-1">
+                            if (showFilterResults) {
+                                return (
+                                    <ListGroup.Item
+                                        key={elm.id}
+                                        as={Link}
+                                        to={`/cines/detalles/${elm.id}`}
+                                        onClick={() => setFilterValue(elm.name)}
+                                    >
+                                        {elm.name}
+                                    </ListGroup.Item>
+                                )
+                            }
+                        })
+                    }
+                </ListGroup>
+            </div >
+        )
 
-                {
-                    filterResults.map(elm => {
+    }
 
-                        if (showFilterResults) {
-                            return (
-                                <ListGroup.Item
-                                    as={Link}
-                                    to={`/cines/detalles/${elm.id}`}
-                                    onClick={() => setFilterValue(elm.name)}
-                                >
-                                    {elm.name}
-                                </ListGroup.Item>
-                            )
-
-                        }
-                    })
-                }
-
-            </ListGroup>
-        </div >
-    )
 }
 
 export default CinemasGlobalFilter

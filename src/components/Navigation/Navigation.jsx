@@ -21,16 +21,15 @@ const Navigation = currentFamilyPath => {
                         <Form>
                             <Row>
                                 <Col xs="auto">
-
-
                                     {
-
-                                        currentFamilyPath.currentFamilyPath === 'cines' ?
-                                            <CinemasGlobalFilter />
-                                            : currentFamilyPath.currentFamilyPath === 'peliculas' ?
-                                                <MoviesGlobalFilter />
-                                                :
-                                                null
+                                        currentFamilyPath.currentFamilyPath === '/' ?
+                                            <CinemasGlobalFilter currentFamilyPath={currentFamilyPath.currentFamilyPath} />
+                                            : currentFamilyPath.currentFamilyPath === 'cines' ?
+                                                <CinemasGlobalFilter currentFamilyPath={currentFamilyPath.currentFamilyPath} />
+                                                : currentFamilyPath.currentFamilyPath === 'peliculas' ?
+                                                    <MoviesGlobalFilter currentFamilyPath={currentFamilyPath.currentFamilyPath} />
+                                                    :
+                                                    null
                                     }
                                 </Col>
                             </Row>
