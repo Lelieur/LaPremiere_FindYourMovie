@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom"
 import { Container, Button, Row, Col } from 'react-bootstrap'
 
-import CinemasGlobalFilter from "../../../components/CinemasGlobalFilter/CinemasGlobalFilter"
 import CinemasList from "../../../components/CinemasList/CinemasList"
 
 import "./CinemasPage.css"
@@ -10,18 +9,16 @@ const CinemasPage = () => {
     return (
         <div className="CinemasPage">
 
-            <Container className="cinemas-page">
-                <Row className="d-flex align-items-center">
-                    <Col md={{ span: 3 }}>
-                        <h1>Encuentra tu cine</h1>
-                    </Col>
-                    <Col md={{ span: 3 }}>
-                        <CinemasGlobalFilter />
+            <Container className="text-center">
+                <Row className="mt-5 d-flex align-items-center">
+                    <Col>
+                        <h2 className="section-title">Encuentra tu cine</h2>
                     </Col>
                 </Row>
-                <hr />
-                <CinemasList />
-                <Button className="return-button" to={'/'} as={Link}>Volver a la Home</Button>
+                <Row className="mt-5">
+                    <CinemasList />
+                </Row>
+                <Button variant="dark" className="styled-button-2" to={'/'} as={Link}>Volver a la Home</Button>
             </Container>
 
         </div>

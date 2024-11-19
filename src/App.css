@@ -1,0 +1,69 @@
+@font-face {
+    font-family: "AmericanCaptain";
+    src: url("./assets/fonts/AmericanCaptain.otf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+h1,
+h2,
+h3,
+.logo {
+    font-family: "AmericanCaptain";
+    font-size: 150px
+}
+
+h2 {
+    font-size: 60px
+}
+
+h3 {
+    font-size: 40px
+}
+
+p,
+span,
+.form-control {
+    font-family: "Helvetica Neue";
+}
+
+.section-title {
+    color: white;
+    padding: 10px;
+    background-image: linear-gradient(25deg, #ff6843, #feb47b);
+    border-radius: 10px;
+}
+
+.logo {
+    font-size: 30px;
+}
+
+.form-control {
+    border: none;
+}
+
+.styled-button-1 {
+    background-color: #feb47b;
+    border: none
+}
+
+.styled-button-1:hover {
+    background-color: #ff6843;
+}
+
+.styled-button-2 {
+    background-color: #ff6843;
+    border: none
+}
+
+.styled-button-2:hover {
+    background-color: #feb47b;
+}
+
+hr {
+    color: #ff6843;
+}
+
+.badge {
+    background-color: #feb47b;
+}

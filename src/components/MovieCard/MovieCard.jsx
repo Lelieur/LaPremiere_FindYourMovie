@@ -1,4 +1,4 @@
-import { Card, Button, ListGroup } from "react-bootstrap"
+import { Card, Row, Col, Button, ListGroup } from "react-bootstrap"
 import { Link } from "react-router-dom"
 
 const MovieCard = ({ id, title, country, duration, language, calification, poster }) => {
@@ -8,21 +8,47 @@ const MovieCard = ({ id, title, country, duration, language, calification, poste
         <div className="MovieCard">
             <Link to={`detalles/${id}`}>
 
-                <Card className="border-dark" style={{ width: '18rem' }} >
+                <Card className="border-dark">
                     <Card.Img
-                        a
+                        fluid
                         variant="top"
                         src={poster}
-                        style={{ height: "400px", objectFit: "cover" }}
-                        alt={`Poster of ${title.spanish || "the movie"}`}
+                        style={{ height: "25rem", objectFit: "cover" }}
+                        alt={`Poster of ${title.spanish}`}
                     />
                     <Card.Body>
-                        <ListGroup variant="flush">
-                            <ListGroup.Item><strong>Country:</strong> {country}</ListGroup.Item>
-                            <ListGroup.Item><strong>Language:</strong> {language}</ListGroup.Item>
-                            <ListGroup.Item> <strong>Duration:</strong> {duration} min </ListGroup.Item>
-                            <ListGroup.Item><strong>Calification:</strong> {calification}</ListGroup.Item>
-                        </ListGroup>
+                        <Row>
+                            <Col >
+                                <strong>Country:</strong>
+                            </Col>
+                            <Col >
+                                {country}
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <strong>Language:</strong>
+                            </Col>
+                            <Col>
+                                {language}
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <strong>Duration:</strong>
+                            </Col>
+                            <Col>
+                                {duration} min
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <strong>Calification:</strong>
+                            </Col>
+                            <Col>
+                                {calification}
+                            </Col>
+                        </Row>
                     </Card.Body>
                 </Card>
             </Link>

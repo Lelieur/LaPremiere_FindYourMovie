@@ -113,15 +113,14 @@ const CinemaDetailsPage = () => {
                         <Container>
                             <Row className='mt-4 mb-4 align-items-center'>
                                 <Col>
-                                    <h1>{cinema.name}</h1>
+                                    <h2 className="section-title">{cinema.name}</h2>
                                 </Col>
                                 <Col className="d-flex align-items-center justify-content-end">
                                     <ButtonGroup>
-                                        <Button variant="success" as={Link} to={`/cines/editar/${cinemaId}`}>Editar cine</Button>
-                                        <Button variant="danger" onClick={() => setShowModal(true)}>Eliminar cine</Button>
+                                        <Button className="styled-button-1" variant="success" as={Link} to={`/cines/editar/${cinemaId}`}>Editar cine</Button>
+                                        <Button className="styled-button-2" variant="danger" onClick={() => setShowModal(true)}>Eliminar cine</Button>
                                     </ButtonGroup>
                                 </Col>
-                                <hr />
                             </Row>
 
                             <Row className="mt-2 align-items-center">
@@ -151,7 +150,7 @@ const CinemaDetailsPage = () => {
                                                 </Row>
                                                 <Row>
                                                     <Col>
-                                                        {cinema.address.street}, {cinema.address.zipcode} ({cinema.address.city})
+                                                        <span>{cinema.address.street}, {cinema.address.zipcode} ({cinema.address.city})</span>
                                                     </Col>
                                                 </Row>
                                             </Row>
@@ -183,7 +182,7 @@ const CinemaDetailsPage = () => {
                                                             {
                                                                 cinema.services.map(elm => {
                                                                     return (
-                                                                        <Badge bg="warning" key={elm}>{cinema.services[cinema.services.indexOf(elm)]}</Badge>
+                                                                        <Badge className="badge" key={elm}>{cinema.services[cinema.services.indexOf(elm)]}</Badge>
                                                                     )
                                                                 })
                                                             }
@@ -217,8 +216,8 @@ const CinemaDetailsPage = () => {
                                             <Row>
                                                 <Col>
                                                     <ButtonGroup className="me-5" aria-label="Basic example">
-                                                        <Button variant="dark" as="a" href={cinema.url} target="_blank">Comprar entradas</Button>
-                                                        <Button variant="secondary" as={Link} to="/cines">Ver otro cine</Button>
+                                                        <Button className="styled-button-1" variant="dark" as="a" href={cinema.url} target="_blank">Comprar entradas</Button>
+                                                        <Button className="styled-button-2" variant="secondary" as={Link} to="/cines">Ver otro cine</Button>
                                                     </ButtonGroup>
                                                 </Col>
                                             </Row>
@@ -233,8 +232,7 @@ const CinemaDetailsPage = () => {
 
                             <Row className="mt-5 justify-content-center">
                                 <Col>
-                                    <h3>PELÍCULAS EN CARTELERA</h3>
-                                    <hr />
+                                    <h3 className="section-title">PELÍCULAS EN CARTELERA</h3>
                                 </Col>
                                 <Row className="flex-nowrap" style={{ overflowX: "auto" }}>
                                     {
@@ -248,9 +246,9 @@ const CinemaDetailsPage = () => {
                                                             </Link>
                                                             {
                                                                 elm.released ?
-                                                                    <Button as="a" target="_blank" href={cinema.url} className="rounded-0 rounded-bottom" variant="dark">Comprar entradas</Button>
+                                                                    <Button as="a" target="_blank" href={cinema.url} className="styled-button-1 rounded-0 rounded-bottom" variant="dark">Comprar entradas</Button>
                                                                     :
-                                                                    <Button as="a" target="_blank" href={cinema.url} className="rounded-0 rounded-bottom" variant="success">Próximamente</Button>
+                                                                    <Button as="a" target="_blank" href={cinema.url} className="styled-button-2 rounded-0 rounded-bottom" variant="success">Próximamente</Button>
                                                             }
                                                         </Card>
                                                     </Col>
