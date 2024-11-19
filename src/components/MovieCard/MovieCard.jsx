@@ -1,7 +1,20 @@
 import { Card, Row, Col, Button, ListGroup } from "react-bootstrap"
 import { Link } from "react-router-dom"
+import FlagIcon from "../FlagIcon/FlagIcon"
+
+const countryNameToCode = {
+    "Estados Unidos": "US",
+    "España": "ES",
+    "Reino Unido": "GB",
+    "Canada": "CA",
+    "México": "MX",
+    "Alemania": "DE",
+    "Japón": "JP"
+}
 
 const MovieCard = ({ id, title, country, duration, language, calification, poster }) => {
+
+    const countryCode = countryNameToCode[country] || "ZZ"
 
 
     return (
@@ -19,15 +32,15 @@ const MovieCard = ({ id, title, country, duration, language, calification, poste
                     <Card.Body>
                         <Row>
                             <Col >
-                                <strong>Country:</strong>
+                                <strong>País:</strong>
                             </Col>
                             <Col >
-                                {country}
+                                {country}  <FlagIcon countryCode={countryCode} size="small" />
                             </Col>
                         </Row>
                         <Row>
                             <Col>
-                                <strong>Language:</strong>
+                                <strong>Idioma:</strong>
                             </Col>
                             <Col>
                                 {language}
@@ -35,7 +48,7 @@ const MovieCard = ({ id, title, country, duration, language, calification, poste
                         </Row>
                         <Row>
                             <Col>
-                                <strong>Duration:</strong>
+                                <strong>Duración:</strong>
                             </Col>
                             <Col>
                                 {duration} min
@@ -43,7 +56,7 @@ const MovieCard = ({ id, title, country, duration, language, calification, poste
                         </Row>
                         <Row>
                             <Col>
-                                <strong>Calification:</strong>
+                                <strong>Calificación:</strong>
                             </Col>
                             <Col>
                                 {calification}

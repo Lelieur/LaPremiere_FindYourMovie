@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Button, Form, Row, Col } from 'react-bootstrap';
+import { Button, Form, CloseButton } from 'react-bootstrap';
 import Loader from "../Loader/Loader"
 import { useNavigate, useParams } from "react-router-dom"
 import axios from "axios"
@@ -21,9 +21,11 @@ const EditMovieForm = () => {
         calification: '',
         released: true,
         date: '',
+        director: '',
         trailer: '',
         description: '',
-        cinemaId: ['']
+        cinemaId: [''],
+        casting: [{ name: '', photo: '' }]
     })
 
     useEffect(() => {
@@ -80,6 +82,12 @@ const EditMovieForm = () => {
         gendersCopy[idx] = value
         setMovieData({ ...movieData, gender: gendersCopy })
     }
+    const handleCastingChange = (e, idx, field) => {
+        const { value } = e.target
+        const updatedCasting = [...movieData.casting]
+        updatedCasting[idx][field] = value
+        setMovieData({ ...movieData, casting: updatedCasting })
+    }
     const addNewCinema = () => {
         setMovieData((prevData) => ({
             ...prevData,
@@ -105,6 +113,18 @@ const EditMovieForm = () => {
         const gendersCopy = [...movieData.gender]
         gendersCopy.pop()
         setMovieData({ ...movieData, gender: gendersCopy })
+    }
+
+    const addNewCasting = () => {
+        const updatedCasting = [...movieData.casting]
+        updatedCasting.push({ name: '', photo: '' })
+        setMovieData({ ...movieData, casting: updatedCasting })
+    }
+    const deletedNewCasting = (idx) => {
+        const updatedCasting = [...movieData.casting]
+        updatedCasting.splice(idx, 1)
+        setMovieData({ ...movieData, casting: updatedCasting })
+
     }
     const handleFormSubmit = (e) => {
         e.preventDefault();
@@ -225,6 +245,45 @@ const EditMovieForm = () => {
                             value={movieData.date}
                             onChange={handleMovieChange}
                         />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="directorField">
+                        <Form.Label><strong>Director</strong></Form.Label>
+                        <Form.Control
+                            type="text"
+                            name="director"
+                            value={movieData.director}
+                            onChange={handleMovieChange}
+                        />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="castingField">
+                        <Form.Label><strong>Casting</strong></Form.Label>
+                        {movieData.casting.map((eachCasting, idx) => (
+                            <div key={idx} className="d-flex align-items-center mb-3">
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Nombre del actor"
+                                    value={eachCasting.name}
+                                    onChange={(event) =>
+                                        handleCastingChange(event, idx, 'name')
+                                    }
+                                    className="me-2"
+                                />
+                                <Form.Control closeButton
+                                    type="text"
+                                    placeholder="URL de la foto"
+                                    value={eachCasting.photo}
+                                    onChange={(event) =>
+                                        handleCastingChange(event, idx, 'photo')
+                                    }
+                                    className="me-2"
+                                />
+                                <CloseButton
+                                    onClick={() => deletedNewCasting(idx)}
+                                    className="ms-2"
+                                />
+                            </div>
+                        ))}
+                        <Button className="me-2" size="sm" variant="dark" onClick={addNewCasting}> Añadir Actor</Button>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="trailerField">

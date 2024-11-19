@@ -5,25 +5,49 @@ import { Col, Container, Row, ButtonGroup, ListGroup, Image, Button, Badge, Acco
 import Loader from "../../../components/Loader/Loader"
 import { FaStar, FaStarHalfAlt, FaPlayCircle } from "react-icons/fa"
 import NewMovieReviewForm from "../../../components/NewMovieReviewForm/NewMovieReviewForm"
+import FlagIcon from "../../../components/FlagIcon/FlagIcon"
+
 
 const API_URL = "http://localhost:5005"
+
+const countryNameToCode = {
+    "Estados Unidos": "US",
+    "España": "ES",
+    "Inglaterra": "IN",
+    "Reino Unido": "GB",
+    "Canada": "CA",
+    "México": "MX",
+    "Alemania": "DE",
+    "Japón": "JP"
+}
 
 const MovieDetailsPage = () => {
     const badgeColors = ["primary", "secondary", "success", "danger", "warning", "info", "dark"]
     const { movieId } = useParams()
+    const navigate = useNavigate()
     const [showAddReviewModal, setShowAddReviewModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [movie, setMovie] = useState({})
     const [isLoading, setIsLoading] = useState(true)
     const [cinemasInMovie, setCinemasInMovie] = useState([])
     const [reviews, setReviews] = useState([])
-    const navigate = useNavigate()
+    const [countryCode, setCountryCode] = useState("ZZ")
+
+
+
 
     useEffect(() => {
         fetchCinemaInMovie()
         fetchReviews()
         fetchMovieDetails()
     }, [movieId])
+
+    useEffect(() => {
+        if (movie.country) {
+            const code = countryNameToCode[movie.country] || 'ZZ'
+            setCountryCode(code);
+        }
+    }, [movie]);
 
     const fetchMovieDetails = () => {
         axios
@@ -212,7 +236,7 @@ const MovieDetailsPage = () => {
 
                             </ListGroup.Item>
 
-                            <ListGroup.Item><strong>País: </strong>{movie.country || "No disponible"}</ListGroup.Item>
+                            <ListGroup.Item><strong>País: </strong>{movie.country || "No disponible"} <FlagIcon countryCode={countryCode} size="small" /></ListGroup.Item >
                             <ListGroup.Item><strong>Lengua: </strong>{movie.language || "No disponible"}</ListGroup.Item>
                             <ListGroup.Item><strong>Duración: </strong>{movie.duration || "No disponible"} min</ListGroup.Item>
                             <ListGroup.Item>
