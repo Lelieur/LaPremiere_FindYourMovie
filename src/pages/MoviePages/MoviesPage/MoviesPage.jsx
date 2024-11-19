@@ -11,6 +11,7 @@ const FilmsPage = () => {
                     <Col>
                         <Col>
                             <h2 className="section-title">Encuentra tu peli</h2>
+                            <hr />
                         </Col>
                     </Col>
                 </Row>

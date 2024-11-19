@@ -13,6 +13,7 @@ const CinemasPage = () => {
                 <Row className="mt-5 d-flex align-items-center">
                     <Col>
                         <h2 className="section-title">Encuentra tu cine</h2>
+                        <hr />
                     </Col>
                 </Row>
                 <Row className="mt-5">

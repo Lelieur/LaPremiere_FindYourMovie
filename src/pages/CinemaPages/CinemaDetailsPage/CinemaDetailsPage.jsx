@@ -111,17 +111,18 @@ const CinemaDetailsPage = () => {
                     <div className="CinemaDetailsPage">
 
                         <Container>
-                            <Row className='mt-4 mb-4 align-items-center'>
-                                <Col>
+                            <Row className='mt-4'>
+                                <Col >
                                     <h2 className="section-title">{cinema.name}</h2>
                                 </Col>
-                                <Col className="d-flex align-items-center justify-content-end">
-                                    <ButtonGroup>
-                                        <Button className="styled-button-1" variant="success" as={Link} to={`/cines/editar/${cinemaId}`}>Editar cine</Button>
-                                        <Button className="styled-button-2" variant="danger" onClick={() => setShowModal(true)}>Eliminar cine</Button>
+                                <Col className="text-end" >
+                                    <ButtonGroup >
+                                        <Button className="styled-button-1" as={Link} to={`/cines/editar/${cinemaId}`}>Editar cine</Button>
+                                        <Button className="styled-button-2" onClick={() => setShowModal(true)}>Eliminar cine</Button>
                                     </ButtonGroup>
                                 </Col>
                             </Row>
+                            <hr />
 
                             <Row className="mt-2 align-items-center">
                                 <Col md={{ span: 4 }}>
@@ -140,7 +141,6 @@ const CinemaDetailsPage = () => {
 
                                 <Col md={{ span: 8 }}>
                                     <Row>
-
                                         <Col md={{ span: 6 }}>
                                             <Row className="mb-3" >
                                                 <Row>
@@ -163,9 +163,9 @@ const CinemaDetailsPage = () => {
                                                 <Row>
                                                     <Col>
                                                         <Stack direction="horizontal" gap={1}>
-                                                            <Badge bg="dark">Nomal: {cinema.price.regular}€</Badge>
-                                                            <Badge bg="secondary">Fin de semana: {cinema.price.weekend}€</Badge>
-                                                            <Badge bg="success">Miércoles: {cinema.price.special}€</Badge>
+                                                            <Badge className="badge-container-dark" bg="none">Nomal: {cinema.price.regular}€</Badge>
+                                                            <Badge className="badge-container-medium" bg="none">Fin de semana: {cinema.price.weekend}€</Badge>
+                                                            <Badge className="badge-container-ligth" bg="none">Miércoles: {cinema.price.special}€</Badge>
                                                         </Stack>
                                                     </Col>
                                                 </Row>
@@ -182,7 +182,7 @@ const CinemaDetailsPage = () => {
                                                             {
                                                                 cinema.services.map(elm => {
                                                                     return (
-                                                                        <Badge className="badge" key={elm}>{cinema.services[cinema.services.indexOf(elm)]}</Badge>
+                                                                        <Badge bg="none" className="badge-container-ligth" key={elm}>{cinema.services[cinema.services.indexOf(elm)]}</Badge>
                                                                     )
                                                                 })
                                                             }
@@ -213,14 +213,6 @@ const CinemaDetailsPage = () => {
                                                     </Col>
                                                 </Row>
                                             </Row>
-                                            <Row>
-                                                <Col>
-                                                    <ButtonGroup className="me-5" aria-label="Basic example">
-                                                        <Button className="styled-button-1" variant="dark" as="a" href={cinema.url} target="_blank">Comprar entradas</Button>
-                                                        <Button className="styled-button-2" variant="secondary" as={Link} to="/cines">Ver otro cine</Button>
-                                                    </ButtonGroup>
-                                                </Col>
-                                            </Row>
                                         </Col>
 
                                         <Col md={{ span: 6 }}>
@@ -230,33 +222,40 @@ const CinemaDetailsPage = () => {
                                 </Col>
                             </Row>
 
-                            <Row className="mt-5 justify-content-center">
-                                <Col>
+                            <Row className="mt-5">
+                                <Col >
                                     <h3 className="section-title">PELÍCULAS EN CARTELERA</h3>
                                 </Col>
-                                <Row className="flex-nowrap" style={{ overflowX: "auto" }}>
-                                    {
-                                        moviesInCinema.map(elm => {
-                                            if (!elm.isDeleted) {
-                                                return (
-                                                    <Col md={{ span: 2 }} key={elm.id}>
-                                                        <Card className="h-100 mx-auto">
-                                                            <Link className="h-100 mx-auto" to={`/peliculas/detalles/${elm.id}`}>
-                                                                <Card.Img variant="top h-100 object-fit-cover" src={elm.poster} />
-                                                            </Link>
-                                                            {
-                                                                elm.released ?
-                                                                    <Button as="a" target="_blank" href={cinema.url} className="styled-button-1 rounded-0 rounded-bottom" variant="dark">Comprar entradas</Button>
-                                                                    :
-                                                                    <Button as="a" target="_blank" href={cinema.url} className="styled-button-2 rounded-0 rounded-bottom" variant="success">Próximamente</Button>
-                                                            }
-                                                        </Card>
-                                                    </Col>
-                                                )
-                                            }
-                                        })
-                                    }
-                                </Row>
+                                <Col className="text-end" >
+                                    <ButtonGroup aria-label="Basic example">
+                                        <Button className="styled-button-1" variant="dark" as="a" href={cinema.url} target="_blank">Comprar entradas</Button>
+                                        <Button className="styled-button-2" variant="secondary" as={Link} to="/cines">Ver otro cine</Button>
+                                    </ButtonGroup>
+                                </Col>
+                            </Row>
+                            <hr />
+                            <Row className="flex-nowrap" style={{ overflowX: "auto" }}>
+                                {
+                                    moviesInCinema.map(elm => {
+                                        if (!elm.isDeleted) {
+                                            return (
+                                                <Col md={{ span: 2 }} key={elm.id}>
+                                                    <Card className="h-100 mx-auto">
+                                                        <Link className="h-100 mx-auto" to={`/peliculas/detalles/${elm.id}`}>
+                                                            <Card.Img variant="top h-100 object-fit-cover" src={elm.poster} />
+                                                        </Link>
+                                                        {
+                                                            elm.released ?
+                                                                <Button as="a" target="_blank" href={cinema.url} className="styled-button-1 rounded-0 rounded-bottom" variant="dark">Comprar entradas</Button>
+                                                                :
+                                                                <Button as="a" target="_blank" href={cinema.url} className="styled-button-2 rounded-0 rounded-bottom" variant="success">Próximamente</Button>
+                                                        }
+                                                    </Card>
+                                                </Col>
+                                            )
+                                        }
+                                    })
+                                }
                             </Row>
 
                         </Container>

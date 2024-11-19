@@ -1,7 +1,7 @@
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { useState, useEffect } from "react"
 import axios from "axios"
-import { Col, Container, Row, ButtonGroup, ListGroup, Image, Button, Badge, Accordion, Modal, Card, CardHeader, CardBody, ModalHeader, ModalTitle, ModalBody, ModalFooter } from "react-bootstrap"
+import { Col, Container, Row, ButtonGroup, ListGroup, Image, Button, Badge, Accordion, Modal, ModalHeader, ModalTitle, ModalBody, Stack } from "react-bootstrap"
 import Loader from "../../../components/Loader/Loader"
 import { FaStar, FaStarHalfAlt, FaPlayCircle } from "react-icons/fa"
 import NewMovieReviewForm from "../../../components/NewMovieReviewForm/NewMovieReviewForm"
@@ -137,148 +137,276 @@ const MovieDetailsPage = () => {
         isLoading ? <Loader /> : (
             <div className="MovieDetailsPage">
                 <Container>
-                    <Row className="mb-1 mt-1">
-                        <Col xs={12} md={8} >
-                            <h1>{movie.title?.spanish || movie.title || "Sin título"}</h1>
+
+                    {/* TÍTULO & BOTONES */}
+                    <Row className="mt-4">
+                        <Col >
+                            <h2>{movie.title?.spanish || movie.title || "Sin título"}</h2>
                         </Col>
-                        <Col xs={12} md={4}>
-                            <ButtonGroup className="d-flex justify-content-end mt-3">
-                                <Button className="me-4 btn-sm" variant="dark" as={Link} to={`/peliculas/editar/${movieId}`}>
+                        <Col className="text-end">
+                            <ButtonGroup >
+                                <Button className="styled-button-1" as={Link} to={"/peliculas"}>
+                                    Volver a la lista
+                                </Button>
+                                <Button className="styled-button-1" as={Link} to={`/peliculas/editar/${movieId}`}>
                                     Editar Película
                                 </Button>
-                                <Button className="ms-4 btn-sm" variant="dark" onClick={() => setShowDeleteModal(true)}>
+                                <Button className="styled-button-2" onClick={() => setShowDeleteModal(true)}>
                                     Eliminar Película
                                 </Button>
                             </ButtonGroup>
                         </Col>
                     </Row>
-                    <hr className="my-1" />
-                    <Row className="align-items-center mb-5 mt-0 p-2">
-                        <Col md={2} className="mb-4">
-                            <div>
-                                <a href={movie.trailer || "#"} target="_blank" rel="noopener noreferrer" style={{ position: "relative", display: "block" }}>
-                                    <Image
-                                        src={movie.poster || "default-image.jpg"}
-                                        alt={movie.title || "Película"}
-                                        fluid
-                                        style={{ height: "300px", maxHeight: "350px", width: "100%", objectFit: "cover", cursor: "pointer" }}
-                                    />
-                                    <div
-                                        style={{
-                                            position: "absolute",
-                                            top: "50%",
-                                            left: "50%",
-                                            transform: "translate(-50%, -50%)",
-                                            fontSize: "4rem",
-                                            color: "rgba(255, 255, 255, 0.8)",
-                                            textShadow: "0 0 10px rgba(0, 0, 0, 0.7)",
-                                            pointerEvents: "none",
-                                        }}
-                                    >
-                                        <FaPlayCircle />
+                    <hr />
+
+                    {/* POSTER & SINOPSIS & CASTING */}
+                    <Row>
+                        <Col>
+                            <Row>
+                                {/* POSTER */}
+                                <Col>
+                                    <div className="position-relative">
+                                        <Image
+                                            onClick={() => window.open(movie.trailer, "_blank")}
+                                            target="_blank"
+                                            src={movie.poster}
+                                            alt={movie.title}
+                                            fluid
+                                            style={{ cursor: "pointer" }}
+                                        />
+                                        <FaPlayCircle size={50} color="white" opacity={0.7} className="position-absolute top-50 start-50 translate-middle pe-none" />
                                     </div>
-                                </a>
-                            </div>
-                        </Col>
+                                </Col>
 
-                        <Col md={3} className="mb-4">
-                            <ListGroup.Item className="mt-0">
-                                <strong>Calificación: </strong>
-                                {averageRating > 0 ? (
-                                    <div className="d-flex align-items-center justify-content-between">
-                                        <div className="d-flex align-items-center">
-                                            {[...Array(5)].map((_, index) => {
-                                                const isFull = averageRating >= index + 1
-                                                const isHalf = averageRating >= index + 0.5 && averageRating < index + 1
-                                                const isEmpty = averageRating < index + 1
-                                                return (
-                                                    <span key={index} style={{ marginRight: "5px", fontSize: "1.5rem" }}>
-                                                        {isFull ? (
-                                                            <FaStar style={{ color: "#ffb400" }} />
-                                                        ) : isHalf ? (
-                                                            <FaStarHalfAlt style={{ color: "#ffb400" }} />
-                                                        ) : (
-                                                            <FaStar style={{ color: "#e4e5e9" }} />
-                                                        )}
-                                                    </span>
-                                                );
-                                            })}
-                                            <span className="ms-2 mt-2">{averageRating.toFixed(1)} / 5</span>
-                                        </div>
-                                    </div>
-                                ) : (
-                                    <span>0 / 0 ⭐</span>
-                                )}
-
-                            </ListGroup.Item>
-
-                            <ListGroup.Item><strong>País: </strong>{movie.country || "No disponible"}</ListGroup.Item>
-                            <ListGroup.Item><strong>Lengua: </strong>{movie.language || "No disponible"}</ListGroup.Item>
-                            <ListGroup.Item><strong>Duración: </strong>{movie.duration || "No disponible"} min</ListGroup.Item>
-                            <ListGroup.Item>
-                                <strong>Género: </strong>
-                                <Row className="mt-1">
-                                    {movie.gender?.length ? (
-                                        movie.gender.map((gen, index) => (
-                                            <Col key={index} xs="auto" className="mb-2">
-                                                <Badge bg={badgeColors[index % badgeColors.length]}>{gen}</Badge>
-                                            </Col>
-                                        ))
-                                    ) : (
-                                        <span>No disponible</span>
-                                    )}
-                                </Row>
-                            </ListGroup.Item>
-                            <ListGroup.Item><strong>Fecha: </strong>{movie.date ? new Date(movie.date).toLocaleDateString() : "No disponible"}</ListGroup.Item>
-                            <ListGroup.Item><strong>Director: </strong>{movie.director || "No disponible"}</ListGroup.Item>
-                            <Button className="mt-3" size="sm" variant="dark" onClick={() => setShowAddReviewModal(true)}>
-                                Hacer una reseña
-                            </Button>
-                        </Col>
-                        <Col md={7} className="mb-4">
-                            <p><strong>Sinopsis: </strong>{movie.description || "Sin descripción disponible."}</p>
-                            <Accordion>
-                                <Accordion.Item eventKey="0">
-                                    <Accordion.Header><strong>Cines Disponibles</strong></Accordion.Header>
-                                    <Accordion.Body>
-                                        <div style={{ maxHeight: "200px", overflowY: "auto" }}>
-                                            <ListGroup>
-                                                {cinemasInMovie.map((elm) => !elm.isDeleted && (
-                                                    <ListGroup.Item key={elm.id}>
-                                                        <Link to={`/cines/detalles/${elm.id}`}>{elm.name}</Link>
-                                                    </ListGroup.Item>
-                                                ))}
-                                            </ListGroup>
-                                        </div>
-                                    </Accordion.Body>
-                                </Accordion.Item>
-                            </Accordion>
-                        </Col>
-                        <div className="mt-4">
-                            <h3><strong>Casting</strong></h3>
-                            {movie.casting && movie.casting.length > 0 ? (
-                                <Row className="g-2">
-                                    {movie.casting.map((actor, index) => (
-                                        <Col xs={4} md={2} className="text-center" key={index}>
-                                            <div className="text-center">
-                                                <Image
-                                                    src={actor.photo || "default-image.jpg"}
-                                                    alt={actor.name}
-                                                    roundedCircle
-                                                    style={{ width: "100px", height: "120px", objectFit: "cover" }}
-                                                />
-                                                <p className="mt-1" style={{ fontSize: "0.9rem" }}><strong>{actor.name}</strong></p>
-                                            </div>
+                                {/* DETALLES & CINES */}
+                                <Col className="movie-container">
+                                    {/* País */}
+                                    <Row className="mb-3">
+                                        <Col>
+                                            <Row>
+                                                <Col>
+                                                    <strong>País: </strong>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col>
+                                                    {movie.country}
+                                                </Col>
+                                            </Row>
                                         </Col>
-                                    ))}
-                                </Row>
-                            ) : (
-                                <p>No hay información sobre el elenco disponible.</p>
-                            )}
-                        </div>
+                                    </Row>
+
+                                    {/* Idioma */}
+                                    <Row className="mb-3">
+                                        <Col>
+                                            <Row>
+                                                <Col>
+                                                    <strong>Lengua: </strong>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col>
+                                                    {movie.language}
+                                                </Col>
+                                            </Row>
+                                        </Col>
+                                    </Row>
+
+                                    {/* Duración */}
+                                    <Row className="mb-3">
+                                        <Col>
+                                            <Row>
+                                                <Col>
+                                                    <strong>Duración: </strong>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col>
+                                                    {movie.duration} min
+                                                </Col>
+                                            </Row>
+                                        </Col>
+                                    </Row>
+
+                                    {/* Género */}
+                                    <Row className="mb-3">
+                                        <Col>
+                                            <Row>
+                                                <Col>
+                                                    <strong>Género: </strong>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col>
+                                                    {
+                                                        movie.gender.length &&
+                                                        <Stack direction="horizontal" gap={1}>
+                                                            {
+                                                                movie.gender.map((gen, index) => (
+                                                                    <Badge key={index} className="badge-container-dark" bg="none">{gen}</Badge>
+                                                                ))
+                                                            }
+                                                        </Stack>
+                                                    }
+                                                </Col>
+                                            </Row>
+                                        </Col>
+                                    </Row>
+
+                                    {/* Fecha */}
+                                    <Row className="mb-3">
+                                        <Col>
+                                            <Row>
+                                                <Col>
+                                                    <strong>Fecha: </strong>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col>
+                                                    {movie.date ? new Date(movie.date).toLocaleDateString() : "No disponible"}
+                                                </Col>
+                                            </Row>
+                                        </Col>
+                                    </Row>
+
+                                    {/* Director */}
+                                    <Row className="mb-3">
+                                        <Col>
+                                            <Row>
+                                                <Col>
+                                                    <strong>Director: </strong>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col>
+                                                    {movie.director || "No disponible"}
+                                                </Col>
+                                            </Row>
+                                        </Col>
+                                    </Row>
+
+                                    {/* CINES */}
+                                    <Row className="mt-4">
+                                        <Col>
+                                            <Accordion className="position-absolute w-20" style={{ zIndex: 1000 }}>
+                                                <Accordion.Item eventKey="0">
+                                                    <Accordion.Header as="span"><stong>Cines Disponibles</stong></Accordion.Header>
+                                                    <Accordion.Body>
+                                                        <ListGroup style={{ overflowY: "auto", zIndex: 1000 }}>
+                                                            {cinemasInMovie.map((elm) => !elm.isDeleted && (
+                                                                <ListGroup.Item key={elm.id}>
+                                                                    <Link to={`/cines/detalles/${elm.id}`}>{elm.name}</Link>
+                                                                </ListGroup.Item>
+                                                            ))}
+                                                        </ListGroup>
+                                                    </Accordion.Body>
+                                                </Accordion.Item>
+                                            </Accordion>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                            </Row>
+                        </Col>
+
+                        {/* CASTING & SINOPSIS */}
+                        <Col>
+                            {/* SINOPSIS */}
+                            <Row>
+                                <Col>
+                                    <p><strong>Sinopsis: </strong></p>
+                                    <p>{movie.description || "Sin descripción disponible."}</p>
+                                </Col>
+                            </Row>
+
+                            {/* CASTING */}
+                            <Row>
+                                <Col>
+                                    <Row>
+                                        <Col>
+                                            <p><strong>Casting</strong></p>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        {movie.casting.map((actor, index) => (
+                                            <Col className="text-center" key={index}>
+                                                <Row>
+                                                    <Col>
+                                                        <Image
+                                                            src={actor.photo || "default-image.jpg"}
+                                                            alt={actor.name}
+                                                            roundedCircle
+                                                            style={{ width: "80px", height: "80px", objectFit: "cover" }}
+                                                        />
+                                                    </Col>
+                                                    <Row>
+                                                        <Col>
+                                                            <p className="mt-1" style={{ fontSize: "0.9rem" }}><strong>{actor.name}</strong></p>
+                                                        </Col>
+                                                    </Row>
+                                                </Row>
+                                            </Col>
+                                        ))}
+                                    </Row>
+                                </Col>
+                            </Row>
+
+
+                        </Col>
                     </Row>
-                    <Row className="mb-4">
-                        <Col md={12}>
+
+
+
+                    {/* RATING */}
+                    <Row className="mt-4">
+                        <Col md={3}>
+                            <Row>
+                                <Col>
+                                    <Row>
+                                        <Col>
+                                            <strong>Calificación: </strong>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col>
+                                            {averageRating > 0 ? (
+                                                <div className="d-flex align-items-center justify-content-between">
+                                                    <div className="d-flex align-items-center">
+                                                        {[...Array(5)].map((_, index) => {
+                                                            const isFull = averageRating >= index + 1
+                                                            const isHalf = averageRating >= index + 0.5 && averageRating < index + 1
+                                                            const isEmpty = averageRating < index + 1
+                                                            return (
+                                                                <span key={index} style={{ marginRight: "5px", fontSize: "1.5rem" }}>
+                                                                    {isFull ? (
+                                                                        <FaStar style={{ color: "#ffb400" }} />
+                                                                    ) : isHalf ? (
+                                                                        <FaStarHalfAlt style={{ color: "#ffb400" }} />
+                                                                    ) : (
+                                                                        <FaStar style={{ color: "#e4e5e9" }} />
+                                                                    )}
+                                                                </span>
+                                                            );
+                                                        })}
+                                                        <span className="ms-2 mt-2">{averageRating.toFixed(1)} / 5</span>
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                <span>0 / 0 ⭐</span>
+                                            )}
+                                        </Col>
+                                    </Row>
+                                </Col>
+                                <Col>
+                                    <Button className="mt-3" size="sm" variant="dark" onClick={() => setShowAddReviewModal(true)}>
+                                        Hacer una reseña</Button>
+                                </Col>
+                            </Row>
+                        </Col>
+                    </Row>
+
+                    {/* COMENTARIOS */}
+                    <Row className="mt-4">
+                        <Col>
                             <Accordion className="mb-2">
                                 <Accordion.Item eventKey="0">
                                     <Accordion.Header><strong>Ver Comentarios</strong></Accordion.Header>
@@ -307,6 +435,7 @@ const MovieDetailsPage = () => {
                             </Accordion>
                         </Col>
                     </Row>
+
                     <Modal
                         show={showAddReviewModal}
                         onHide={() => setShowAddReviewModal(false)}
@@ -343,12 +472,8 @@ const MovieDetailsPage = () => {
                             <Button variant="dark" onClick={() => setShowDeleteModal(false)}>Cancelar</Button>
                         </Modal.Footer>
                     </Modal>
-                    <div className="d-grid gap-2 d-md-flex justify-content-sm-end">
-                        <Button className="btn-sm" variant="dark" as={Link} to={"/peliculas"}>
-                            Volver a la lista
-                        </Button>
-                    </div>
-                </Container>
+
+                </Container >
             </div >
         )
 

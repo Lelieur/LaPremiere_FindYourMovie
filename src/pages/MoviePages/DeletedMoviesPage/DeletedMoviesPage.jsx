@@ -82,9 +82,9 @@ const DeletedMoviesPage = () => {
                             movies.map(elm => {
                                 if (elm.isDeleted) {
                                     return (
-                                        <Col md={{ span: 4 }} key={elm.id} >
+                                        <Col className="text-center" md={{ span: 4 }} key={elm.id} >
                                             <MovieCard {...elm} />
-                                            <Button className="mt-3" variant="success" onClick={() => handleMovieRecovery(elm)}>Recuperar película</Button>
+                                            <Button className="styled-button-2 mt-3" variant="success" onClick={() => handleMovieRecovery(elm)}>Recuperar película</Button>
                                         </Col>
                                     )
                                 }

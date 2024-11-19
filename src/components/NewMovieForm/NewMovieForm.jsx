@@ -177,7 +177,7 @@ const NewMovieForm = () => {
 
             <div className="NewMovieForm mt-5">
 
-                <Form onSubmit={handleFormSubmit}>
+                <Form className="form" onSubmit={handleFormSubmit}>
                     <Form.Group className="mb-3" controlId="titleField">
                         <Form.Label><strong>Títulos</strong></Form.Label>
 
@@ -257,8 +257,8 @@ const NewMovieForm = () => {
                             })
                         }
 
-                        <Button className="me-2" size="sm" variant="dark" onClick={addNewGender}>Añadir Género</Button>
-                        <Button className="me-2" size="sm" variant="dark" onClick={deletNewGender}>Quitar Género</Button>
+                        <Button className="styled-button-2 me-2" size="sm" variant="dark" onClick={addNewGender}>Añadir Género</Button>
+                        <Button className="styled-button-2 me-2" size="sm" variant="dark" onClick={deletNewGender}>Quitar Género</Button>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="calificationField">
@@ -315,7 +315,7 @@ const NewMovieForm = () => {
                             </div>
                         ))}
                         <Button
-                            className="me-2"
+                            className="styled-button-2 me-2"
                             size="sm"
                             variant="dark"
                             onClick={addNewCasting}
@@ -323,6 +323,7 @@ const NewMovieForm = () => {
                             Añadir Actor
                         </Button>
                         <Button
+                            className="styled-button-2"
                             size="sm"
                             variant="dark"
                             onClick={() => deletedNewCasting(idx)}
@@ -370,8 +371,8 @@ const NewMovieForm = () => {
                                 ))}
                             </Form.Control>
                         ))}
-                        <Button className="me-2" size="sm" variant="dark" onClick={addNewCinema}>Añadir Cine</Button>
-                        <Button className="me-2" size="sm" variant="dark" onClick={deletNewCinema}>Quitar Cine</Button>
+                        <Button className="styled-button-2 me-2" size="sm" variant="dark" onClick={addNewCinema}>Añadir Cine</Button>
+                        <Button className="styled-button-2 me-2" size="sm" variant="dark" onClick={deletNewCinema}>Quitar Cine</Button>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="releasedField">
@@ -384,7 +385,7 @@ const NewMovieForm = () => {
                         />
                     </Form.Group>
 
-                    <Button variant="dark" type="submit">
+                    <Button className="styled-button-2" variant="dark" type="submit">
                         Guardar película
                     </Button>
                 </Form>

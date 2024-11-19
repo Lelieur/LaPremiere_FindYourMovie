@@ -248,7 +248,7 @@ const NewCinemaForm = () => {
 
                 <Row>
                     <Col md={{ span: 6, offset: 3 }}>
-                        <Form onSubmit={handleFormSubmit}>
+                        <Form className="form" onSubmit={handleFormSubmit}>
                             <Form.Group className="mb-3" controlId="nameField">
                                 <Form.Label className="fw-bold">Nombre</Form.Label>
                                 <Form.Control type="text" value={cinemaData.name} name={'name'} onChange={handleCinemaDataChange} />
@@ -275,8 +275,8 @@ const NewCinemaForm = () => {
                                     }
                                 </div>
 
-                                <Button className="me-2" size="sm" variant="dark" onClick={addNewCinemaCover}>Añadir foto</Button>
-                                <Button className="me-2" size="sm" variant="dark" onClick={deleteNewCinemaCover}>Quitar foto</Button>
+                                <Button className="styled-button-2 me-2" size="sm" variant="dark" onClick={addNewCinemaCover}>Añadir foto</Button>
+                                <Button className="styled-button-2 me-2" size="sm" variant="dark" onClick={deleteNewCinemaCover}>Quitar foto</Button>
 
                             </Form.Group>
 
@@ -420,8 +420,8 @@ const NewCinemaForm = () => {
 
                                 </div>
 
-                                <Button className="me-2" size="sm" variant="dark" onClick={addNewService}>Añadir servicio</Button>
-                                <Button className="me-2" size="sm" variant="dark" onClick={deletNewService}>Quitar servicio</Button>
+                                <Button className="styled-button-2 me-2" size="sm" variant="dark" onClick={addNewService}>Añadir servicio</Button>
+                                <Button className="styled-button-2 me-2" size="sm" variant="dark" onClick={deletNewService}>Quitar servicio</Button>
 
                             </Form.Group>
 
@@ -452,13 +452,13 @@ const NewCinemaForm = () => {
                                     }
                                 </div>
 
-                                <Button className="me-2" size="sm" variant="dark" onClick={addNewMovieId}>Añadir película</Button>
-                                <Button className="me-2" size="sm" variant="dark" onClick={deletNewMovieId}>Quitar película</Button>
+                                <Button className="styled-button-2 me-2" size="sm" variant="dark" onClick={addNewMovieId}>Añadir película</Button>
+                                <Button className="styled-button-2 me-2" size="sm" variant="dark" onClick={deletNewMovieId}>Quitar película</Button>
 
                             </Form.Group>
 
                             <div className="d-grid mt-5">
-                                <Button variant="dark" type="submit">Crear nuevo cine</Button>
+                                <Button className="styled-button-2" variant="dark" type="submit">Crear nuevo cine</Button>
                             </div>
 
                         </Form>

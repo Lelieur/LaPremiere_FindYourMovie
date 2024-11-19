@@ -10,7 +10,8 @@ h2,
 h3,
 .logo {
     font-family: "AmericanCaptain";
-    font-size: 150px
+    font-size: 150px;
+    color: #ff6843;
 }
 
 h2 {
@@ -25,13 +26,6 @@ p,
 span,
 .form-control {
     font-family: "Helvetica Neue";
-}
-
-.section-title {
-    color: white;
-    padding: 10px;
-    background-image: linear-gradient(25deg, #ff6843, #feb47b);
-    border-radius: 10px;
 }
 
 .logo {
@@ -64,6 +58,73 @@ hr {
     color: #ff6843;
 }
 
-.badge {
+.badge-container-ligth {
     background-color: #feb47b;
+}
+
+.badge-container-medium {
+    background-color: #fd8465;
+}
+
+.badge-container-dark {
+    background-color: #ff6843;
+}
+
+.movie-container {
+    padding: 20px;
+    border-radius: 15px;
+    color: #ff6843
+}
+
+.movie-details-container {
+    color: white;
+    background-color: #feb47b;
+}
+
+.form {
+    background-color: #feb47b;
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.Navigation input {
+    background-color: white;
+    border: #ff6843;
+    color: #feb47b
+}
+
+.Navigation input::placeholder {
+    color: #feb47b
+}
+
+.Navigation input:focus {
+    box-shadow: 0px 0px 10px #ff6843;
+    color: #feb47b
+}
+
+.form input,
+#servicesField,
+#moviesField,
+#titleField,
+#cinemaField {
+    background-color: white;
+    border: #ff6843;
+    color: #feb47b
+}
+
+.form input:checked {
+    background-color: #ff6843;
+}
+
+.form input:focus,
+#servicesField:focus,
+#moviesField:focus,
+#titleField:focus {
+    box-shadow: 0px 0px 10px #ff6843;
+    color: #feb47b
+}
+
+.form input::placeholder {
+    color: #feb47b
 }
