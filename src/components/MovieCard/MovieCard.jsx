@@ -1,4 +1,4 @@
-import { Card, Row, Col, Button, ListGroup } from "react-bootstrap"
+import { Card, Row, Col } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import FlagIcon from "../FlagIcon/FlagIcon"
 
@@ -35,7 +35,7 @@ const MovieCard = ({ id, title, country, duration, language, calification, poste
                                 <strong>País:</strong>
                             </Col>
                             <Col >
-                                {country}  <FlagIcon countryCode={countryCode} size="small" />
+                                <p>{country}{' '} <FlagIcon countryCode={countryCode} size="small" /></p>
                             </Col>
                         </Row>
                         <Row>
