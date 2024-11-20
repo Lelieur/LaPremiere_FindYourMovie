@@ -5,9 +5,12 @@
     font-style: normal;
 }
 
+.navbar {
+    background-color: black;
+}
+
 h1,
 h2,
-h3,
 .logo {
     font-family: "AmericanCaptain";
     font-size: 150px;
@@ -15,24 +18,22 @@ h3,
 }
 
 h2 {
-    font-size: 60px
+    font-size: 60px;
 }
 
 h3 {
-    font-size: 40px
+    font-family: "AmericanCaptain";
+    font-size: 60px;
+    font-weight: bold;
+    color: black
 }
 
 h4 {
-    font-family: "AmericanCaptain";
-    font-size: 60px;
-    color: #ff6843
+    font-size: 40px;
+    font-weight: bold;
 }
 
-h5 {
-    font-family: "AmericanCaptain";
-    font-size: 40px;
-    color: #ff6843
-}
+
 
 p,
 span,
@@ -45,104 +46,95 @@ span,
 }
 
 .form {
-    background-color: #feb47b;
-    color: white;
     padding: 20px;
+    border: 1px solid #dee2e6;
     border-radius: 15px;
-}
-
-.form-control {
-    border: none;
-}
-
-.form input,
-#servicesField,
-#moviesField,
-#titleField,
-#cinemaField,
-#descriptionField {
-    background-color: white;
-    border: #ff6843;
-    color: #feb47b
-}
-
-.form input:checked {
-    background-color: #ff6843;
 }
 
 .form input:focus,
 #servicesField:focus,
 #moviesField:focus,
 #titleField:focus {
-    box-shadow: 0px 0px 10px #ff6843;
-    color: #feb47b
+    box-shadow: 0px 0px 10px black;
 }
 
-.form input::placeholder {
-    color: #feb47b
+.form-check-input:checked {
+    background-color: black;
+    border-color: black;
+}
+
+.form-check-input:focus {
+    border-color: black;
 }
 
 .styled-button-1 {
-    background-color: #feb47b;
+    background-color: grey;
     border: none
 }
 
 .styled-button-1:hover {
-    background-color: #ff6843;
+    background-color: grey;
 }
 
 .styled-button-2 {
-    background-color: #ff6843;
+    background-color: black;
     border: none
 }
 
 .styled-button-2:hover {
-    background-color: #feb47b;
+    background-color: grey;
 }
 
-hr {
-    color: #ff6843;
+.styled-button-3 {
+    background-color: white;
+    color: black;
+    border: none;
+}
+
+.styled-button-3:hover,
+.styled-button-4:hover {
+    background-color: black;
+    color: white
+}
+
+.styled-button-4 {
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    padding: 20px;
+    border: none;
+}
+
+.styled-button-1.btn:active,
+.styled-button-2.btn:active,
+.styled-button-3.btn:active,
+.styled-button-4.btn:active {
+    background-color: grey;
 }
 
 .badge-container-ligth {
-    background-color: #feb47b;
+    background-color: grey;
+    font-weight: normal
 }
 
+
 .badge-container-medium {
-    background-color: #fd8465;
+    background-color: rgb(53, 53, 53);
+    font-weight: normal
 }
 
 .badge-container-dark {
-    background-color: #ff6843;
-}
-
-.movie-container {
-    padding: 20px;
-    border-radius: 15px;
-    color: #ff6843
+    background-color: black;
+    font-weight: normal
 }
 
 .details-container {
     padding: 20px;
-    border-radius: 15px;
-    color: white;
-    background-color: #feb47b;
-}
-
-
-.Navigation input {
-    background-color: white;
-    border: #ff6843;
-    color: #feb47b
-}
-
-.Navigation input::placeholder {
-    color: #feb47b
 }
 
 .Navigation input:focus {
-    box-shadow: 0px 0px 10px #ff6843;
-    color: #feb47b
+    box-shadow: none;
+    border: 1px solid #dee2e6;
 }
 
 .navbar-toggler {
@@ -157,16 +149,6 @@ hr {
     background-image: url("https://res.cloudinary.com/dhluctrie/image/upload/v1732100622/Toggler_edjgla.png");
 }
 
-.accordion-button {
-    font-weight: bold;
-    color: white;
-    background-color: #ff6843;
-}
-
-.accordion-button:focus {
-    box-shadow: 0px 0px 10px #ff6843;
-}
-
 .accordion-button::after {
     background-image: url("https://res.cloudinary.com/dhluctrie/image/upload/v1732098580/Arrow_wg2z4i.png");
     padding-left: 20px;
@@ -176,49 +158,39 @@ hr {
     background-image: url("https://res.cloudinary.com/dhluctrie/image/upload/v1732098580/Arrow_wg2z4i.png");
 }
 
-.accordion-button:not {
-    color: white
-}
 
+.accordion-button,
 .accordion-button[aria-expanded="true"] {
     font-weight: bold;
     color: white;
-    background-color: #ff6843;
-    box-shadow: 0px 0px 10px #ff6843;
+    background-color: black;
+    border: none;
 }
 
-.accordion-collapse {
-    color: white;
-    background-color: #feb47b;
+.accordion-button:focus {
+    box-shadow: none
+}
+
+.accordion-item {
+    border: none
 }
 
 .list-group-item {
-    border: 1px solid #feb47b;
-    background-color: #fccfac;
-}
-
-.list-group-item a {
-    color: white
+    border-radius: 0%;
 }
 
 .form-control:focus {
-    box-shadow: 0px 0px 10px #ff6843;
+    box-shadow: none;
+    border-color: black;
 }
 
-.dropdown-menu {
-    border: 1px solid #feb47b;
-    background-color: #fccfac;
+
+.dropdown-item:focus {
+    background-color: white;
+    color: black
 }
 
-.dropdown-menu a {
-    color: white
-}
 
-.dropdown-menu a:hover {
-    color: white;
-    background-color: none
-}
-
-.dropdown-divider {
-    border-top: 1px solid white;
+.delete-button {
+    font-weight: bold;
 }

@@ -12,7 +12,7 @@ const CinemasPage = () => {
             <Container className="text-center">
                 <Row className="mt-5 d-flex align-items-center">
                     <Col>
-                        <h4 className="section-title">Encuentra tu cine</h4>
+                        <h3 className="section-title">ENCUENTRA TU CINE</h3>
                         <hr />
                     </Col>
                 </Row>

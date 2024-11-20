@@ -8,7 +8,7 @@ const Footer = ({ currentFamilyPath }) => {
         return (
             <div className="Footer text-center text-white p-5 mt-5">
                 <Row>
-                    <h3 className="text-white">LA PREMIERE</h3>
+                    <h2 className="text-white">LA PREMIERE</h2>
                 </Row>
                 <Row>
                     <p>Copyright © 2024 La Premiere | Built by Aaron & Lucas.</p>

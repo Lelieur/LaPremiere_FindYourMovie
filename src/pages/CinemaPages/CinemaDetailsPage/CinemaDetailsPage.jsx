@@ -1,18 +1,21 @@
 import * as IMAGE_PATHS from '../../../consts/image-paths'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 
 import axios from 'axios'
-import { Container, Image, Row, Col, Carousel, Stack, Badge, Button, ButtonGroup, Card, Modal } from 'react-bootstrap'
+import { Container, Image, Row, Col, Carousel, Stack, Badge, Button, ButtonGroup, Card, Modal, Nav, Navbar, NavDropdown } from 'react-bootstrap'
 
 import "./CinemaDetailsPage.css"
 import CustomMap from '../../../components/CustomMap/CustomMap'
 import Loader from '../../../components/Loader/Loader'
+import { AuthContext } from '../../../contexts/auth.context'
 
 const API_URL = "http://localhost:5005"
 
 const CinemaDetailsPage = () => {
+
+    const { loggedUser } = useContext(AuthContext)
 
     const { cinemaId } = useParams()
     const [cinema, setCinema] = useState({})
@@ -107,20 +110,49 @@ const CinemaDetailsPage = () => {
         isLoading ? <Loader /> :
             (
                 <>
-
                     <div className="CinemaDetailsPage">
 
                         <Container>
+
+                            {/* NOMBRE & BOTONES */}
                             <Row className='mt-4'>
-                                <Col >
-                                    <h4 className="section-title">{cinema.name}</h4>
+
+                                {/* NOMBRE */}
+                                <Col md={3} >
+                                    <h4 className="section-title m-0">{cinema.name.toUpperCase()}</h4>
                                 </Col>
-                                <Col className="text-end" >
-                                    <ButtonGroup >
-                                        <Button className="styled-button-1" as={Link} to={`/cines/editar/${cinemaId}`}>Editar cine</Button>
-                                        <Button className="styled-button-2" onClick={() => setShowModal(true)}>Eliminar cine</Button>
-                                    </ButtonGroup>
+
+                                {/* BOTONES */}
+                                <Col md={9}>
+                                    <Navbar>
+                                        <Container>
+                                            <Nav.Link as="a" href={cinema.url} target="_blank" className="ms-3 text-white fw-bold">
+                                                Comprar entradas
+                                            </Nav.Link>
+                                            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                                            <Navbar.Collapse id="responsive-navbar-nav" >
+                                                <Nav className="ms-auto">
+
+                                                    <Nav.Link className="text-white" as={Link} to={"/cines"} >
+                                                        Volver a cines
+                                                    </Nav.Link>
+                                                    {
+                                                        loggedUser &&
+
+                                                        <NavDropdown title="Editar" id="collapsible-nav-dropdown">
+
+                                                            <NavDropdown.Item as={Link} to={`/cines/editar/${cinemaId}`}>Editar cine</NavDropdown.Item>
+                                                            <NavDropdown.Divider />
+                                                            <NavDropdown.Item className="delete-button" onClick={() => setShowModal(true)}>Eliminar cine</NavDropdown.Item>
+
+                                                        </NavDropdown>
+                                                    }
+                                                </Nav>
+                                            </Navbar.Collapse>
+                                        </Container>
+                                    </Navbar>
                                 </Col>
+
                             </Row>
                             <hr />
 
@@ -163,8 +195,8 @@ const CinemaDetailsPage = () => {
                                                 <Row>
                                                     <Col>
                                                         <Stack direction="horizontal" gap={1}>
-                                                            <Badge className="badge-container-dark" bg="none">Nomal: {cinema.price.regular}€</Badge>
-                                                            <Badge className="badge-container-medium" bg="none">Fin de semana: {cinema.price.weekend}€</Badge>
+                                                            <Badge className="badge-container-medium" bg="none">Nomal: {cinema.price.regular}€</Badge>
+                                                            <Badge className="badge-container-dark" bg="none">Fin de semana: {cinema.price.weekend}€</Badge>
                                                             <Badge className="badge-container-ligth" bg="none">Miércoles: {cinema.price.special}€</Badge>
                                                         </Stack>
                                                     </Col>
@@ -222,15 +254,9 @@ const CinemaDetailsPage = () => {
                                 </Col>
                             </Row>
 
-                            <Row className="mt-5">
-                                <Col >
-                                    <h5 className="section-title">PELÍCULAS EN CARTELERA</h5>
-                                </Col>
-                                <Col className="text-end" >
-                                    <ButtonGroup aria-label="Basic example">
-                                        <Button className="styled-button-1" variant="dark" as="a" href={cinema.url} target="_blank">Comprar entradas</Button>
-                                        <Button className="styled-button-2" variant="secondary" as={Link} to="/cines">Ver otro cine</Button>
-                                    </ButtonGroup>
+                            <Row className="mt-5 p-2 bg-black text-white ">
+                                <Col>
+                                    <h5 className="section-title fw-bold m-0">Películas en cartelera</h5>
                                 </Col>
                             </Row>
                             <hr />
@@ -246,7 +272,7 @@ const CinemaDetailsPage = () => {
                                                         </Link>
                                                         {
                                                             elm.released ?
-                                                                <Button as="a" target="_blank" href={cinema.url} className="styled-button-1 rounded-0 rounded-bottom" variant="dark">Comprar entradas</Button>
+                                                                <Button as="a" target="_blank" href={cinema.url} className="styled-button-2 rounded-0 rounded-bottom" variant="dark">Comprar entradas</Button>
                                                                 :
                                                                 <Button as="a" target="_blank" href={cinema.url} className="styled-button-2 rounded-0 rounded-bottom" variant="success">Próximamente</Button>
                                                         }
@@ -275,10 +301,10 @@ const CinemaDetailsPage = () => {
                             Si continúas no se podrá recuperar el cine seleccionado. ¿Estás seguro de que quieres continuar?
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button variant="danger" onClick={handleCinemaDelete}>
+                            <Button className="styled-button-2" variant="danger" onClick={handleCinemaDelete}>
                                 Eliminar definitvamente
                             </Button>
-                            <Button variant="primary" onClick={() => setShowModal(false)}>Cancelar</Button>
+                            <Button className="styled-button-3" variant="primary" onClick={() => setShowModal(false)}>Cancelar</Button>
                         </Modal.Footer>
                     </Modal >
                 </>

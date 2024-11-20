@@ -1,12 +1,13 @@
 import { Link, useNavigate, useParams } from "react-router-dom"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import axios from "axios"
-import { Col, Container, Row, ButtonGroup, ListGroup, Image, Button, Badge, Accordion, Modal, ModalHeader, ModalTitle, ModalBody, Stack } from "react-bootstrap"
+import { Col, Container, Row, ButtonGroup, ListGroup, Image, Button, Badge, Accordion, Modal, ModalHeader, ModalTitle, ModalBody, Stack, Nav, Navbar, NavDropdown } from "react-bootstrap"
 import Loader from "../../../components/Loader/Loader"
 import { FaStar, FaStarHalfAlt, FaPlayCircle } from "react-icons/fa"
 import NewMovieReviewForm from "../../../components/NewMovieReviewForm/NewMovieReviewForm"
 import FlagIcon from "../../../components/FlagIcon/FlagIcon"
 import NewEditMovieReviewForm from "../../../components/NewEditMovieReviewForm/NewEditMovieReviewForm"
+import { AuthContext } from "../../../contexts/auth.context"
 
 const API_URL = "http://localhost:5005"
 
@@ -22,6 +23,8 @@ const countryNameToCode = {
 }
 
 const MovieDetailsPage = () => {
+
+    const { loggedUser } = useContext(AuthContext)
 
     const { movieId } = useParams()
     const [showAddReviewModal, setShowAddReviewModal] = useState(false)
@@ -156,55 +159,77 @@ const MovieDetailsPage = () => {
                     {/* TÍTULO & BOTONES */}
                     <Row className="mt-4">
 
-                        <Col>
+                        {/* TÍTULO */}
+                        <Col md={3}>
                             <Row>
-                                {/* TÍTULO */}
-                                <Col md={4}>
-                                    <h4>{movie.title?.spanish || movie.title || "Sin título"}</h4>
-                                </Col>
-
-                                {/* CINES */}
                                 <Col>
-                                    <Accordion>
-                                        <Accordion.Item eventKey="0" className="position-absolute" style={{ zIndex: 1000 }}>
-                                            <Accordion.Header as="span" className="accordion-header">Cines Disponibles</Accordion.Header>
-                                            <Accordion.Body>
-                                                <ListGroup className="accordion-list-group" bg="none">
-                                                    {cinemasInMovie.map((elm) => !elm.isDeleted && (
-                                                        <ListGroup.Item key={elm.id}>
-                                                            <Link to={`/cines/detalles/${elm.id}`}>{elm.name}</Link>
-                                                        </ListGroup.Item>
-                                                    ))}
-                                                </ListGroup>
-                                            </Accordion.Body>
-                                        </Accordion.Item>
-                                    </Accordion>
+                                    <h4>{movie.title?.spanish.toUpperCase() || movie.title || "Sin título"}</h4>
                                 </Col>
                             </Row>
                         </Col>
 
-                        <Col className="text-end">
-                            <ButtonGroup >
-                                <Button className="styled-button-1" as={Link} to={"/peliculas"}>
-                                    Volver a la lista
-                                </Button>
-                                <Button className="styled-button-1" as={Link} to={`/peliculas/editar/${movieId}`}>
-                                    Editar Película
-                                </Button>
-                                <Button className="styled-button-2" onClick={() => setShowDeleteModal(true)}>
-                                    Eliminar Película
-                                </Button>
-                            </ButtonGroup>
+                        {/* BOTONES */}
+                        <Col md={9}>
+                            <Navbar>
+                                <Container>
+                                    {/* CINES */}
+                                    <Nav>
+                                        <Accordion>
+                                            <Accordion.Item eventKey="0" className="position-absolute top-0 start-0" style={{ zIndex: 1000 }}>
+                                                <Accordion.Header as="span" className="accordion-header">Cines Disponibles</Accordion.Header>
+                                                <Accordion.Body>
+                                                    <ListGroup className="accordion-list-group" bg="none">
+                                                        {cinemasInMovie.map((elm) => !elm.isDeleted && (
+                                                            <ListGroup.Item key={elm.id}>
+                                                                <Link to={`/cines/detalles/${elm.id}`}>{elm.name}</Link>
+                                                            </ListGroup.Item>
+                                                        ))}
+                                                    </ListGroup>
+                                                </Accordion.Body>
+                                            </Accordion.Item>
+                                        </Accordion>
+                                    </Nav>
+
+                                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                                    <Navbar.Collapse id="responsive-navbar-nav" >
+                                        <Nav className="ms-auto">
+
+                                            {/* VOLVER */}
+                                            <Nav.Link className="text-white" as={Link} to={"/peliculas"} >
+                                                Volver a películas
+                                            </Nav.Link>
+
+                                            {/* EDITAR / ELIMINAR */}
+                                            {
+                                                loggedUser &&
+
+                                                <NavDropdown title="Editar" id="collapsible-nav-dropdown">
+
+                                                    <NavDropdown.Item as={Link} to={`/peliculas/editar/${movieId}`}>
+                                                        Editar Película
+                                                    </NavDropdown.Item>
+                                                    <NavDropdown.Divider />
+                                                    <NavDropdown.Item className="delete-button" onClick={() => setShowDeleteModal(true)}>
+                                                        Eliminar Película
+                                                    </NavDropdown.Item>
+
+                                                </NavDropdown>
+
+                                            }
+                                        </Nav>
+                                    </Navbar.Collapse>
+                                </Container>
+                            </Navbar>
                         </Col>
                     </Row>
                     <hr />
 
                     {/* POSTER & SINOPSIS & CASTING */}
                     <Row>
-                        <Col>
+                        <Col md={5}>
                             <Row>
                                 {/* POSTER */}
-                                <Col>
+                                <Col md={7}>
                                     <div className="position-relative">
                                         <Image
                                             onClick={() => window.open(movie.trailer, "_blank")}
@@ -219,7 +244,7 @@ const MovieDetailsPage = () => {
                                 </Col>
 
                                 {/* DETALLES */}
-                                <Col className="details-container">
+                                <Col md={5} className="details-container">
                                     {/* País */}
                                     <Row className="mb-3">
                                         <Col>
@@ -328,7 +353,7 @@ const MovieDetailsPage = () => {
                         </Col>
 
                         {/* CASTING & SINOPSIS */}
-                        <Col>
+                        <Col md={7}>
                             {/* SINOPSIS */}
                             <Row>
                                 <Col>
@@ -338,15 +363,15 @@ const MovieDetailsPage = () => {
                             </Row>
 
                             {/* CASTING */}
-                            <Row>
+                            <Row >
                                 <Col>
                                     <Row>
                                         <Col>
                                             <p><strong>Casting</strong></p>
                                         </Col>
                                     </Row>
-                                    <Row>
-                                        {movie.casting.map((actor, index) => (
+                                    <Row className="flex-nowrap" style={{ overflowX: "auto" }}>
+                                        {movie.casting?.map((actor, index) => (
                                             <Col className="text-center" key={index}>
                                                 <Row>
                                                     <Col>
@@ -374,7 +399,7 @@ const MovieDetailsPage = () => {
                     </Row>
 
                     {/* RATING */}
-                    <Row className="mt-4">
+                    <Row className="mt-4 align-items-center">
                         <Col md={6}>
                             <Row>
 
@@ -415,21 +440,25 @@ const MovieDetailsPage = () => {
                                         </Col>
                                     </Row>
                                 </Col>
-
                                 {/* HACER RESEÑA */}
                                 <Col>
-                                    <Button className="styled-button-1 mt-3 p-2" size="sm" variant="dark" onClick={() => setShowAddReviewModal(true)}>
+                                    <Button className="styled-button-4 p-3" onClick={() => setShowAddReviewModal(true)}>
                                         Hacer una reseña</Button>
                                 </Col>
 
                             </Row>
                         </Col>
+
+                    </Row>
+                    <Row>
+
                     </Row>
 
                     {/* COMENTARIOS */}
-                    <Row className="mt-4">
+                    <Row className="mt-4 mb-2">
+
                         <Col>
-                            <Accordion className="mb-2">
+                            <Accordion>
                                 <Accordion.Item eventKey="0">
                                     <Accordion.Header as="span"><strong>Ver Comentarios</strong></Accordion.Header>
                                     <Accordion.Body>
@@ -459,6 +488,7 @@ const MovieDetailsPage = () => {
                             </Accordion>
                         </Col>
                     </Row>
+
                     {/* Modal para añadir comentario */}
                     <Modal
                         show={showAddReviewModal}
@@ -476,6 +506,7 @@ const MovieDetailsPage = () => {
                             />
                         </ModalBody>
                     </Modal>
+
                     {/* Modal para editar comentario */}
                     <Modal
                         show={showEditReviewModal}
@@ -493,6 +524,7 @@ const MovieDetailsPage = () => {
                             />
                         </Modal.Body>
                     </Modal>
+
                     {/* Modal para eliminar película */}
                     <Modal
                         show={showDeleteModal}

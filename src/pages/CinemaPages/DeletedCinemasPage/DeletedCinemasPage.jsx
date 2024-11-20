@@ -1,14 +1,23 @@
 import CinemaCard from "../../../components/CinemaCard/CinemaCard"
 import Loader from "../../../components/Loader/Loader"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { Row, Col, Container, Button } from "react-bootstrap"
+
+import { Navigate } from "react-router-dom"
+import { AuthContext } from "../../../contexts/auth.context"
 
 import axios from "axios"
 
 const API_URL = "http://localhost:5005"
 
 const DeletedCinemasPage = () => {
+
+    const { loggedUser } = useContext(AuthContext)
+
+    if (!loggedUser) {
+        return <Navigate to="/cines" />
+    }
 
     const [cinemas, setCinemas] = useState([])
     const [isLoading, setIsLoading] = useState(true)

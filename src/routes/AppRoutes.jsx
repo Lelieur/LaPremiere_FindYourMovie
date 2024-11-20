@@ -20,14 +20,18 @@ const AppRoutes = () => {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/cines" element={<CinemasPage />} />
                 <Route path="/cines/detalles/:cinemaId" element={<CinemaDetailsPage key={window.location.pathname} />} />
+
                 <Route path="/cines/crear" element={<NewCinemaPage />} />
                 <Route path="/cines/editar/:cinemaId" element={<EditCinemaPage />} />
                 <Route path="/cines/eliminados" element={<DeletedCinemasPage />} />
+
                 <Route path="/peliculas" element={<MoviesPage />} />
                 <Route path="/peliculas/detalles/:movieId" element={<MovieDetailPage />} />
+
                 <Route path="/peliculas/crear" element={<NewMoviePage />} />
                 <Route path="/peliculas/editar/:movieId" element={<EditMoviePage />} />
                 <Route path="/peliculas/eliminados" element={<DeletedMoviesPage />} />
+
                 <Route path="/peliculas/reseña/:movieId" element={<ReviewMoviePage />} />
                 <Route path="*" element={<h1>404 Not Found</h1>} />
             </Routes>
