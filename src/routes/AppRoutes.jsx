@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import CinemasPage from "../pages/CinemaPages/CinemasPage/CinemasPage";
-import HomePage from "../pages/HomePages/HomePages";
+import HomePage from "../pages/HomePage/HomePage";
 import CinemaDetailsPage from "../pages/CinemaPages/CinemaDetailsPage/CinemaDetailsPage";
 import NewCinemaPage from "../pages/CinemaPages/NewCinemaPage/NewCinemaPage";
 import EditCinemaPage from "../pages/CinemaPages/EditCinemaPage/EditCinemaPage";

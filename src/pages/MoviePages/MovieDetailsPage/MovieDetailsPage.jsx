@@ -9,7 +9,7 @@ import NewMovieReviewForm from "../../../components/NewMovieReviewForm/NewMovieR
 const API_URL = "http://localhost:5005"
 
 const MovieDetailsPage = () => {
-    const badgeColors = ["primary", "secondary", "success", "danger", "warning", "info", "dark"]
+
     const { movieId } = useParams()
     const [showAddReviewModal, setShowAddReviewModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -20,48 +20,34 @@ const MovieDetailsPage = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        fetchCinemaInMovie()
-        fetchReviews()
-        fetchMovieDetails()
-    }, [movieId])
+        fetchMovieData()
+    }, [])
 
-    const fetchMovieDetails = () => {
-        axios
-            .get(`${API_URL}/movies/${movieId}`)
-            .then(response => {
-                setMovie(response.data)
-                setIsLoading(false)
-            })
-            .catch(err => console.log(err))
-    }
-    const fetchCinemaInMovie = () => {
-        axios
-            .get(`${API_URL}/cinemas/`)
-            .then(response => {
-                const { data: allCinemas } = response
+    const fetchMovieData = () => {
+
+        const promises = [
+            axios.get(`${API_URL}/movies/${movieId}`),
+            axios.get(`${API_URL}/cinemas/`),
+            axios.get(`${API_URL}/reviews?movieId=${movieId}`)
+        ]
+
+        Promise
+            .all(promises)
+            .then(([movieData, cinemasData, reviewsData]) => {
+                setMovie(movieData.data)
+
+                const { data: allCinemas } = cinemasData
                 const filteredCinemas = allCinemas.filter(eachCinema =>
                     Array.isArray(eachCinema.movieId) ?
                         eachCinema.movieId.includes(Number(movieId))
                         : eachCinema.movieId === Number(movieId)
                 )
-                setCinemasInMovie(filteredCinemas)
-                setIsLoading(false)
-            })
-            .catch(err => console.log(err))
-    }
 
-    const fetchReviews = () => {
-        axios
-            .get(`${API_URL}/reviews?movieId=${movieId}`)
-            .then(response => {
-                const reviewsData = Array.isArray(response.data) ? response.data : []
-                setReviews(reviewsData)
-                setIsLoading(false)
+                setCinemasInMovie(filteredCinemas)
+                setReviews(reviewsData.data)
             })
-            .catch(err => {
-                console.log(err)
-                setReviews([])
-            })
+            .then(() => setIsLoading(false))
+            .catch(err => console.log(err))
     }
 
     const calculateAverageRating = () => {
@@ -132,6 +118,7 @@ const MovieDetailsPage = () => {
                 console.error("Error al añadir la reseña", err)
             })
     }
+
     return (
 
         isLoading ? <Loader /> : (
@@ -140,9 +127,34 @@ const MovieDetailsPage = () => {
 
                     {/* TÍTULO & BOTONES */}
                     <Row className="mt-4">
-                        <Col >
-                            <h2>{movie.title?.spanish || movie.title || "Sin título"}</h2>
+
+                        <Col>
+                            <Row>
+                                {/* TÍTULO */}
+                                <Col md={4}>
+                                    <h4>{movie.title?.spanish || movie.title || "Sin título"}</h4>
+                                </Col>
+
+                                {/* CINES */}
+                                <Col>
+                                    <Accordion>
+                                        <Accordion.Item eventKey="0" className="position-absolute" style={{ zIndex: 1000 }}>
+                                            <Accordion.Header as="span" className="accordion-header">Cines Disponibles</Accordion.Header>
+                                            <Accordion.Body>
+                                                <ListGroup className="accordion-list-group" bg="none">
+                                                    {cinemasInMovie.map((elm) => !elm.isDeleted && (
+                                                        <ListGroup.Item key={elm.id}>
+                                                            <Link to={`/cines/detalles/${elm.id}`}>{elm.name}</Link>
+                                                        </ListGroup.Item>
+                                                    ))}
+                                                </ListGroup>
+                                            </Accordion.Body>
+                                        </Accordion.Item>
+                                    </Accordion>
+                                </Col>
+                            </Row>
                         </Col>
+
                         <Col className="text-end">
                             <ButtonGroup >
                                 <Button className="styled-button-1" as={Link} to={"/peliculas"}>
@@ -178,8 +190,8 @@ const MovieDetailsPage = () => {
                                     </div>
                                 </Col>
 
-                                {/* DETALLES & CINES */}
-                                <Col className="movie-container">
+                                {/* DETALLES */}
+                                <Col className="details-container">
                                     {/* País */}
                                     <Row className="mb-3">
                                         <Col>
@@ -238,16 +250,13 @@ const MovieDetailsPage = () => {
                                             </Row>
                                             <Row>
                                                 <Col>
-                                                    {
-                                                        movie.gender.length &&
-                                                        <Stack direction="horizontal" gap={1}>
-                                                            {
-                                                                movie.gender.map((gen, index) => (
-                                                                    <Badge key={index} className="badge-container-dark" bg="none">{gen}</Badge>
-                                                                ))
-                                                            }
-                                                        </Stack>
-                                                    }
+                                                    <Stack direction="horizontal" gap={1}>
+                                                        {
+                                                            movie.gender?.map((gen, index) => (
+                                                                <Badge key={index} className="badge-container-dark" bg="none">{gen}</Badge>
+                                                            ))
+                                                        }
+                                                    </Stack>
                                                 </Col>
                                             </Row>
                                         </Col>
@@ -285,25 +294,6 @@ const MovieDetailsPage = () => {
                                         </Col>
                                     </Row>
 
-                                    {/* CINES */}
-                                    <Row className="mt-4">
-                                        <Col>
-                                            <Accordion className="position-absolute w-20" style={{ zIndex: 1000 }}>
-                                                <Accordion.Item eventKey="0">
-                                                    <Accordion.Header as="span"><stong>Cines Disponibles</stong></Accordion.Header>
-                                                    <Accordion.Body>
-                                                        <ListGroup style={{ overflowY: "auto", zIndex: 1000 }}>
-                                                            {cinemasInMovie.map((elm) => !elm.isDeleted && (
-                                                                <ListGroup.Item key={elm.id}>
-                                                                    <Link to={`/cines/detalles/${elm.id}`}>{elm.name}</Link>
-                                                                </ListGroup.Item>
-                                                            ))}
-                                                        </ListGroup>
-                                                    </Accordion.Body>
-                                                </Accordion.Item>
-                                            </Accordion>
-                                        </Col>
-                                    </Row>
                                 </Col>
                             </Row>
                         </Col>
@@ -354,12 +344,12 @@ const MovieDetailsPage = () => {
                         </Col>
                     </Row>
 
-
-
                     {/* RATING */}
                     <Row className="mt-4">
-                        <Col md={3}>
+                        <Col md={6}>
                             <Row>
+
+                                {/* RATING */}
                                 <Col>
                                     <Row>
                                         <Col>
@@ -396,10 +386,13 @@ const MovieDetailsPage = () => {
                                         </Col>
                                     </Row>
                                 </Col>
+
+                                {/* HACER RESEÑA */}
                                 <Col>
-                                    <Button className="mt-3" size="sm" variant="dark" onClick={() => setShowAddReviewModal(true)}>
+                                    <Button className="styled-button-1 mt-3 p-2" size="sm" variant="dark" onClick={() => setShowAddReviewModal(true)}>
                                         Hacer una reseña</Button>
                                 </Col>
+
                             </Row>
                         </Col>
                     </Row>
@@ -409,7 +402,7 @@ const MovieDetailsPage = () => {
                         <Col>
                             <Accordion className="mb-2">
                                 <Accordion.Item eventKey="0">
-                                    <Accordion.Header><strong>Ver Comentarios</strong></Accordion.Header>
+                                    <Accordion.Header as="span"><strong>Ver Comentarios</strong></Accordion.Header>
                                     <Accordion.Body>
                                         <div style={{ maxHeight: "300px", overflowY: "auto" }}>
                                             {reviews.length > 0 ? (

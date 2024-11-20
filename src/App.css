@@ -11,7 +11,7 @@ h3,
 .logo {
     font-family: "AmericanCaptain";
     font-size: 150px;
-    color: #ff6843;
+    color: white;
 }
 
 h2 {
@@ -20,6 +20,18 @@ h2 {
 
 h3 {
     font-size: 40px
+}
+
+h4 {
+    font-family: "AmericanCaptain";
+    font-size: 60px;
+    color: #ff6843
+}
+
+h5 {
+    font-family: "AmericanCaptain";
+    font-size: 40px;
+    color: #ff6843
 }
 
 p,
@@ -32,8 +44,42 @@ span,
     font-size: 30px;
 }
 
+.form {
+    background-color: #feb47b;
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+}
+
 .form-control {
     border: none;
+}
+
+.form input,
+#servicesField,
+#moviesField,
+#titleField,
+#cinemaField,
+#descriptionField {
+    background-color: white;
+    border: #ff6843;
+    color: #feb47b
+}
+
+.form input:checked {
+    background-color: #ff6843;
+}
+
+.form input:focus,
+#servicesField:focus,
+#moviesField:focus,
+#titleField:focus {
+    box-shadow: 0px 0px 10px #ff6843;
+    color: #feb47b
+}
+
+.form input::placeholder {
+    color: #feb47b
 }
 
 .styled-button-1 {
@@ -76,17 +122,13 @@ hr {
     color: #ff6843
 }
 
-.movie-details-container {
+.details-container {
+    padding: 20px;
+    border-radius: 15px;
     color: white;
     background-color: #feb47b;
 }
 
-.form {
-    background-color: #feb47b;
-    color: white;
-    padding: 20px;
-    border-radius: 15px;
-}
 
 .Navigation input {
     background-color: white;
@@ -103,28 +145,80 @@ hr {
     color: #feb47b
 }
 
-.form input,
-#servicesField,
-#moviesField,
-#titleField,
-#cinemaField {
-    background-color: white;
-    border: #ff6843;
-    color: #feb47b
+.navbar-toggler {
+    border: none
 }
 
-.form input:checked {
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+.navbar-toggler-icon {
+    background-image: url("https://res.cloudinary.com/dhluctrie/image/upload/v1732100622/Toggler_edjgla.png");
+}
+
+.accordion-button {
+    font-weight: bold;
+    color: white;
     background-color: #ff6843;
 }
 
-.form input:focus,
-#servicesField:focus,
-#moviesField:focus,
-#titleField:focus {
+.accordion-button:focus {
     box-shadow: 0px 0px 10px #ff6843;
-    color: #feb47b
 }
 
-.form input::placeholder {
-    color: #feb47b
+.accordion-button::after {
+    background-image: url("https://res.cloudinary.com/dhluctrie/image/upload/v1732098580/Arrow_wg2z4i.png");
+    padding-left: 20px;
+}
+
+.accordion-button:not(.collapsed)::after {
+    background-image: url("https://res.cloudinary.com/dhluctrie/image/upload/v1732098580/Arrow_wg2z4i.png");
+}
+
+.accordion-button:not {
+    color: white
+}
+
+.accordion-button[aria-expanded="true"] {
+    font-weight: bold;
+    color: white;
+    background-color: #ff6843;
+    box-shadow: 0px 0px 10px #ff6843;
+}
+
+.accordion-collapse {
+    color: white;
+    background-color: #feb47b;
+}
+
+.list-group-item {
+    border: 1px solid #feb47b;
+    background-color: #fccfac;
+}
+
+.list-group-item a {
+    color: white
+}
+
+.form-control:focus {
+    box-shadow: 0px 0px 10px #ff6843;
+}
+
+.dropdown-menu {
+    border: 1px solid #feb47b;
+    background-color: #fccfac;
+}
+
+.dropdown-menu a {
+    color: white
+}
+
+.dropdown-menu a:hover {
+    color: white;
+    background-color: none
+}
+
+.dropdown-divider {
+    border-top: 1px solid white;
 }

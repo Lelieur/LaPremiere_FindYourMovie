@@ -76,7 +76,6 @@ const EditCinemaForm = () => {
             })
     }
 
-
     const handleCinemaDataChange = e => {
         const { name, value } = e.target
 

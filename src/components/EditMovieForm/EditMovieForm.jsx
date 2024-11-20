@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Button, Form, CloseButton } from 'react-bootstrap';
+import { Button, Form, CloseButton, Row, Col } from 'react-bootstrap';
 import Loader from "../Loader/Loader"
 import { useNavigate, useParams } from "react-router-dom"
 import axios from "axios"
@@ -142,208 +142,214 @@ const EditMovieForm = () => {
     return (
         isLoading ? <Loader /> :
             <div className="EditMovieForm">
-                <Form onSubmit={handleFormSubmit}>
-                    <Form.Group className="mb-3" controlId="titleField">
-                        <Form.Label><strong>Títulos</strong></Form.Label>
 
-                        <Form.Control className="mb-2"
-                            type="text"
-                            placeholder="Título Original"
-                            name="original"
-                            value={title.original}
-                            onChange={(e) => handleTitleChange(e)}
-                        />
-                        <Form.Control
-                            type="text"
-                            placeholder="Título en España"
-                            name="spanish"
-                            value={title.spanish}
-                            onChange={(e) => handleTitleChange(e)}
-                        />
+                <Row>
+                    <Col md={{ span: 6, offset: 3 }}>
+                        <Form className="form" onSubmit={handleFormSubmit}>
+                            <Form.Group className="mb-3" controlId="titleField">
+                                <Form.Label><strong>Títulos</strong></Form.Label>
 
-
-
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="posterField">
-                        <Form.Label><strong>Imagen</strong></Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="poster"
-                            value={movieData.poster}
-                            onChange={handleMovieChange}
-                            placeholder="URL de la imagen"
-                        />
-                    </Form.Group>
-
-
-                    <Form.Group className="mb-3" controlId="countryField">
-                        <Form.Label><strong>País</strong></Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="country"
-                            value={movieData.country}
-                            onChange={handleMovieChange}
-                        />
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" controlId="languageField">
-                        <Form.Label><strong>Idioma</strong></Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="language"
-                            value={movieData.language}
-                            onChange={handleMovieChange}
-                        />
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" controlId="durationField">
-                        <Form.Label><strong>Duración</strong> (minutos)</Form.Label>
-                        <Form.Control
-                            type="number"
-                            name="duration"
-                            value={movieData.duration}
-                            onChange={handleMovieChange}
-                        />
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" controlId="genderField">
-                        <Form.Label><strong>Género</strong></Form.Label>
-                        {
-                            movieData.gender.map((eachGender, idx) => {
-                                return (
-                                    <Form.Control
-                                        className="mb-2"
-                                        type="text"
-                                        onChange={(event) => handleGenderChange(event, idx)}
-                                        value={eachGender}
-                                        key={idx}
-                                    />
-                                )
-                            })
-                        }
-
-                        <Button className="me-2" size="sm" variant="dark" onClick={addNewGender}>Añadir Género</Button>
-                        <Button className="me-2" size="sm" variant="dark" onClick={deletNewGender}>Quitar Género</Button>
-
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" controlId="calificationField">
-                        <Form.Label><strong>Calificación</strong></Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="calification"
-                            value={movieData.calification}
-                            onChange={handleMovieChange}
-                        />
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" controlId="dateField">
-                        <Form.Label><strong>Fecha de estreno</strong></Form.Label>
-                        <Form.Control
-                            type="date"
-                            name="date"
-                            value={movieData.date}
-                            onChange={handleMovieChange}
-                        />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="directorField">
-                        <Form.Label><strong>Director</strong></Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="director"
-                            value={movieData.director}
-                            onChange={handleMovieChange}
-                        />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="castingField">
-                        <Form.Label><strong>Casting</strong></Form.Label>
-                        {movieData.casting.map((eachCasting, idx) => (
-                            <div key={idx} className="d-flex align-items-center mb-3">
+                                <Form.Control className="mb-2"
+                                    type="text"
+                                    placeholder="Título Original"
+                                    name="original"
+                                    value={title.original}
+                                    onChange={(e) => handleTitleChange(e)}
+                                />
                                 <Form.Control
                                     type="text"
-                                    placeholder="Nombre del actor"
-                                    value={eachCasting.name}
-                                    onChange={(event) =>
-                                        handleCastingChange(event, idx, 'name')
-                                    }
-                                    className="me-2"
+                                    placeholder="Título en España"
+                                    name="spanish"
+                                    value={title.spanish}
+                                    onChange={(e) => handleTitleChange(e)}
                                 />
-                                <Form.Control closeButton
+                            </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="posterField">
+                                <Form.Label><strong>Imagen</strong></Form.Label>
+                                <Form.Control
                                     type="text"
-                                    placeholder="URL de la foto"
-                                    value={eachCasting.photo}
-                                    onChange={(event) =>
-                                        handleCastingChange(event, idx, 'photo')
-                                    }
-                                    className="me-2"
+                                    name="poster"
+                                    value={movieData.poster}
+                                    onChange={handleMovieChange}
+                                    placeholder="URL de la imagen"
                                 />
-                                <CloseButton
-                                    onClick={() => deletedNewCasting(idx)}
-                                    className="ms-2"
+                            </Form.Group>
+
+
+                            <Form.Group className="mb-3" controlId="countryField">
+                                <Form.Label><strong>País</strong></Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="country"
+                                    value={movieData.country}
+                                    onChange={handleMovieChange}
                                 />
-                            </div>
-                        ))}
-                        <Button className="me-2" size="sm" variant="dark" onClick={addNewCasting}> Añadir Actor</Button>
-                    </Form.Group>
+                            </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="trailerField">
-                        <Form.Label><strong>Tráiler (URL)</strong></Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="trailer"
-                            value={movieData.trailer}
-                            onChange={handleMovieChange}
-                        />
-                    </Form.Group>
+                            <Form.Group className="mb-3" controlId="languageField">
+                                <Form.Label><strong>Idioma</strong></Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="language"
+                                    value={movieData.language}
+                                    onChange={handleMovieChange}
+                                />
+                            </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="descriptionField">
-                        <Form.Label><strong>Descripción</strong></Form.Label>
-                        <Form.Control
-                            as="textarea"
-                            rows={3}
-                            name="description"
-                            value={movieData.description}
-                            onChange={handleMovieChange}
-                        />
-                    </Form.Group>
+                            <Form.Group className="mb-3" controlId="durationField">
+                                <Form.Label><strong>Duración</strong> (minutos)</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    name="duration"
+                                    value={movieData.duration}
+                                    onChange={handleMovieChange}
+                                />
+                            </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="cinemaField">
-                        <Form.Label><strong>Cines</strong></Form.Label>
-                        {movieData.cinemaId.map((eachCinema, idx) => (
-                            <Form.Control
-                                key={idx}
-                                as="select"
-                                value={eachCinema}
-                                onChange={(event) => handleCinemaChange(event, idx)}
-                                className="mb-2"
-                                disabled={true}
-                            >
-                                <option value="">Selecciona un cine</option>
-                                {cinemas.map((cinema) => (
-                                    <option key={cinema.id} value={cinema.id}>
-                                        {cinema.name}
-                                    </option>
+                            <Form.Group className="mb-3" controlId="genderField">
+                                <Form.Label><strong>Género</strong></Form.Label>
+                                {
+                                    movieData.gender.map((eachGender, idx) => {
+                                        return (
+                                            <Form.Control
+                                                className="mb-2"
+                                                type="text"
+                                                onChange={(event) => handleGenderChange(event, idx)}
+                                                value={eachGender}
+                                                key={idx}
+                                            />
+                                        )
+                                    })
+                                }
+
+                                <Button className="styled-button-2 me-2" size="sm" variant="dark" onClick={addNewGender}>Añadir Género</Button>
+                                <Button className="styled-button-2 me-2" size="sm" variant="dark" onClick={deletNewGender}>Quitar Género</Button>
+
+                            </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="calificationField">
+                                <Form.Label><strong>Calificación</strong></Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="calification"
+                                    value={movieData.calification}
+                                    onChange={handleMovieChange}
+                                />
+                            </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="dateField">
+                                <Form.Label><strong>Fecha de estreno</strong></Form.Label>
+                                <Form.Control
+                                    type="date"
+                                    name="date"
+                                    value={movieData.date}
+                                    onChange={handleMovieChange}
+                                />
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="directorField">
+                                <Form.Label><strong>Director</strong></Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="director"
+                                    value={movieData.director}
+                                    onChange={handleMovieChange}
+                                />
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="castingField">
+                                <Form.Label><strong>Casting</strong></Form.Label>
+                                {movieData.casting.map((eachCasting, idx) => (
+                                    <div key={idx} className="d-flex align-items-center mb-3">
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Nombre del actor"
+                                            value={eachCasting.name}
+                                            onChange={(event) =>
+                                                handleCastingChange(event, idx, 'name')
+                                            }
+                                            className="me-2"
+                                        />
+                                        <Form.Control closeButton
+                                            type="text"
+                                            placeholder="URL de la foto"
+                                            value={eachCasting.photo}
+                                            onChange={(event) =>
+                                                handleCastingChange(event, idx, 'photo')
+                                            }
+                                            className="me-2"
+                                        />
+                                        <CloseButton
+                                            onClick={() => deletedNewCasting(idx)}
+                                            className="ms-2"
+                                        />
+                                    </div>
                                 ))}
-                            </Form.Control>
-                        ))}
-                        <Button disabled className="me-2" size="sm" variant="dark" onClick={addNewCinema}>Añadir Cine</Button>
-                        <Button disabled className="me-2" size="sm" variant="dark" onClick={deletNewCinema}>Quitar Cine</Button>
-                    </Form.Group>
+                                <Button className="styled-button-2 me-2" size="sm" variant="dark" onClick={addNewCasting}> Añadir Actor</Button>
+                            </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="releasedField">
-                        <Form.Check
-                            type="checkbox"
-                            name="released"
-                            checked={movieData.released}
-                            onChange={handleMovieChange}
-                            label="¿Película lanzada?"
-                        />
-                    </Form.Group>
+                            <Form.Group className="mb-3" controlId="trailerField">
+                                <Form.Label><strong>Tráiler (URL)</strong></Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="trailer"
+                                    value={movieData.trailer}
+                                    onChange={handleMovieChange}
+                                />
+                            </Form.Group>
 
-                    <Button variant="dark" type="submit">
-                        Editar película
-                    </Button>
-                </Form>
+                            <Form.Group className="mb-3" controlId="descriptionField">
+                                <Form.Label><strong>Descripción</strong></Form.Label>
+                                <Form.Control
+                                    as="textarea"
+                                    rows={3}
+                                    name="description"
+                                    value={movieData.description}
+                                    onChange={handleMovieChange}
+                                />
+                            </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="cinemaField">
+                                <Form.Label><strong>Cines</strong></Form.Label>
+                                {movieData.cinemaId.map((eachCinema, idx) => (
+                                    <Form.Control
+                                        key={idx}
+                                        as="select"
+                                        value={eachCinema}
+                                        onChange={(event) => handleCinemaChange(event, idx)}
+                                        className="mb-2"
+                                        disabled={true}
+                                    >
+                                        <option value="">Selecciona un cine</option>
+                                        {cinemas.map((cinema) => (
+                                            <option key={cinema.id} value={cinema.id}>
+                                                {cinema.name}
+                                            </option>
+                                        ))}
+                                    </Form.Control>
+                                ))}
+                                <Button disabled className="styled-button-2 me-2" size="sm" variant="dark" onClick={addNewCinema}>Añadir Cine</Button>
+                                <Button disabled className="styled-button-2 me-2" size="sm" variant="dark" onClick={deletNewCinema}>Quitar Cine</Button>
+                            </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="releasedField">
+                                <Form.Check
+                                    type="checkbox"
+                                    name="released"
+                                    checked={movieData.released}
+                                    onChange={handleMovieChange}
+                                    label="¿Película lanzada?"
+                                />
+                            </Form.Group>
+
+                            <div className="d-grid mt-5">
+                                <Button className="styled-button-2" variant="dark" type="submit">
+                                    Editar película
+                                </Button>
+                            </div>
+                        </Form>
+
+                    </Col>
+                </Row>
 
             </div>
     )

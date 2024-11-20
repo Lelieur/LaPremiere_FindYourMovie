@@ -113,7 +113,7 @@ const CinemaDetailsPage = () => {
                         <Container>
                             <Row className='mt-4'>
                                 <Col >
-                                    <h2 className="section-title">{cinema.name}</h2>
+                                    <h4 className="section-title">{cinema.name}</h4>
                                 </Col>
                                 <Col className="text-end" >
                                     <ButtonGroup >
@@ -141,7 +141,7 @@ const CinemaDetailsPage = () => {
 
                                 <Col md={{ span: 8 }}>
                                     <Row>
-                                        <Col md={{ span: 6 }}>
+                                        <Col className="details-container" md={{ span: 6 }}>
                                             <Row className="mb-3" >
                                                 <Row>
                                                     <Col>
@@ -224,7 +224,7 @@ const CinemaDetailsPage = () => {
 
                             <Row className="mt-5">
                                 <Col >
-                                    <h3 className="section-title">PELÍCULAS EN CARTELERA</h3>
+                                    <h5 className="section-title">PELÍCULAS EN CARTELERA</h5>
                                 </Col>
                                 <Col className="text-end" >
                                     <ButtonGroup aria-label="Basic example">

@@ -10,7 +10,7 @@ const FilmsPage = () => {
                 <Row className="mt-5">
                     <Col>
                         <Col>
-                            <h2 className="section-title">Encuentra tu peli</h2>
+                            <h4 className="section-title">Encuentra tu peli</h4>
                             <hr />
                         </Col>
                     </Col>

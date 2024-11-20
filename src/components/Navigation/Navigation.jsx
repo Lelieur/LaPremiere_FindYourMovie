@@ -18,27 +18,21 @@ const Navigation = ({ currentFamilyPath }) => {
                 <Navbar collapseOnSelect expand="lg">
                     <Container>
                         <Navbar.Brand to="/" as={Link} className="logo text-white">LA PREMIERE</Navbar.Brand>
+                        <Nav className="me-auto ms-5">
+                            {
+                                currentFamilyPath === 'cines' ?
+                                    <CinemasGlobalFilter currentFamilyPath={currentFamilyPath} />
+                                    : currentFamilyPath === 'peliculas' ?
+                                        <MoviesGlobalFilter currentFamilyPath={currentFamilyPath} />
+                                        :
+                                        null
+                            }
+                        </Nav>
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                        <Navbar.Collapse id="responsive-navbar-nav" >
-                            <Nav className="me-auto">
+                        <Navbar.Collapse className="flex-grow-0" id="responsive-navbar-nav" >
+                            <Nav className="ms-auto">
                                 <Nav.Link to="/cines" className="text-white" as={Link}><span>Cines</span></Nav.Link>
                                 <Nav.Link to="/peliculas" className="text-white" as={Link}><span>Películas</span></Nav.Link>
-                            </Nav>
-                            <Form>
-                                <Row>
-                                    <Col xs="auto" className="me-5">
-                                        {
-                                            currentFamilyPath === 'cines' ?
-                                                <CinemasGlobalFilter currentFamilyPath={currentFamilyPath} />
-                                                : currentFamilyPath === 'peliculas' ?
-                                                    <MoviesGlobalFilter currentFamilyPath={currentFamilyPath} />
-                                                    :
-                                                    null
-                                        }
-                                    </Col>
-                                </Row>
-                            </Form>
-                            <Nav>
                                 <NavDropdown title="Administrar" id="collapsible-nav-dropdown">
                                     <NavDropdown.Item to="/cines/crear" as={Link}>Añadir nuevo cine</NavDropdown.Item>
                                     <NavDropdown.Item to="/peliculas/crear" as={Link}>Añadir nueva película</NavDropdown.Item>
@@ -50,7 +44,7 @@ const Navigation = ({ currentFamilyPath }) => {
                         </Navbar.Collapse>
                     </Container>
                 </Navbar>
-            </div>
+            </div >
         )
     }
 }
