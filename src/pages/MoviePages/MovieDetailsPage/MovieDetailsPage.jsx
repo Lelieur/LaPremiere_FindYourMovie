@@ -5,19 +5,42 @@ import { Col, Container, Row, ButtonGroup, ListGroup, Image, Button, Badge, Acco
 import Loader from "../../../components/Loader/Loader"
 import { FaStar, FaStarHalfAlt, FaPlayCircle } from "react-icons/fa"
 import NewMovieReviewForm from "../../../components/NewMovieReviewForm/NewMovieReviewForm"
+import FlagIcon from "../../../components/FlagIcon/FlagIcon"
+import NewEditMovieReviewForm from "../../../components/NewEditMovieReviewForm/NewEditMovieReviewForm"
 
 const API_URL = "http://localhost:5005"
+
+const countryNameToCode = {
+    "Estados Unidos": "US",
+    "España": "ES",
+    "Inglaterra": "IN",
+    "Reino Unido": "GB",
+    "Canada": "CA",
+    "México": "MX",
+    "Alemania": "DE",
+    "Japón": "JP"
+}
 
 const MovieDetailsPage = () => {
 
     const { movieId } = useParams()
-    const [showAddReviewModal, setShowAddReviewModal] = useState(false);
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [showAddReviewModal, setShowAddReviewModal] = useState(false)
+    const [showDeleteModal, setShowDeleteModal] = useState(false)
+    const [showEditReviewModal, setShowEditReviewModal] = useState(false)
     const [movie, setMovie] = useState({})
     const [isLoading, setIsLoading] = useState(true)
     const [cinemasInMovie, setCinemasInMovie] = useState([])
     const [reviews, setReviews] = useState([])
+    const [reviewToEdit, setReviewToEdit] = useState(null)
+    const [countryCode, setCountryCode] = useState("ZZ")
     const navigate = useNavigate()
+
+    useEffect(() => {
+        if (movie.country) {
+            const code = countryNameToCode[movie.country] || 'ZZ'
+            setCountryCode(code);
+        }
+    }, [movie])
 
     useEffect(() => {
         fetchMovieData()
@@ -119,6 +142,11 @@ const MovieDetailsPage = () => {
             })
     }
 
+    const openEditReviewModal = (review) => {
+        setReviewToEdit(review)  // Establece la reseña seleccionada para editar
+        setShowEditReviewModal(true)  // Abre el modal de edición
+    }
+
     return (
 
         isLoading ? <Loader /> : (
@@ -202,7 +230,8 @@ const MovieDetailsPage = () => {
                                             </Row>
                                             <Row>
                                                 <Col>
-                                                    {movie.country}
+                                                    {movie.country}{' '}
+                                                    <FlagIcon countryCode={countryCode} size="small" />
                                                 </Col>
                                             </Row>
                                         </Col>
@@ -409,6 +438,7 @@ const MovieDetailsPage = () => {
                                                 <ListGroup>
                                                     {reviews.map((review, index) => (
                                                         <ListGroup.Item key={index}>
+
                                                             <strong>{review.user || "Anónimo"}</strong>: {review.comment}
                                                             <div>
                                                                 <strong>Calificación:</strong>
@@ -416,6 +446,7 @@ const MovieDetailsPage = () => {
                                                                     <span key={idx} style={{ color: "#ffb400" }}>★</span>
                                                                 ))}
                                                             </div>
+                                                            <Button variant="dark" onClick={() => openEditReviewModal(review)}>Editar</Button>
                                                         </ListGroup.Item>
                                                     ))}
                                                 </ListGroup>
@@ -428,7 +459,7 @@ const MovieDetailsPage = () => {
                             </Accordion>
                         </Col>
                     </Row>
-
+                    {/* Modal para añadir comentario */}
                     <Modal
                         show={showAddReviewModal}
                         onHide={() => setShowAddReviewModal(false)}
@@ -445,7 +476,24 @@ const MovieDetailsPage = () => {
                             />
                         </ModalBody>
                     </Modal>
-
+                    {/* Modal para editar comentario */}
+                    <Modal
+                        show={showEditReviewModal}
+                        onHide={() => setShowEditReviewModal(false)}
+                        backdrop="static"
+                        keyboard={false}
+                    >
+                        <Modal.Header closeButton>
+                            <Modal.Title>Editar reseña</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <NewEditMovieReviewForm
+                                reviewToEdit={reviewToEdit}
+                                onCloseModal={() => setShowEditReviewModal(false)}
+                            />
+                        </Modal.Body>
+                    </Modal>
+                    {/* Modal para eliminar película */}
                     <Modal
                         show={showDeleteModal}
                         onHide={() => setShowDeleteModal(false)}
