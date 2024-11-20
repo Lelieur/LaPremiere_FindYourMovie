@@ -6,7 +6,7 @@ import Loader from "../../../components/Loader/Loader"
 import { FaStar, FaStarHalfAlt, FaPlayCircle } from "react-icons/fa"
 import NewMovieReviewForm from "../../../components/NewMovieReviewForm/NewMovieReviewForm"
 import FlagIcon from "../../../components/FlagIcon/FlagIcon"
-import NewEditMovieReviewForm from "../../../components/NewEditMovieReviewForm/NewEditMovieReviewForm"
+import EditReviewForm from "../../../components/EditReviewForm/EditReviewForm"
 
 const API_URL = "http://localhost:5005"
 
@@ -18,7 +18,8 @@ const countryNameToCode = {
     "Canada": "CA",
     "México": "MX",
     "Alemania": "DE",
-    "Japón": "JP"
+    "Japón": "JP",
+    "Nueva Zelanda": "NZ"
 }
 
 const MovieDetailsPage = () => {
@@ -145,6 +146,11 @@ const MovieDetailsPage = () => {
     const openEditReviewModal = (review) => {
         setReviewToEdit(review)  // Establece la reseña seleccionada para editar
         setShowEditReviewModal(true)  // Abre el modal de edición
+    }
+    const updateReview = (updatedReview) => {
+        setReviews(prevReviews =>
+            prevReviews.map(review =>
+                review.id === updatedReview.id ? updatedReview : review))
     }
 
     return (
@@ -346,7 +352,7 @@ const MovieDetailsPage = () => {
                                         </Col>
                                     </Row>
                                     <Row>
-                                        {movie.casting.map((actor, index) => (
+                                        {movie.casting?.map((actor, index) => (
                                             <Col className="text-center" key={index}>
                                                 <Row>
                                                     <Col>
@@ -487,9 +493,10 @@ const MovieDetailsPage = () => {
                             <Modal.Title>Editar reseña</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <NewEditMovieReviewForm
+                            <EditReviewForm
                                 reviewToEdit={reviewToEdit}
-                                onCloseModal={() => setShowEditReviewModal(false)}
+                                updateReview={updateReview}
+                                setShowEditReviewModal={setShowEditReviewModal}
                             />
                         </Modal.Body>
                     </Modal>
