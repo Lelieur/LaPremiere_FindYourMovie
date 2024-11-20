@@ -19,7 +19,8 @@ const countryNameToCode = {
     "Canada": "CA",
     "México": "MX",
     "Alemania": "DE",
-    "Japón": "JP"
+    "Japón": "JP",
+    "Nueva Zelanda": "NZ"
 }
 
 const MovieDetailsPage = () => {
@@ -148,6 +149,11 @@ const MovieDetailsPage = () => {
     const openEditReviewModal = (review) => {
         setReviewToEdit(review)  // Establece la reseña seleccionada para editar
         setShowEditReviewModal(true)  // Abre el modal de edición
+    }
+    const updateReview = (updatedReview) => {
+        setReviews(prevReviews =>
+            prevReviews.map(review =>
+                review.id === updatedReview.id ? updatedReview : review))
     }
 
     return (
@@ -518,9 +524,10 @@ const MovieDetailsPage = () => {
                             <Modal.Title>Editar reseña</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <NewEditMovieReviewForm
+                            <EditReviewForm
                                 reviewToEdit={reviewToEdit}
-                                onCloseModal={() => setShowEditReviewModal(false)}
+                                updateReview={updateReview}
+                                setShowEditReviewModal={setShowEditReviewModal}
                             />
                         </Modal.Body>
                     </Modal>

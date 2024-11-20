@@ -19,22 +19,22 @@ const HomePage = () => {
         setFilterSelected(filter)
     }
 
-    useEffect(() => {
-        const audioInstance = new Audio(Century)
-        setAudio(audioInstance)
-        audioInstance.play().catch((error) => {
-            console.log(error)
-        })
-        return () => {
-            audioInstance.pause()
-            audioInstance.currentTime = 0
-        }
-    }, [])
+    // useEffect(() => {
+    //     const audioInstance = new Audio(Century)
+    //     setAudio(audioInstance)
+    //     audioInstance.play().catch((error) => {
+    //         console.log(error)
+    //     })
+    //     return () => {
+    //         audioInstance.pause()
+    //         audioInstance.currentTime = 0
+    //     }
+    // }, [])
 
-    const handleMute = () => {
-        audio.muted = !isMuted
-        setIsMuted(!isMuted)
-    }
+    // const handleMute = () => {
+    //     audio.muted = !isMuted
+    //     setIsMuted(!isMuted)
+    // }
 
     return (
         <div className="HomePage h-100 bg-black text-white">
@@ -64,13 +64,13 @@ const HomePage = () => {
 
             </Container>
 
-            <div className="d-none position-sticky top-0">
+            {/* <div className="d-none position-sticky top-0">
                 <span
                     onClick={handleMute}
                     style={{ fontSize: "2rem", cursor: "pointer" }}>
                     {isMuted ? <MdVolumeOff /> : <MdVolumeUp />}
                 </span>
-            </div>
+            </div> */}
 
         </div >
     )

@@ -116,7 +116,7 @@ const EditMovieForm = () => {
     }
 
     const addNewCasting = () => {
-        const updatedCasting = [...movieData.casting]
+        const updatedCasting = Array.isArray(movieData.casting) ? [...movieData.casting] : []
         updatedCasting.push({ name: '', photo: '' })
         setMovieData({ ...movieData, casting: updatedCasting })
     }
@@ -210,7 +210,7 @@ const EditMovieForm = () => {
                             <Form.Group className="mb-3" controlId="genderField">
                                 <Form.Label><strong>Género</strong></Form.Label>
                                 {
-                                    movieData.gender.map((eachGender, idx) => {
+                                    movieData.gender?.map((eachGender, idx) => {
                                         return (
                                             <Form.Control
                                                 className="mb-2"
@@ -258,7 +258,7 @@ const EditMovieForm = () => {
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="castingField">
                                 <Form.Label><strong>Casting</strong></Form.Label>
-                                {movieData.casting.map((eachCasting, idx) => (
+                                {movieData.casting?.map((eachCasting, idx) => (
                                     <div key={idx} className="d-flex align-items-center mb-3">
                                         <Form.Control
                                             type="text"
