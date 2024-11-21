@@ -5,13 +5,8 @@ import MoviesGlobalFilter from "../../components/MoviesGlobalFilter/MoviesGlobal
 import { useEffect, useState } from "react";
 import { Container, Button, Col, Row } from 'react-bootstrap/'
 
-import { MdVolumeOff, MdVolumeUp } from "react-icons/md"
-import Century from '../../assets/music/Century.mp3'
-
 const HomePage = () => {
 
-    const [audio, setAudio] = useState()
-    const [isMuted, setIsMuted] = useState(true)
     const [filterSelected, setFilterSelected] = useState("")
 
     const handleFilterSelected = filter => {
@@ -19,6 +14,7 @@ const HomePage = () => {
         setFilterSelected(filter)
     }
 
+<<<<<<< HEAD
     // useEffect(() => {
     //     const audioInstance = new Audio(Century)
     //     setAudio(audioInstance)
@@ -36,11 +32,19 @@ const HomePage = () => {
     //     setIsMuted(!isMuted)
     // }
 
+=======
+>>>>>>> lucas
     return (
-        <div className="HomePage h-100 bg-black text-white">
+        <div className="HomePage text-white">
 
             <Container className="d-flex justify-content-center align-items-center min-vh-100">
-                <div className="w-70 text-center">
+
+                <video autoPlay loop muted playsInline className="video-content">
+                    <source src="https://res.cloudinary.com/dhluctrie/video/upload/v1732182659/background-video_cudoag.mp4" type="video/mp4" />
+                    Tu navegador no soporta videos.
+                </video>
+
+                <div className="w-70 text-center" style={{ zIndex: 100 }}>
                     <h1 className="text-decoration-underline">LA PREMIERE</h1>
                     <h2>Encuentra tu peli favorita, en tu cine favorito</h2>
                     <Row className="mt-5">
@@ -64,6 +68,7 @@ const HomePage = () => {
 
             </Container>
 
+<<<<<<< HEAD
             {/* <div className="d-none position-sticky top-0">
                 <span
                     onClick={handleMute}
@@ -72,6 +77,8 @@ const HomePage = () => {
                 </span>
             </div> */}
 
+=======
+>>>>>>> lucas
         </div >
     )
 }

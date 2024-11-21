@@ -11,6 +11,7 @@ import EditMoviePage from "../pages/MoviePages/EditMoviePage/EditMoviePage"
 import DeletedCinemasPage from "../pages/CinemaPages/DeletedCinemasPage/DeletedCinemasPage";
 import DeletedMoviesPage from "../pages/MoviePages/DeletedMoviesPage/DeletedMoviesPage";
 import ReviewMoviePage from "../pages/MoviePages/ReviewMoviePage/ReviewMoviePage";
+import MovieStatsPage from "../pages/Stats/MovieStatsPage";
 
 const AppRoutes = () => {
 
@@ -31,6 +32,8 @@ const AppRoutes = () => {
                 <Route path="/peliculas/crear" element={<NewMoviePage />} />
                 <Route path="/peliculas/editar/:movieId" element={<EditMoviePage />} />
                 <Route path="/peliculas/eliminados" element={<DeletedMoviesPage />} />
+
+                <Route path="/datos" element={<MovieStatsPage />} />
 
                 <Route path="/peliculas/reseña/:movieId" element={<ReviewMoviePage />} />
                 <Route path="*" element={<h1>404 Not Found</h1>} />

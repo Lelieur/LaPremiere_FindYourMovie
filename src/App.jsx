@@ -19,7 +19,9 @@ const App = () => {
       :
       location.pathname.startsWith('/peliculas') ? 'peliculas'
         :
-        null
+        location.pathname.startsWith('/datos') ? 'datos'
+          :
+          null
 
   const [showModal, setShowModal] = useState(false)
 

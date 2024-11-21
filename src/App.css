@@ -9,6 +9,16 @@
     background-color: black;
 }
 
+.HomePage {
+    position: relative;
+    overflow: hidden;
+}
+
+.video-content {
+    position: absolute;
+    z-index: -1;
+}
+
 h1,
 h2,
 .logo {

@@ -6,7 +6,7 @@ import Loader from "../../../components/Loader/Loader"
 import { FaStar, FaStarHalfAlt, FaPlayCircle } from "react-icons/fa"
 import NewMovieReviewForm from "../../../components/NewMovieReviewForm/NewMovieReviewForm"
 import FlagIcon from "../../../components/FlagIcon/FlagIcon"
-import NewEditMovieReviewForm from "../../../components/NewEditMovieReviewForm/NewEditMovieReviewForm"
+import NewEditMovieReviewForm from "../../../components/EditReviewForm/EditReviewForm"
 import { AuthContext } from "../../../contexts/auth.context"
 
 const API_URL = "http://localhost:5005"

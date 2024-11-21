@@ -13,8 +13,6 @@ const Navigation = ({ currentFamilyPath, setShowModal }) => {
 
     const { loggedUser, setLoggedUser } = useContext(AuthContext)
 
-    console.log(currentFamilyPath)
-
     if (currentFamilyPath) {
 
         return (
@@ -56,6 +54,7 @@ const Navigation = ({ currentFamilyPath, setShowModal }) => {
                                         <NavDropdown.Item to="/cines/eliminados" as={Link}>Recuperar Cine</NavDropdown.Item>
                                         <NavDropdown.Item to="/peliculas/eliminados" as={Link}>Recuperar Película</NavDropdown.Item>
                                         <NavDropdown.Divider />
+                                        <NavDropdown.Item to="/datos" as={Link}>Estadísticas</NavDropdown.Item>
                                         <NavDropdown.Item className="delete-button" as="button" onClick={() => setLoggedUser(false)}>Cerrar sesión</NavDropdown.Item>
 
                                     </NavDropdown>
