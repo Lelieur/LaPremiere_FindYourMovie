@@ -6,9 +6,9 @@ import Loader from "../../../components/Loader/Loader"
 import { FaStar, FaStarHalfAlt, FaPlayCircle } from "react-icons/fa"
 import NewMovieReviewForm from "../../../components/NewMovieReviewForm/NewMovieReviewForm"
 import FlagIcon from "../../../components/FlagIcon/FlagIcon"
-import NewEditMovieReviewForm from "../../../components/EditReviewForm/EditReviewForm"
+import EditReviewForm from "../../../components/EditReviewForm/EditReviewForm"
 import { AuthContext } from "../../../contexts/auth.context"
-
+import "../MovieDetailsPage/MovieDetailsPage.css"
 const API_URL = "http://localhost:5005"
 
 const countryNameToCode = {
@@ -20,7 +20,8 @@ const countryNameToCode = {
     "México": "MX",
     "Alemania": "DE",
     "Japón": "JP",
-    "Nueva Zelanda": "NZ"
+    "Nueva Zelanda": "NZ",
+    "Australia": "AU"
 }
 
 const MovieDetailsPage = () => {
@@ -382,10 +383,11 @@ const MovieDetailsPage = () => {
                                                 <Row>
                                                     <Col>
                                                         <Image
+                                                            //className="hover-zoom"
                                                             src={actor.photo || "default-image.jpg"}
                                                             alt={actor.name}
                                                             roundedCircle
-                                                            style={{ width: "80px", height: "80px", objectFit: "cover" }}
+                                                            style={{ width: "100px", height: "100px", objectFit: "cover" }}
                                                         />
                                                     </Col>
                                                     <Row>
