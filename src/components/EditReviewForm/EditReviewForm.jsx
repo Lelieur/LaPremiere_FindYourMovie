@@ -15,6 +15,7 @@ const EditReviewForm = ({ reviewToEdit, setShowEditReviewModal, updateReview }) 
     const [reviews, setReviews] = useState([])
     const [isLoading, setIsLoading] = useState(false)
 
+
     const validateForm = () => {
         const newErrors = {}
         if (!userName) newErrors.userName = "El nombre es obligatorio."
@@ -62,10 +63,12 @@ const EditReviewForm = ({ reviewToEdit, setShowEditReviewModal, updateReview }) 
             setErrors(newErrors);
         } else {
             const reqPayload = createReqPayload()
+
             if (reviewToEdit) {
                 axios
                     .put(`${API_URL}/reviews/${reviewToEdit.id}`, reqPayload)
                     .then(() => {
+
                         updateReview({ ...reqPayload, id: reviewToEdit.id })
                         setShowEditReviewModal(false)
                     })
@@ -75,8 +78,8 @@ const EditReviewForm = ({ reviewToEdit, setShowEditReviewModal, updateReview }) 
             }
         }
     }
-
     return (
+
         isLoading ? <Loader /> : (
             <div className="NewEditMovieReviewForm">
                 <Row>
@@ -92,6 +95,7 @@ const EditReviewForm = ({ reviewToEdit, setShowEditReviewModal, updateReview }) 
                                 />
                                 {errors.userName && <small className="text-danger">{errors.userName}</small>}
                             </Form.Group>
+
                             <Form.Group controlId="rating" className="mb-3">
                                 <Form.Label><strong>Calificación Película</strong></Form.Label>
                                 <div>
@@ -101,13 +105,14 @@ const EditReviewForm = ({ reviewToEdit, setShowEditReviewModal, updateReview }) 
                                             onClick={() => setRating(index + 1)}
                                             onMouseEnter={() => setHoverRating(index + 1)}
                                             onMouseLeave={() => setHoverRating(null)}
-                                            color={(hoverRating || rating) > index ? "#FFB400" : "#E4E5E9"}
+                                            color={(hoverRating || rating) > index ? "#ffb400" : "#e4e5e9"}
                                             style={{ cursor: "pointer", marginRight: "5px", fontSize: "1.5rem" }}
                                         />
                                     ))}
                                 </div>
                                 {errors.rating && <small className="text-danger">{errors.rating}</small>}
                             </Form.Group>
+
                             <Form.Group controlId="comment" className="mb-3">
                                 <Form.Label><strong>Comentario Película</strong></Form.Label>
                                 <Form.Control
@@ -119,6 +124,7 @@ const EditReviewForm = ({ reviewToEdit, setShowEditReviewModal, updateReview }) 
                                 />
                                 {errors.comment && <small className="text-danger">{errors.comment}</small>}
                             </Form.Group>
+
                             <ButtonGroup size="sm">
                                 <Button type="submit" variant="dark" className="mt-3">
                                     {reviewToEdit ? "Actualizar Comentario" : "Enviar Comentario"}
