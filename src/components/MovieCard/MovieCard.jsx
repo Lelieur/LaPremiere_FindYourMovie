@@ -1,6 +1,7 @@
 import { Card, Row, Col } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import FlagIcon from "../FlagIcon/FlagIcon"
+import "../MovieCard/MovieCard.css"
 
 const countryNameToCode = {
     "Estados Unidos": "US",
@@ -9,7 +10,9 @@ const countryNameToCode = {
     "Canada": "CA",
     "México": "MX",
     "Alemania": "DE",
-    "Japón": "JP"
+    "Japón": "JP",
+    "Australia": "AU",
+    "Nueva Zelanda": "NZ"
 }
 
 const MovieCard = ({ id, title, country, duration, language, calification, poster }) => {
@@ -35,7 +38,7 @@ const MovieCard = ({ id, title, country, duration, language, calification, poste
                                 <strong>País:</strong>
                             </Col>
                             <Col >
-                                <p>{country}{' '} <FlagIcon countryCode={countryCode} size="small" /></p>
+                                <FlagIcon countryCode={countryCode} size="small" />
                             </Col>
                         </Row>
                         <Row>
