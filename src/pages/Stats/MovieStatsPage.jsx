@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react"
-
+import { useContext, useEffect, useState } from "react"
 import { Row, Col, Container } from "react-bootstrap"
 
 import axios from "axios"
@@ -11,8 +10,15 @@ import MoviesGenrePieChart from "../../components/MoviesGenrePieChart/MoviesGenr
 import CinemasSeatingPieChart from "../../components/CinemasSeatingPieChart/CinemasSeatingPieChart"
 
 import "./MovieStatsPage.css"
+import { Navigate } from "react-router-dom"
 
 const MovieStatsPage = () => {
+
+    const { loggedUser } = useContext(AuthContext)
+
+    if (!loggedUser) {
+        return <Navigate to="/" />
+    }
 
     const [isLoading, setIsLoading] = useState(true)
     const [cinemas, setCinemas] = useState([])

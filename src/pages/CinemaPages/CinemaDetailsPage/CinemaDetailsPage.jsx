@@ -260,13 +260,13 @@ const CinemaDetailsPage = () => {
                                 </Col>
                             </Row>
                             <hr />
-                            <Row className="flex-nowrap" style={{ overflowX: "auto" }}>
+                            <Row className="flex-nowrap p-3" style={{ overflowX: "auto" }}>
                                 {
                                     moviesInCinema.map(elm => {
                                         if (!elm.isDeleted) {
                                             return (
                                                 <Col md={{ span: 2 }} key={elm.id}>
-                                                    <Card className="h-100 mx-auto">
+                                                    <Card className="MovieCard h-100 mx-auto">
                                                         <Link className="h-100 mx-auto" to={`/peliculas/detalles/${elm.id}`}>
                                                             <Card.Img variant="top h-100 object-fit-cover" src={elm.poster} />
                                                         </Link>

@@ -14,26 +14,6 @@ const HomePage = () => {
         setFilterSelected(filter)
     }
 
-<<<<<<< HEAD
-    // useEffect(() => {
-    //     const audioInstance = new Audio(Century)
-    //     setAudio(audioInstance)
-    //     audioInstance.play().catch((error) => {
-    //         console.log(error)
-    //     })
-    //     return () => {
-    //         audioInstance.pause()
-    //         audioInstance.currentTime = 0
-    //     }
-    // }, [])
-
-    // const handleMute = () => {
-    //     audio.muted = !isMuted
-    //     setIsMuted(!isMuted)
-    // }
-
-=======
->>>>>>> lucas
     return (
         <div className="HomePage text-white">
 
@@ -68,17 +48,6 @@ const HomePage = () => {
 
             </Container>
 
-<<<<<<< HEAD
-            {/* <div className="d-none position-sticky top-0">
-                <span
-                    onClick={handleMute}
-                    style={{ fontSize: "2rem", cursor: "pointer" }}>
-                    {isMuted ? <MdVolumeOff /> : <MdVolumeUp />}
-                </span>
-            </div> */}
-
-=======
->>>>>>> lucas
         </div >
     )
 }

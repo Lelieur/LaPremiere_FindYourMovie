@@ -164,10 +164,10 @@ const MovieDetailsPage = () => {
                 <Container>
 
                     {/* TÍTULO & BOTONES */}
-                    <Row className="mt-4">
+                    <Row className="mt-4 align-items-stretch">
 
                         {/* TÍTULO */}
-                        <Col md={3}>
+                        <Col md={{ span: "auto" }}>
                             <Row>
                                 <Col>
                                     <h4>{movie.title?.spanish.toUpperCase() || movie.title || "Sin título"}</h4>
@@ -176,7 +176,7 @@ const MovieDetailsPage = () => {
                         </Col>
 
                         {/* BOTONES */}
-                        <Col md={9}>
+                        <Col>
                             <Navbar>
                                 <Container>
                                     {/* CINES */}
@@ -311,13 +311,11 @@ const MovieDetailsPage = () => {
                                             </Row>
                                             <Row>
                                                 <Col>
-                                                    <Stack direction="horizontal" gap={1}>
-                                                        {
-                                                            movie.gender?.map((gen, index) => (
-                                                                <Badge key={index} className="badge-container-dark" bg="none">{gen}</Badge>
-                                                            ))
-                                                        }
-                                                    </Stack>
+                                                    {
+                                                        movie.gender?.map((gen, index) => (
+                                                            <Badge key={index} className="badge-container-dark me-1" bg="black">{gen}</Badge>
+                                                        ))
+                                                    }
                                                 </Col>
                                             </Row>
                                         </Col>
@@ -407,28 +405,38 @@ const MovieDetailsPage = () => {
                     </Row>
 
                     {/* RATING */}
-                    <Row className="mt-4 align-items-center">
-                        <Col md={6}>
+                    <Row className="mt-4">
+                        <Col md={5}>
                             <Row>
+                                <Col md={7}>
+                                    <Row className="align-items-center">
+                                        <Col>
+                                            {/* RATING */}
+                                            {
+                                                averageRating > 0 ? (
+                                                    <Row>
+                                                        <Col className="fs-3 fw-bold">
+                                                            {averageRating.toFixed(1)} / 5
+                                                        </Col>
+                                                    </Row>
+                                                ) : (
+                                                    <Row>
+                                                        <Col>
+                                                            <span>Sin valoración</span>
+                                                        </Col>
+                                                    </Row>
+                                                )
+                                            }
 
-                                {/* RATING */}
-                                <Col>
-                                    <Row>
-                                        <Col>
-                                            <strong>Calificación: </strong>
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col>
                                             {averageRating > 0 ? (
-                                                <div className="d-flex align-items-center justify-content-between">
-                                                    <div className="d-flex align-items-center">
+                                                <Row className="align-items-center mb-2">
+                                                    <Col>
                                                         {[...Array(5)].map((_, index) => {
                                                             const isFull = averageRating >= index + 1
                                                             const isHalf = averageRating >= index + 0.5 && averageRating < index + 1
                                                             const isEmpty = averageRating < index + 1
                                                             return (
-                                                                <span key={index} style={{ marginRight: "5px", fontSize: "1.5rem" }}>
+                                                                <span key={index} style={{ marginRight: "5px", fontSize: "1rem" }}>
                                                                     {isFull ? (
                                                                         <FaStar style={{ color: "#ffb400" }} />
                                                                     ) : isHalf ? (
@@ -439,26 +447,23 @@ const MovieDetailsPage = () => {
                                                                 </span>
                                                             );
                                                         })}
-                                                        <span className="ms-2 mt-2">{averageRating.toFixed(1)} / 5</span>
-                                                    </div>
-                                                </div>
+                                                    </Col>
+                                                </Row>
                                             ) : (
                                                 <span>0 / 0 ⭐</span>
                                             )}
                                         </Col>
-                                    </Row>
-                                </Col>
-                                {/* HACER RESEÑA */}
-                                <Col>
-                                    <Button className="styled-button-4 p-3" onClick={() => setShowAddReviewModal(true)}>
-                                        Hacer una reseña</Button>
-                                </Col>
 
+                                        {/* HACER RESEÑA */}
+                                        <Col>
+                                            <Button className="styled-button-4 p-3 w-100" onClick={() => setShowAddReviewModal(true)}>
+                                                Valorar</Button>
+                                        </Col>
+                                    </Row>
+
+                                </Col>
                             </Row>
                         </Col>
-
-                    </Row>
-                    <Row>
 
                     </Row>
 

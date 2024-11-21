@@ -10,7 +10,6 @@ const API_URL = "http://localhost:5005"
 const MoviesList = ({ filterData }) => {
     const [isLoading, setIsLoading] = useState(true)
     const [movies, setMovies] = useState([])
-    console.log(filterData)
 
     useEffect(() => {
         fetchMovies()
@@ -28,29 +27,15 @@ const MoviesList = ({ filterData }) => {
 
     let filteredMovies = []
 
-
     if (filterData) {
 
         filteredMovies = movies.filter(eachMovie => {
             const genderMatch = !filterData.gender || eachMovie.gender.includes(filterData.gender);
-
-            // Aplica el filtro de país solo si se ha seleccionado uno
             const countryMatch = !filterData.country || eachMovie.country === filterData.country;
-
-            // Aplica el filtro de idioma solo si se ha seleccionado uno
             const languageMatch = !filterData.language || eachMovie.language === filterData.language;
-
-            // Todos los filtros deben coincidir si están activos
             return genderMatch && countryMatch && languageMatch;
         });
-
-
-
     }
-
-
-    console.log(filteredMovies)
-
 
     return (
         isLoading ? <Loader /> :
@@ -86,10 +71,6 @@ const MoviesList = ({ filterData }) => {
                         }
                     </Row>
                 </div>
-
-
     )
-
-
 }
 export default MoviesList
