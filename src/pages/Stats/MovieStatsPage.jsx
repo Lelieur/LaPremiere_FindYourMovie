@@ -103,11 +103,11 @@ const MovieStatsPage = () => {
 
             <div className="MovieStatsPage">
                 <Container className="h-100">
-                    <Row className="h-100">
-                        <Col className="text-center h-100 d-flex justify-content-center align-items-center">
+                    <Row className="stats h-100">
+                        <Col md={6} className="text-center h-100">
                             <MoviesGenrePieChart data={durationData} />
                         </Col>
-                        <Col className="text-center h-100 d-flex justify-content-center align-items-center">
+                        <Col md={6} className="text-center h-100">
                             <CinemasSeatingPieChart data={seatingData} />
                         </Col>
                     </Row>
