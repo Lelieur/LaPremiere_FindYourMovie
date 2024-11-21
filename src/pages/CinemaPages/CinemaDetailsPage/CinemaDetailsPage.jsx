@@ -118,12 +118,12 @@ const CinemaDetailsPage = () => {
                             <Row className='mt-4'>
 
                                 {/* NOMBRE */}
-                                <Col md={3} >
+                                <Col md={"auto"} >
                                     <h4 className="section-title m-0">{cinema.name.toUpperCase()}</h4>
                                 </Col>
 
                                 {/* BOTONES */}
-                                <Col md={9}>
+                                <Col>
                                     <Navbar>
                                         <Container>
                                             <Nav.Link as="a" href={cinema.url} target="_blank" className="ms-3 text-white fw-bold">
@@ -272,9 +272,9 @@ const CinemaDetailsPage = () => {
                                                         </Link>
                                                         {
                                                             elm.released ?
-                                                                <Button as="a" target="_blank" href={cinema.url} className="styled-button-2 rounded-0 rounded-bottom" variant="dark">Comprar entradas</Button>
+                                                                <Button as="a" target="_blank" href={cinema.url} className="styled-button-2 rounded-0 rounded-bottom fw-bold">Comprar entradas</Button>
                                                                 :
-                                                                <Button as="a" target="_blank" href={cinema.url} className="styled-button-2 rounded-0 rounded-bottom" variant="success">Próximamente</Button>
+                                                                <Button as="a" target="_blank" href={cinema.url} className="styled-button-2 rounded-0 rounded-bottom fw-bold">Próximamente</Button>
                                                         }
                                                     </Card>
                                                 </Col>

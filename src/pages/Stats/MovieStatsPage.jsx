@@ -3,6 +3,7 @@ import { Row, Col, Container } from "react-bootstrap"
 
 import axios from "axios"
 import Loader from "../../components/Loader/Loader"
+import { AuthContext } from "../../contexts/auth.context"
 
 const API_URL = "http://localhost:5005"
 
@@ -102,11 +103,11 @@ const MovieStatsPage = () => {
 
             <div className="MovieStatsPage">
                 <Container className="h-100">
-                    <Row className="h-100 d-flex justify-content-center align-items-center">
-                        <Col md={6} className="text-center">
+                    <Row className="h-100">
+                        <Col className="text-center h-100 d-flex justify-content-center align-items-center">
                             <MoviesGenrePieChart data={durationData} />
                         </Col>
-                        <Col md={6} className="text-center">
+                        <Col className="text-center h-100 d-flex justify-content-center align-items-center">
                             <CinemasSeatingPieChart data={seatingData} />
                         </Col>
                     </Row>

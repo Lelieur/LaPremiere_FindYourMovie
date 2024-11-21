@@ -1,11 +1,6 @@
 import { ResponsivePie } from '@nivo/pie'
 
-import { Row, Col } from "react-bootstrap"
-
-
 const CinemasSeatingPieChart = ({ data }) => {
-
-    console.log(data)
 
     return (
 
