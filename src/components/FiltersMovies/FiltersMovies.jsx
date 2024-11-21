@@ -38,6 +38,16 @@ const Filters = ({ handleFilterData }) => {
         handleFilterData(filters);
     };
 
+    const handleResetFilters = () => {
+        setFilters({
+            gender: '',
+            country: '',
+            language: ''
+        });
+
+        handleFilterData(undefined)
+    };
+
     return (
         <Form onSubmit={handleSubmit}>
             <Row>
@@ -76,10 +86,12 @@ const Filters = ({ handleFilterData }) => {
                 </Col>
             </Row>
 
-            <Button className="styled-button-2" variant="dark" type="submit">
+            <Button className="styled-button-2 me-3" variant="dark" type="submit">
                 Aplicar Filtros
             </Button>
-
+            <Button className="styled-button-2" variant="secondary" type="button" onClick={handleResetFilters} >
+                Limpiar Filtros
+            </Button>
         </Form>
     );
 };
