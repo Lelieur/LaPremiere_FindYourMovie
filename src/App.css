@@ -20,15 +20,15 @@
 }
 
 h1,
-h2,
 .logo {
     font-family: "AmericanCaptain";
-    font-size: 150px;
+    font-size: calc(4rem + 1.5vw);
     color: white;
 }
 
 h2 {
-    font-size: 60px;
+    font-family: "AmericanCaptain";
+    font-size: calc(2rem + 1.5vw)
 }
 
 h3 {

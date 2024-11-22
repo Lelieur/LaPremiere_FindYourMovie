@@ -17,7 +17,7 @@ const HomePage = () => {
     return (
         <div className="HomePage text-white">
 
-            <Container className="d-flex justify-content-center align-items-center min-vh-100">
+            <Container className="d-flex justify-content-center align-items-center min-vh-100 p-5">
 
                 <video autoPlay loop muted playsInline className="video-content">
                     <source src="https://res.cloudinary.com/dhluctrie/video/upload/v1732182659/background-video_cudoag.mp4" type="video/mp4" />
@@ -27,20 +27,22 @@ const HomePage = () => {
                 <div className="w-70 text-center" style={{ zIndex: 100 }}>
                     <h1 className="text-decoration-underline">LA PREMIERE</h1>
                     <h2>Encuentra tu peli favorita, en tu cine favorito</h2>
-                    <Row className="mt-5">
-                        <Row>
-                            <Col>
-                                <p>¿Por dónde quieres empezar?</p>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <CinemasGlobalFilter filterSelected={filterSelected} handleFilterSelected={handleFilterSelected} />
-                            </Col>
-                            <Col>
-                                <MoviesGlobalFilter filterSelected={filterSelected} handleFilterSelected={handleFilterSelected} />
-                            </Col>
-                        </Row>
+                    <Row className="mt-5 ">
+                        <Col>
+                            <Row>
+                                <Col>
+                                    <p>¿Por dónde quieres empezar?</p>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <CinemasGlobalFilter filterSelected={filterSelected} handleFilterSelected={handleFilterSelected} />
+                                </Col>
+                                <Col>
+                                    <MoviesGlobalFilter filterSelected={filterSelected} handleFilterSelected={handleFilterSelected} />
+                                </Col>
+                            </Row>
+                        </Col>
                     </Row>
 
                 </div>

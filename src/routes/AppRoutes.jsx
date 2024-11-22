@@ -12,6 +12,7 @@ import DeletedCinemasPage from "../pages/CinemaPages/DeletedCinemasPage/DeletedC
 import DeletedMoviesPage from "../pages/MoviePages/DeletedMoviesPage/DeletedMoviesPage";
 import ReviewMoviePage from "../pages/MoviePages/ReviewMoviePage/ReviewMoviePage";
 import MovieStatsPage from "../pages/Stats/MovieStatsPage";
+import Error404Page from "../pages/Error404Page/Error404Page";
 
 const AppRoutes = () => {
 
@@ -36,7 +37,7 @@ const AppRoutes = () => {
                 <Route path="/datos" element={<MovieStatsPage />} />
 
                 <Route path="/peliculas/reseña/:movieId" element={<ReviewMoviePage />} />
-                <Route path="*" element={<h5>404 Not Found</h5>} />
+                <Route path="*" element={<Error404Page />} />
             </Routes>
 
         </div>
