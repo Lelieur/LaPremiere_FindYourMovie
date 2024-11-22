@@ -260,7 +260,7 @@ const CinemaDetailsPage = () => {
                                 </Col>
                             </Row>
                             <hr />
-                            <Row className="flex-nowrap p-3" style={{ overflowX: "auto" }}>
+                            <Row className="flex-nowrap p-4" style={{ overflowX: "auto" }}>
                                 {
                                     moviesInCinema.map(elm => {
                                         if (!elm.isDeleted) {
@@ -272,9 +272,9 @@ const CinemaDetailsPage = () => {
                                                         </Link>
                                                         {
                                                             elm.released ?
-                                                                <Button as="a" target="_blank" href={cinema.url} className="styled-button-2 rounded-0 rounded-bottom fw-bold">Comprar entradas</Button>
+                                                                <Button as="a" target="_blank" href={cinema.url} className="styled-button-2 rounded-0 rounded-bottom fw-bold m-0">Comprar entradas</Button>
                                                                 :
-                                                                <Button as="a" target="_blank" href={cinema.url} className="styled-button-2 rounded-0 rounded-bottom fw-bold">Próximamente</Button>
+                                                                <Button as="a" target="_blank" href={cinema.url} className="styled-button-2 rounded-0 rounded-bottom fw-bold m-0">Próximamente</Button>
                                                         }
                                                     </Card>
                                                 </Col>
@@ -301,10 +301,10 @@ const CinemaDetailsPage = () => {
                             Si continúas no se podrá recuperar el cine seleccionado. ¿Estás seguro de que quieres continuar?
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button className="styled-button-2" variant="danger" onClick={handleCinemaDelete}>
+                            <Button variant="danger" onClick={handleCinemaDelete}>
                                 Eliminar definitvamente
                             </Button>
-                            <Button className="styled-button-3" variant="primary" onClick={() => setShowModal(false)}>Cancelar</Button>
+                            <Button variant="dark" onClick={() => setShowModal(false)}>Cancelar</Button>
                         </Modal.Footer>
                     </Modal >
                 </>

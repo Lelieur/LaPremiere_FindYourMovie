@@ -36,7 +36,7 @@ const AppRoutes = () => {
                 <Route path="/datos" element={<MovieStatsPage />} />
 
                 <Route path="/peliculas/reseña/:movieId" element={<ReviewMoviePage />} />
-                <Route path="*" element={<h1>404 Not Found</h1>} />
+                <Route path="*" element={<h5>404 Not Found</h5>} />
             </Routes>
 
         </div>
