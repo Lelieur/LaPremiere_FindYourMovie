@@ -3,7 +3,7 @@ import { Button, ButtonGroup, Form, Row, Col } from "react-bootstrap"
 import { FaStar } from "react-icons/fa"
 import axios from "axios"
 
-const API_URL = "http://localhost:5005"
+const API_URL = import.meta.env.VITE_APP_API_URL
 
 const EditReviewForm = ({ reviewToEdit, setShowEditReviewModal, updateReview }) => {
 
