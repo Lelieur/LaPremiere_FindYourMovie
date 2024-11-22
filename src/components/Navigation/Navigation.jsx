@@ -20,18 +20,19 @@ const Navigation = ({ currentFamilyPath, setShowModal }) => {
                 <Navbar sticky="top" collapseOnSelect expand="lg">
                     <Container>
                         <Navbar.Brand to="/" as={Link} className="logo text-white">LA PREMIERE</Navbar.Brand>
-                        <Nav className="me-auto ms-5">
-                            {
-                                currentFamilyPath === 'cines' ?
-                                    <CinemasGlobalFilter currentFamilyPath={currentFamilyPath} />
-                                    : currentFamilyPath === 'peliculas' ?
-                                        <MoviesGlobalFilter currentFamilyPath={currentFamilyPath} />
-                                        :
-                                        null
-                            }
-                        </Nav>
+
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                        <Navbar.Collapse className="flex-grow-0" id="responsive-navbar-nav" >
+                        <Navbar.Collapse id="responsive-navbar-nav" >
+                            <Nav className="me-auto">
+                                {
+                                    currentFamilyPath === 'cines' ?
+                                        <CinemasGlobalFilter currentFamilyPath={currentFamilyPath} />
+                                        : currentFamilyPath === 'peliculas' ?
+                                            <MoviesGlobalFilter currentFamilyPath={currentFamilyPath} />
+                                            :
+                                            null
+                                }
+                            </Nav>
                             <Nav className="ms-auto">
 
                                 <Nav.Link to="/cines" className="text-white" as={Link}><span>Cines</span></Nav.Link>
@@ -40,7 +41,7 @@ const Navigation = ({ currentFamilyPath, setShowModal }) => {
                                 {
                                     !loggedUser &&
 
-                                    <Nav.Link as="button" onClick={() => setShowModal(true)} className="text-white">Iniciar sesión</Nav.Link>
+                                    <Nav.Link as="button" onClick={() => setShowModal(true)} className="text-white me-auto fw-bold">Iniciar sesión</Nav.Link>
                                 }
 
                                 {

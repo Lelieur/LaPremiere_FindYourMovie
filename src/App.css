@@ -19,8 +19,11 @@
     z-index: -1;
 }
 
-h1,
 .logo {
+    font-family: "AmericanCaptain";
+}
+
+h1 {
     font-family: "AmericanCaptain";
     font-size: calc(4rem + 1.5vw);
     color: white;
