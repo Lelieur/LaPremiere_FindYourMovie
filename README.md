@@ -14,7 +14,6 @@
 ## ⌨️ **Project Description**  
 *LA PREMIERE* is a single page application prototype developed by **Aaron Ferrer** and **Lucas Lelieur** to aggregate all screenings of a movie in each of the theatres where it is shown into a single site. The project offers a simple interface and a clear experience so that every visitor can quickly find the cinema and movie session that suits them best. 
 
-<br>
 
 ## 🖱️ **Navigation**  
 
