@@ -1,18 +1,21 @@
-# React + Vite
+# 🍿 **LA PREMIERE**
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<p align="center">
+  <img src="https://res.cloudinary.com/dhluctrie/image/upload/v1736522918/La_Premiere_MockUp_a9nnwr.gifg" alt="LA PREMIERE MockUp">
+</p>
 
-Currently, two official plugins are available:
+<p align="center">
+  <a href="https://lapremiere.netlify.app/">Visit the web app!</a>
+</p>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
 
 
 | URL                  | Description                                        |
 | ----------------     | -------------------------------------------------- | 
 | /                    | Home Page                                          |
 | /cines               | Page containing all cinemas                        |
-| /cines/:id           | Page containgin the details of the selected cinema |
+| /cines/:id           | Page containing the details of the selected cinema |
 | /cines/crear         | New cinema form page                               |
 | /cines/editar/:id    | Selected cinema editing form page                  |
 | /peliculas           | Page containing all movies                         |
