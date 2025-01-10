@@ -1,7 +1,7 @@
 # 🍿 **LA PREMIERE**
 
 <p align="center">
-  <img src="https://res.cloudinary.com/dhluctrie/image/upload/v1736522918/La_Premiere_MockUp_a9nnwr.gifg" alt="LA PREMIERE MockUp">
+  <img src="https://res.cloudinary.com/dhluctrie/image/upload/v1736522918/La_Premiere_MockUp_a9nnwr.gif" alt="LA PREMIERE MockUp">
 </p>
 
 <p align="center">
