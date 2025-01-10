@@ -44,6 +44,7 @@
 </p>
 
 <br>
+
 ## 🛠️ **Technologies Used**  
 - **Front-end:** React, React Bootstrap, JavaScript
 - **Back-end:** Json Server for creating the custom API.
