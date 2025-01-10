@@ -34,6 +34,11 @@
 - **Filter** by genre, country or language to find the movie to watch.
 - **Find** all movie theaters screening the selected movie, and all movies screening in the selected movie theatre.
 
+  
+<p align="center">
+  <img src="https://res.cloudinary.com/dhluctrie/image/upload/v1736525208/LA_PREMIERE_iPhone_MockUp_siz4lg.png" alt="LA PREMIERE MockUp">
+</p>
+
 
 ## 🛠️ **Technologies Used**  
 - **Front-end:** React, React Bootstrap, JavaScript
