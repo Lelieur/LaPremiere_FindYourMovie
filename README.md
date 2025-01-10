@@ -5,16 +5,12 @@
 
 # 🍿 **LA PREMIERE**
 
----
-
 <p align="center">
   <a href="https://lapremiere.netlify.app/">Visit the web app!</a>
 </p>
 
 ## ⌨️ **Project Description**  
 *LA PREMIERE* is a single page application prototype developed by **Aaron Ferrer** and **Lucas Lelieur** to aggregate all screenings of a movie in each of the theatres where it is shown into a single site. The project offers a simple interface and a clear experience so that every visitor can quickly find the cinema and movie session that suits them best. 
-
----
 
 ## 🖱️ **Navigation**  
 
@@ -32,14 +28,12 @@
 | /peliculas/editar/:id| Selected movie editing form page                   |
 | *                    | 404 page                                           |
 
----
 
 ## 🚀 **Features**  
 - **Explore** a catalogue of movie theatres with detailed information.
 - **Filter** by genre, country or language to find the movie to watch.
 - **Find** all movie theaters screening the selected movie, and all movies screening in the selected movie theatre.
 
----
 
 ## 🛠️ **Technologies Used**  
 - **Front-end:** React, React Bootstrap, JavaScript
