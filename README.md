@@ -44,14 +44,10 @@
   <img src="https://res.cloudinary.com/dhluctrie/image/upload/v1736525333/LA_PREMIERE_iPhone_MockUp_e3ag2q.jpg" alt="LA PREMIERE MockUp">
 </p>
 
-<br>
-
 ## 🛠️ **Technologies Used**  
 - **Front-end:** React, React Bootstrap, JavaScript
 - **Back-end:** Json Server for creating the custom API.
 - **Services:** Geocoding for movie theatre location.
-
-<br>
 
 ## 💡 **Credits**
 
