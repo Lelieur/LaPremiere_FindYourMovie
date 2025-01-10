@@ -4,10 +4,8 @@
 </p>
 
 # 🍿 **LA PREMIERE**
-
-
-
-
+<br>
+<br>
 
 <p align="center">
   <a href="https://lapremiere.netlify.app/">Visit the web app!</a>
