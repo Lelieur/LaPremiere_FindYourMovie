@@ -1,8 +1,11 @@
-# 🍿 **LA PREMIERE**
 
 <p align="center">
   <img src="https://res.cloudinary.com/dhluctrie/image/upload/v1736523691/La_Premiere_MockUp_kb6aeu.png" alt="LA PREMIERE MockUp">
 </p>
+
+# 🍿 **LA PREMIERE**
+
+---
 
 <p align="center">
   <a href="https://lapremiere.netlify.app/">Visit the web app!</a>
@@ -47,5 +50,3 @@
 ## 💡 **Credits**
 
 Developed by <a href="https://github.com/Lelieur">Lucas Lelieur</a> and <a href="https://github.com/https://github.com/AaronFerrer-VLC">Aaron Ferrer</a>.
-
-
