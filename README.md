@@ -36,7 +36,7 @@
 
   
 <p align="center">
-  <img src="https://res.cloudinary.com/dhluctrie/image/upload/v1736525208/LA_PREMIERE_iPhone_MockUp_siz4lg.png" alt="LA PREMIERE MockUp">
+  <img src="https://res.cloudinary.com/dhluctrie/image/upload/v1736525333/LA_PREMIERE_iPhone_MockUp_e3ag2q.jpg" alt="LA PREMIERE MockUp">
 </p>
 
 
