@@ -31,7 +31,6 @@
 | /peliculas/editar/:id| Selected movie editing form page                   |
 | *                    | 404 page                                           |
 
-<br>
 
 ## 🚀 **Features**  
 - **Explore** a catalogue of movie theatres with detailed information.
