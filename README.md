@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="https://res.cloudinary.com/dhluctrie/image/upload/v1736523691/La_Premiere_MockUp_kb6aeu.png" alt="LA PREMIERE MockUp">
+  <img src="https://res.cloudinary.com/lucaslelieur/image/upload/v1736788199/Logo_kzwn86.png" alt="LA PREMIERE MockUp">
 </p>
 
 # 🍿 **LA PREMIERE**
@@ -39,7 +39,7 @@
 
   
 <p align="center">
-  <img src="https://res.cloudinary.com/dhluctrie/image/upload/v1736525333/LA_PREMIERE_iPhone_MockUp_e3ag2q.jpg" alt="LA PREMIERE MockUp">
+  <img src="https://res.cloudinary.com/lucaslelieur/image/upload/v1736525333/LA_PREMIERE_iPhone_MockUp_e3ag2q.jpg" alt="LA PREMIERE MockUp">
 </p>
 
 ## 🛠️ **Technologies Used**  
